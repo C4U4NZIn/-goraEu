@@ -169,3 +169,21 @@ background-color:rgba(45, 118, 166, 1);
   display: flex;
   justify-content: center;
 }
+
+@media (max-width:1200px) {
+  
+.agoraLogoSignUp{
+  height: 7.6568rem;
+  width: 5.875rem;
+  
+}
+.agoraContainerLogoElementElipse{
+  height: 7.8rem;
+  width: 7.90625rem;
+}
+.agoraContainerForm{
+ height: 18.5rem;
+ width: 12.96875rem;
+}
+
+}

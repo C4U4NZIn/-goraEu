@@ -1,4 +1,4 @@
-
+'use client';
 
 import {useForm} from 'react-hook-form';
 
@@ -64,7 +64,13 @@ export default function App(){
  });
  const handleSubmitValues = (data:userForm)=>{console.log(data)}
  
- 
+ const username = watch('username')
+ const nickname = watch('nickname')
+ const email = watch('email')
+ const password = watch('password')
+ const tel = watch('tel')
+
+ const isSubmitButtonCad = username && nickname && email && password && tel
 
 
 return(
@@ -171,8 +177,8 @@ placeholder='Ex.:Nathalia.Braga@gmail.com'
 
 
 <div className={styles.agoraContainerButtonForm}>
-<button type="submit"  className={styles.agoraButtonCancel} disabled><p className={styles.agoraColorLetterForm}>Cancelar</p></button>
-<button type="submit"  className={styles.agoraButtonCad} disabled><p className={styles.agoraColorLetterForm}>Cadastrar</p></button>
+<button type="submit"  className={styles.agoraButtonCancel} disabled={!isSubmitButtonCad}><p className={styles.agoraColorLetterForm}>Cancelar</p></button>
+<button type="submit"  className={styles.agoraButtonCad} disabled={!isSubmitButtonCad}><p className={styles.agoraColorLetterForm}>Cadastrar</p></button>
 </div>
 
  </form>

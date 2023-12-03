@@ -1,0 +1,10 @@
+body{
+    display: flex;
+    flex-direction: row;
+    width: 80rem;
+    height: 52rem;
+    background-image: url('../app/images/backGroundSignUp.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}

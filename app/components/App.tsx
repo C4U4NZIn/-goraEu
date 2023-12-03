@@ -75,7 +75,7 @@ export default function App(){
 
 return(
 
-  <main className={styles.agoraMainBackgroundSignUp}>
+  <>
 
 
 
@@ -109,8 +109,14 @@ return(
  <form onSubmit={handleSubmit(handleSubmitValues)}>
 
 <div className={styles.agoraContainsAllFormElements}>
-<div>
- <label><h5>Nome</h5></label>
+<div 
+ className={styles.gapBetweenInputLabel}
+ >
+ <label 
+  className={styles.tinosStyleNamesInput}
+  >
+  Nome
+  </label>
 
  <input 
  id="agoraNameCad" 
@@ -124,8 +130,10 @@ return(
 
 </div>
 
-<div>
-<label><h5>Apelido</h5></label>
+<div 
+className={styles.gapBetweenInputLabel}
+>
+<label  className={styles.tinosStyleNamesInput}>Apelido</label>
 <input 
  id="agoraApelidoCad" 
  className={styles.agoraInputCad} 
@@ -137,8 +145,14 @@ return(
  />
 </div>
 
-<div>
-<label><h5>Email</h5></label>
+<div 
+className={styles.gapBetweenInputLabel}
+>
+<label  
+className={styles.tinosStyleNamesInput}
+>
+   Email
+  </label>
 <input 
 id="agoraEmailCad" 
 className={styles.agoraInputCad} 
@@ -148,8 +162,14 @@ placeholder='Ex.:Nathalia.Braga@gmail.com'
 />
  </div>
 
-<div>
- <label><h5>Senha</h5></label>
+<div
+className={styles.gapBetweenInputLabel}
+>
+ <label 
+ className={styles.tinosStyleNamesInput}
+ >
+Senha
+</label>
  <input 
  id="agoraSenhaCad" 
  className={styles.agoraInputCad} 
@@ -160,8 +180,14 @@ placeholder='Ex.:Nathalia.Braga@gmail.com'
  />
  </div>
 
-<div>
- <label><h5>Telefone</h5></label>
+<div 
+className={styles.gapBetweenInputLabel}
+>
+ <label 
+ className={styles.tinosStyleNamesInput}
+ >
+Telefone
+</label>
  <input 
  id="agoraTelefoneCad" 
  className={styles.agoraInputCad} 
@@ -171,7 +197,7 @@ placeholder='Ex.:Nathalia.Braga@gmail.com'
  />
  </div>
 
-<div className={styles.agoraContainerLinkLogin}><h6><Link className={styles.agoraStylesLink} href="">Já tenho conta</Link></h6></div>
+<div className={styles.agoraContainerLinkLogin}><Link className={styles.agoraStylesLink} href="">Já tenho Login</Link></div>
 
 </div>
 
@@ -189,7 +215,7 @@ placeholder='Ex.:Nathalia.Braga@gmail.com'
    
   
 
-  </main>
+  </>
 
 );
 

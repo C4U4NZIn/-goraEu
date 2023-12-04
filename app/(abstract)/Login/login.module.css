@@ -1,0 +1,16 @@
+.body{
+
+    display:flex;
+    flex-direction: row;
+    width: 80rem;
+    height: 52rem;
+    background-color: rgba(147, 206, 220, 1);
+    
+  
+}
+.leftContainerElementAgora{
+ margin-left:1.875rem;
+ height: 52rem;
+ width:44.375rem;
+ background-color: floralwhite;
+}

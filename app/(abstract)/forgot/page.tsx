@@ -1,20 +1,14 @@
-'use client';
+ import styles from '../forgot/forgot.module.css'; 
+ import centralCompueterLoginImage from '../images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg'
+ import Image from 'next/image'
+ import Link from 'next/link'
+ import agoraLogoSignUp from '../images/Logo_Agora 2.svg'
+ const EsqueceuSenha = () =>{
 
-import styles from '../Login/login.module.css'
-import Link from 'next/link'
-import Image from 'next/image'
-import centralCompueterLoginImage from '../images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg';
-import agoraLogoSignUp from '../images/Logo_Agora 2.svg';
-
-
-
- const LoginPage = ()=>{
- 
     return (
-      <>
-       
-       
-       <div 
+     <>
+      
+      <div 
        className =
        {styles.leftContainerElementAgora}
        >
@@ -40,7 +34,7 @@ import agoraLogoSignUp from '../images/Logo_Agora 2.svg';
      >
         <div className={styles.agoraContainerLines}>
 
-       <span className={styles.agoraLoginLine}>Login</span>
+       <span className={styles.agoraLoginLine}>Esqueci minha Senha</span>
        <a href="" className={styles.agoraLoginFirstLine}></a>
        <a href="" className={styles.agoraLoginSecondLine}></a>
 
@@ -53,9 +47,7 @@ import agoraLogoSignUp from '../images/Logo_Agora 2.svg';
         <form className={styles.agoraFormContainerLog}>
    
 
-   <div 
-   className={styles.agoraContainerBetweenInputsLinks}
-   >
+   
    <div 
     className={styles.agoraContainerCamposLogin}
     >
@@ -77,43 +69,11 @@ placeholder='Ex.:Nathalia.Braga@gmail.com'
 />
  </div>
 
-<div
-className={styles.gapBetweenInputLabel}
->
- <label 
- className={styles.tinosStyleNamesInput}
- >
-Senha
-</label>
- <input 
- id="agoraSenhaCad" 
- className={styles.agoraInputCad} 
- type="password" 
- placeholder='Mínimo de 8 caracteres' 
-  min={8}
- />
- </div>
-    </div>
 
 
 
 
-   <div 
-  className={styles.agoraContainerLinks}
-   >
   
-      <Link
-      className={styles.agoraStylesLink}  
-      href=""
-      >Esqueci minha senha</Link>
-      <Link 
-      className={styles.agoraStylesLink} 
-      href="/SignUp"
-      >
-      Não tenho cadastro
-      </Link>
-    
-   </div>
 
    </div>
    <div 
@@ -122,22 +82,14 @@ className={styles.agoraContainerButtonForm}
 
 
 <button type="submit"  
-className={styles.agoraButtonCancel} 
-disabled >
-<p className={styles.agoraColorLetterForm}
->
-Cancelar
-</p>
-</button>
-
-<button type="submit"  
 className={styles.agoraButtonLog} 
 disabled >
-<p 
-className={styles.agoraColorLetterForm}
->
-Logar
-</p>
+    <Link 
+    href=''
+    className={styles.agoraColorLetterForm}
+    >
+     Voltar para o Login
+    </Link>
 </button>
 </div>
    </form>
@@ -162,9 +114,8 @@ Logar
 
 
 
-
-      </>
+     </>
     )
 
 }
-export default LoginPage;
+export default EsqueceuSenha;

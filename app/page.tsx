@@ -1,7 +1,7 @@
 
-import App from '../app/components/App';
+import SignUp from './SignUp/page';
 export default function Home() {
   return (
-   <App/>
+   <SignUp/>
   )
 }

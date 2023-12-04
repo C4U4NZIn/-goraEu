@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 import agoraLogoSignUp from '../images/Logo_Agora 2.svg';
 
-import styles from '../components/bakground.module.css';
+import styles from '../SignUp/background.module.css';
 
 
 const userFormSchema = zod.object({
@@ -49,7 +49,7 @@ const userFormSchema = zod.object({
 
 type  userForm =  zod.infer<typeof  userFormSchema>;
 
-export default function App(){
+export default function SignUp(){
  
  const {register,handleSubmit,watch} = useForm({
   resolver: zodResolver( userFormSchema),
@@ -197,14 +197,42 @@ Telefone
  />
  </div>
 
-<div className={styles.agoraContainerLinkLogin}><Link className={styles.agoraStylesLink} href="">Já tenho Login</Link></div>
+<div 
+className={styles.agoraContainerLinkLogin}
+>
+  <Link 
+  className={styles.agoraStylesLink} 
+  href="/Login"
+  >
+  Já tenho Login
+  </Link>
+  </div>
 
 </div>
 
 
-<div className={styles.agoraContainerButtonForm}>
-<button type="submit"  className={styles.agoraButtonCancel} disabled={!isSubmitButtonCad}><p className={styles.agoraColorLetterForm}>Cancelar</p></button>
-<button type="submit"  className={styles.agoraButtonCad} disabled={!isSubmitButtonCad}><p className={styles.agoraColorLetterForm}>Cadastrar</p></button>
+<div 
+className={styles.agoraContainerButtonForm}
+>
+
+<button type="submit"  
+className={styles.agoraButtonCancel} 
+disabled={!isSubmitButtonCad}>
+<p className={styles.agoraColorLetterForm}
+>
+Cancelar
+</p>
+</button>
+
+<button type="submit"  
+className={styles.agoraButtonCad} 
+disabled={!isSubmitButtonCad}>
+<p 
+className={styles.agoraColorLetterForm}
+>
+Cadastrar
+</p>
+</button>
 </div>
 
  </form>

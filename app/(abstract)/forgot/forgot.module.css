@@ -75,7 +75,6 @@
 
 }
 .agoraLoginLine{
-    display:inline;
     font-weight: 700;
     font-family: 'Arsenal', sans-serif;
     font-size: 2.375rem;
@@ -85,20 +84,22 @@
   }
   .agoraLoginFirstLine{
     height: 0.005rem;
-    width: 11.6875rem;
+    width: 18.6875rem;
     border: 1px;
     background-color: rgba(45, 118, 166, 1);
     
   }
   .agoraLoginSecondLine{
+    padding-left:1.273125rem;
     height: 0.005rem;
-    width: 13.289375rem;
+    width: 18.664375rem;
     border: 1px;
     background-color: rgba(45, 118, 166, 1);
   
   }
   .agoraContainerLines{
-    display: flex;
+    display: inline-flex;
+    white-space: nowrap;
     flex-direction: column;
     gap: 0.45rem;
     margin-left: 2.975rem;
@@ -107,7 +108,7 @@
     display:flex;
     flex-direction: column;
     margin-top:9.3125rem;
-    margin-left:7.5rem;
+    margin-right:4.5rem;
     gap:4.035rem;
 
   }
@@ -168,6 +169,7 @@
   }
   .agoraColorLetterForm{
     color: rgba(255, 255, 255, 1);
+    text-decoration: none;
     
   }
   .agoraButtonCancel:disabled{
@@ -219,5 +221,11 @@
     font-size: 35px;
     font-weight: 400;
     font-family: 'Titan One', sans-serif;
+    white-space: pre-line;
+   }
+   .forgotPasswordFrase{
+    font-size: 21px;
+    font-weight: 400;
+    font-family: 'tinos',serif;
     white-space: pre-line;
    }

@@ -1,7 +1,7 @@
 
-import SignUp from './SignUp/page';
+
 export default function Home() {
   return (
-   <SignUp/>
+   <h1>Vá para SignUp</h1>
   )
 }

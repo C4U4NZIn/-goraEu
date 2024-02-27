@@ -1,20 +1,13 @@
 'use client';
 
 import {useForm} from 'react-hook-form';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import * as zod from 'zod';
-
 import styles from '../Login/login.module.css'
-
 import Link from 'next/link'
-
 import Image from 'next/image'
-
-import centralCompueterLoginImage from '../images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg';
-
-import agoraLogoSignUp from '../images/Logo_Agora 2.svg';
+import centralCompueterLoginImage from '../forgot/images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg'
+import agoraLogoSignUp from '../forgot/images/Logo_Agora 2.svg';
 
 
 
@@ -38,7 +31,7 @@ type  userForm =  zod.infer<typeof  userSchemaLogin>;
 
  const LoginPage = ()=>{
 
-   const {register,handleSubmit,watch} = useForm({
+   const {register,handleSubmit,watch, formState:{errors}} = useForm({
 
     resolver: zodResolver(userSchemaLogin),
       defaultValues:{

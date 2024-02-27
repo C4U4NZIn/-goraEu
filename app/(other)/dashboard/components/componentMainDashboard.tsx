@@ -15,7 +15,7 @@ type user = {
 
 
  export const ComponentMainDashboard=(props:user)=>{
-  console.log(props);
+
 
     return (
        <>

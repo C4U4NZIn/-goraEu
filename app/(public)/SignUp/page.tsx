@@ -1,32 +1,26 @@
 'use client';
-
 import {useForm} from 'react-hook-form';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import * as zod from 'zod';
-
 import Image from 'next/image';
-
 import Link from 'next/link';
-
-import agoraLogoSignUp from '../images/Logo_Agora 2.svg';
-
+import agoraLogoSignUp from '../forgot/images/Logo_Agora 2.svg';
 import styles from '../SignUp/background.module.css';
-
+import { useUserContext } from '@/contexts';
+import { ZodError } from './styled/zodErros/zodError';
 
 const userFormSchema = zod.object({
 
   username: zod
   .string()
-  .min(8, "Informe seu nome completo")
-  .regex(/^[A-Za-z]+$/i,"One letters alowed"),
+  .min(8, 'Informe seu nome completo'),
+ 
 
   nickname: zod
   .string()
-  .min(3,"Informe um apelido válido")
-  .max(12,"informe um apelido válido")
-  .regex(/^[A-Za-z]+$/i,"One letters alowed"),
+  .min(3,"Informe um nome válido")
+  .max(12, "Informe um nome válido"),
+  
   
    email: zod
    .string()
@@ -37,11 +31,15 @@ const userFormSchema = zod.object({
 
    password: zod
    .string()
-   .min(8),
+   .min(8)
+   .regex(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,"Sua senha deve conter pelo menos um caracter em caixa alta , caixa baixa e um caracter númerico"
+     ),
 
    tel: zod
    .string()
-   .regex(/^\(\d{2}\) \d{5}-\d{4}$/,"Please digit your right number ")
+   .regex(/^\(\d{2}\) \d{5}-\d{4}$/,
+    "Por favor digite seu número corretamente "
+  )
 
 
 
@@ -50,19 +48,33 @@ const userFormSchema = zod.object({
 type  userForm =  zod.infer<typeof  userFormSchema>;
 
 export default function SignUp(){
+   const { createUser } = useUserContext();
  
- const {register,handleSubmit,watch} = useForm({
-  resolver: zodResolver( userFormSchema),
+ const {register,handleSubmit,watch,formState:{errors}} = useForm({
+  resolver: zodResolver(userFormSchema),
   defaultValues: 
   {
     username:'',
-    nickname:'',
+    nickname:'',  
     email:'',
     password:'',
     tel:''
   }
  });
- const handleSubmitValues = (data:userForm)=>{console.log(data)}
+ const handleSubmitValues = (data:userForm)=>{
+
+
+     const values = {
+      username:data.username,
+      nickname:data.nickname,
+      email:data.email,
+      password:data.password,
+      phone:data.tel
+     }
+     createUser(values);
+ 
+
+}
  
  const username = watch('username')
  const nickname = watch('nickname')
@@ -71,6 +83,7 @@ export default function SignUp(){
  const tel = watch('tel')
 
  const isSubmitButtonCad = username && nickname && email && password && tel
+   
 
 
 return(
@@ -124,10 +137,8 @@ return(
  type="text"
  placeholder='Ex.:Nathalia Silva da Braga' 
  {...register("username")}
- min={8}
- max={12}
  />
-
+{errors.username && <span>{errors.username?.message}</span>}
 </div>
 
 <div 
@@ -140,9 +151,8 @@ className={styles.gapBetweenInputLabel}
  type="text" 
  placeholder='Ex.:Nana Braga' 
  {...register("nickname")}
- min={3}
- max={12}
  />
+ {errors.nickname && <span>{errors.nickname?.message}</span>}
 </div>
 
 <div 
@@ -160,6 +170,7 @@ type="email"
 placeholder='Ex.:Nathalia.Braga@gmail.com' 
 {...register('email')}
 />
+{errors.email && <span>{errors.email?.message}</span>}
  </div>
 
 <div
@@ -176,8 +187,8 @@ Senha
  type="password" 
  placeholder='Mínimo de 8 caracteres' 
  {...register('password')}
-  min={8}
  />
+ {errors.password && <span>{errors.password?.message}</span>}
  </div>
 
 <div 
@@ -195,6 +206,7 @@ Telefone
  placeholder='Ex.:(xx) xxxxx-xxxx'
  {...register('tel')}
  />
+ {errors.tel && <span>{errors.tel.message}</span>}
  </div>
 
 <div 

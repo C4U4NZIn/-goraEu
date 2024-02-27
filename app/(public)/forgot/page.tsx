@@ -1,21 +1,14 @@
  'use client';
 
  import {useForm} from 'react-hook-form';
-
  import { zodResolver } from '@hookform/resolvers/zod';
-
  import * as zod from 'zod';
-
  import styles from '../forgot/forgot.module.css'; 
- 
- import centralCompueterLoginImage from '../images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg'
- 
+ import centralCompueterLoginImage from './images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg'
  import Image from 'next/image'
- 
  import Link from 'next/link'
- 
- import agoraLogoSignUp from '../images/Logo_Agora 2.svg'
-import { register } from 'module';
+ import agoraLogoSignUp from './images/Logo_Agora 2.svg'
+ import { register } from 'module';
  
  
  

@@ -4,7 +4,7 @@ import { error } from 'console';
 import { AppError } from '@/utils/AppError';
     
 const api = axios.create({
-  baseURL:'http://localhost:3333/user',
+  baseURL:'http://localhost:3333',
   headers:{
       'Content-Type':'application/json'
   },

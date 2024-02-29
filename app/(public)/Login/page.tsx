@@ -8,7 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import centralCompueterLoginImage from '../forgot/images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg'
 import agoraLogoSignUp from '../forgot/images/Logo_Agora 2.svg';
-
+import { useUserContext } from '@/contexts';
 
 
    const userSchemaLogin = zod.object({
@@ -31,6 +31,8 @@ type  userForm =  zod.infer<typeof  userSchemaLogin>;
 
  const LoginPage = ()=>{
 
+
+  const {authLogin} = useUserContext();
    const {register,handleSubmit,watch, formState:{errors}} = useForm({
 
     resolver: zodResolver(userSchemaLogin),
@@ -40,6 +42,9 @@ type  userForm =  zod.infer<typeof  userSchemaLogin>;
       }
     })
      
+ 
+
+
     const email = watch('email')
     const password = watch('password')
 
@@ -47,7 +52,26 @@ type  userForm =  zod.infer<typeof  userSchemaLogin>;
    
 
    const useDataUser = (data:userForm)=>{
-    console.log(data);
+     
+     try {
+       if(data){
+         
+       const values = {
+        email:data.email,
+        password:data.password
+       }
+
+       authLogin(values);
+        
+
+
+         console.log(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+
    }
 
     return (

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { AppError } from "@/utils/AppError";
 import { useToast } from '@chakra-ui/react'
 import { useEffect } from "react";
+import { error } from "console";
 
 type userType = {
     username:string;
@@ -13,20 +14,22 @@ type userType = {
     phone:string;
     password:string;
 }
-type jwtToken = {
-    acess_token:string;
-}
-type dataLoginParams = {
+type loginType = {
     email:string;
     password:string;
 }
+type jwtToken = {
+    acess_token:string;
+}
+
 
 
 export type userContextType = {
     user: userType;
     createUser: (user:userType) => void; 
-    authUser:(token:jwtToken) => void;
+    authLogin:(authUser:loginType) => void;
 }
+
 
 
 const userContext = createContext({} as userContextType);
@@ -47,13 +50,20 @@ const userContext = createContext({} as userContextType);
         }
     );
 
+    const [userLoginTop , setUserLogin] = useState<loginType>(
+        {
+            email:'',
+            password:''
+        }
+    )
+
     const createUser = (data:userType) =>{
        try {
         if(data){
              
         setUser(data);
         
-        api.post('/post',{
+        api.post('/user/post',{
 
             username: data.username,
             nickname:data.nickname,
@@ -91,23 +101,40 @@ const userContext = createContext({} as userContextType);
        }
     }
 
-    const authUser = (token:jwtToken) =>{
-         return token;
-    }
-    const userLogin = async (data:dataLoginParams) =>{
+ 
+    const  authLogin = async (data:loginType) =>{
 
       if(data){
 
+      setUserLogin(data);
+
        try {
 
-        const userLogin = await api.post('/login',{
+      if(data){
+      const response = await  api.post('/login',{
             email:data.email,
             password:data.password
-        });
+         });
+        
+ 
+         const access_token = response.data.accessToken;
+
+         const user = response.data.user;
+
+         return {
+            acess_token: access_token,
+            user:user,
+         }
+
+         console.log(access_token);
+         console.log(response);
+         
+      }
+
            
         
        } catch (error) {
-        
+        console.log(error);
        }
 
      
@@ -120,7 +147,7 @@ const userContext = createContext({} as userContextType);
 
 
   return (
-      <userContext.Provider value={{ user , createUser , authUser}}>
+      <userContext.Provider value={{ user , createUser , authLogin}}>
         {children}
       </userContext.Provider>
   ) 

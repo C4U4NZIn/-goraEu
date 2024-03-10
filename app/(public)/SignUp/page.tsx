@@ -1,5 +1,5 @@
 'use client';
-import {useForm} from 'react-hook-form';
+import {Controller , useForm} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 import Image from 'next/image';
@@ -8,6 +8,9 @@ import agoraLogoSignUp from '../forgot/images/Logo_Agora 2.svg';
 import styles from '../SignUp/background.module.css';
 import { useUserContext } from '@/contexts';
 import { ZodError } from './styled/zodErros/zodError';
+import { Bounce, toast } from 'react-toastify';
+import { AppError } from '@/utils/AppError';
+import { Input } from './components/Input';
 
 const userFormSchema = zod.object({
 
@@ -49,8 +52,30 @@ type  userForm =  zod.infer<typeof  userFormSchema>;
 
 export default function SignUp(){
    const { createUser } = useUserContext();
+
+   const notifyUser = () =>{
+    toast.success( 'Você foi cadastrado com sucesso!',
+    {
+        position:'top-center',
+        autoClose:5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition:Bounce
+    });
+
+   }
  
- const {register,handleSubmit,watch,formState:{errors}} = useForm({
+ const {
+  register,
+  handleSubmit,
+  watch,
+  control,
+  formState:{errors}
+} = useForm({
   resolver: zodResolver(userFormSchema),
   defaultValues: 
   {
@@ -61,9 +86,9 @@ export default function SignUp(){
     tel:''
   }
  });
- const handleSubmitValues = (data:userForm)=>{
+ const handleSubmitValues =  (data:userForm)=>{
 
-
+  try {
      const values = {
       username:data.username,
       nickname:data.nickname,
@@ -71,8 +96,44 @@ export default function SignUp(){
       password:data.password,
       phone:data.tel
      }
+     toast.success( 'Você foi cadastrado com sucesso!',
+     {
+         position:'top-center',
+         autoClose:5000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "colored",
+         transition:Bounce
+     });
      createUser(values);
- 
+
+     
+    } catch (error) {
+
+      const isAppError = error instanceof AppError;
+
+      const title = isAppError ? error.message : 'Nenhum usuário do Ágora foi encontrado';
+
+
+      toast.error( title,
+      {
+          position:'top-center',
+          autoClose:5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition:Bounce
+      });
+      
+    }
+    
+   
 
 }
  
@@ -122,24 +183,23 @@ return(
  <form onSubmit={handleSubmit(handleSubmitValues)}>
 
 <div className={styles.agoraContainsAllFormElements}>
-<div 
- className={styles.gapBetweenInputLabel}
- >
- <label 
-  className={styles.tinosStyleNamesInput}
-  >
-  Nome
-  </label>
 
- <input 
- id="agoraNameCad" 
- className={styles.agoraInputCad} 
- type="text"
- placeholder='Ex.:Nathalia Silva da Braga' 
- {...register("username")}
- />
-{errors.username && <span>{errors.username?.message}</span>}
-</div>
+<Controller
+name='username'
+defaultValue = ""
+control={control}
+render={({field:{onChange, value , ref}})=>(
+  <Input
+  onChange={onChange}
+  value={value}
+  ref={ref}
+  type='text'
+  inputMode='text'
+  label='Nome'
+  errorMessage={errors?.username?.message}
+  />
+)}
+/>
 
 <div 
 className={styles.gapBetweenInputLabel}
@@ -236,7 +296,8 @@ Cancelar
 </p>
 </button>
 
-<button type="submit"  
+<button type="submit" 
+
 className={styles.agoraButtonCad} 
 disabled={!isSubmitButtonCad}>
 <p 

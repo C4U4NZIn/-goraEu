@@ -3,9 +3,7 @@ import React, { createContext, useContext , useState } from "react";
 import api from '../app/services/__api';
 import axios from 'axios';
 import { AppError } from "@/utils/AppError";
-import { useToast } from '@chakra-ui/react'
-import { useEffect } from "react";
-import { error } from "console";
+import { Bounce, toast } from 'react-toastify';
 
 type userType = {
     username:string;
@@ -49,7 +47,7 @@ const userContext = createContext({} as userContextType);
             password:''
         }
     );
-
+    const [jwtToken , setJwtToken] = useState('');
     const [userLoginTop , setUserLogin] = useState<loginType>(
         {
             email:'',
@@ -76,6 +74,20 @@ const userContext = createContext({} as userContextType);
             }).catch(error=>{
                 console.log(error);
             })
+
+            toast.success( 'Você foi cadastrado com sucesso!',
+                {
+                    position:'top-center',
+                    autoClose:5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition:Bounce
+                });
+              
            
             console.log(data);
         }
@@ -85,17 +97,20 @@ const userContext = createContext({} as userContextType);
 
       const title = isAppError ? error.message : 'Não foi possível registrar conta. Tente Novamente';
 
-       const toast = useToast();
-
-       useEffect(() => {
-        toast({
-          title: "Conta não registrada",
-          description: "Não foi possível registrar conta. Tente Novamente",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
+      toast.error( title,
+        {
+            position:'top-center',
+            autoClose:5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition:Bounce
         });
-      }, [toast]); 
+
+
       console.log(error);
         
        }
@@ -121,20 +136,57 @@ const userContext = createContext({} as userContextType);
 
          const user = response.data.user;
 
+         if(access_token){
+            setJwtToken(access_token);
+         }
+         toast.success('Logado com sucesso',
+         {
+             position:'top-center',
+             autoClose:5000,
+             hideProgressBar: false,
+             closeOnClick: true,
+             pauseOnHover: true,
+             draggable: true,
+             progress: undefined,
+             theme: "colored",
+             transition:Bounce
+            });
+            
+                     console.log(access_token);
+                     console.log(response);
+
          return {
             acess_token: access_token,
             user:user,
          }
 
-         console.log(access_token);
-         console.log(response);
+
          
       }
 
            
         
        } catch (error) {
-        console.log(error);
+
+      
+        const isAppError = error instanceof AppError;
+
+        const title = isAppError ? error.message : 'Nenhum usuário do Ágora foi encontrado';
+
+
+        toast.error( title,
+        {
+            position:'top-center',
+            autoClose:5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition:Bounce
+        });
+
        }
 
      

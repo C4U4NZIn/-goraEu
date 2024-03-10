@@ -10,7 +10,7 @@ import { useUserContext } from '@/contexts';
 import { ZodError } from './styled/zodErros/zodError';
 import { Bounce, toast } from 'react-toastify';
 import { AppError } from '@/utils/AppError';
-import { Input } from './components/Input';
+import { InputLabelContainer , Label , InputErrorMessage , InputForm , ErrorMessage } from './styled/Input';
 
 const userFormSchema = zod.object({
 
@@ -74,7 +74,8 @@ export default function SignUp(){
   handleSubmit,
   watch,
   control,
-  formState:{errors}
+  formState:{errors , touchedFields},
+  
 } = useForm({
   resolver: zodResolver(userFormSchema),
   defaultValues: 
@@ -137,13 +138,9 @@ export default function SignUp(){
 
 }
  
- const username = watch('username')
- const nickname = watch('nickname')
- const email = watch('email')
- const password = watch('password')
- const tel = watch('tel')
 
- const isSubmitButtonCad = username && nickname && email && password && tel
+
+
    
 
 
@@ -184,90 +181,92 @@ return(
 
 <div className={styles.agoraContainsAllFormElements}>
 
-<Controller
-name='username'
-defaultValue = ""
-control={control}
-render={({field:{onChange, value , ref}})=>(
-  <Input
-  onChange={onChange}
-  value={value}
-  ref={ref}
-  type='text'
-  inputMode='text'
-  label='Nome'
-  errorMessage={errors?.username?.message}
-  />
-)}
-/>
 
-<div 
-className={styles.gapBetweenInputLabel}
->
-<label  className={styles.tinosStyleNamesInput}>Apelido</label>
-<input 
- id="agoraApelidoCad" 
- className={styles.agoraInputCad} 
- type="text" 
- placeholder='Ex.:Nana Braga' 
- {...register("nickname")}
- />
- {errors.nickname && <span>{errors.nickname?.message}</span>}
-</div>
 
-<div 
-className={styles.gapBetweenInputLabel}
->
-<label  
-className={styles.tinosStyleNamesInput}
->
-   Email
-  </label>
-<input 
-id="agoraEmailCad" 
-className={styles.agoraInputCad} 
-type="email" 
-placeholder='Ex.:Nathalia.Braga@gmail.com' 
-{...register('email')}
-/>
-{errors.email && <span>{errors.email?.message}</span>}
- </div>
+<InputLabelContainer>
+    <Label>Nome</Label>
+    <InputErrorMessage>
+     <InputForm
+       {...register('username')}
+       type= 'text'
+       placeholder='' 
+       id="agoraUsername"
 
-<div
-className={styles.gapBetweenInputLabel}
->
- <label 
- className={styles.tinosStyleNamesInput}
- >
-Senha
-</label>
- <input 
- id="agoraSenhaCad" 
- className={styles.agoraInputCad} 
- type="password" 
- placeholder='Mínimo de 8 caracteres' 
- {...register('password')}
- />
- {errors.password && <span>{errors.password?.message}</span>}
- </div>
+     />
+     { errors.username && (
+        <ErrorMessage>{errors.username.message}</ErrorMessage>
+     )}
 
-<div 
-className={styles.gapBetweenInputLabel}
->
- <label 
- className={styles.tinosStyleNamesInput}
- >
-Telefone
-</label>
- <input 
- id="agoraTelefoneCad" 
- className={styles.agoraInputCad} 
- type="tel" 
- placeholder='Ex.:(xx) xxxxx-xxxx'
- {...register('tel')}
- />
- {errors.tel && <span>{errors.tel.message}</span>}
- </div>
+    </InputErrorMessage>
+
+    
+    </InputLabelContainer>
+
+    <InputLabelContainer>
+    <Label>Apelido</Label>
+    <InputErrorMessage>
+     <InputForm
+       {...register('nickname')}
+       type= 'text'
+       placeholder='' 
+       id="agoraUserNickname"
+     />
+     { errors.nickname && (
+        <ErrorMessage>{errors.nickname.message}</ErrorMessage>
+     )}
+    </InputErrorMessage>
+    </InputLabelContainer>
+
+     
+    <InputLabelContainer>
+    <Label>Email</Label>
+    <InputErrorMessage>
+     <InputForm
+       {...register('email')}
+       type= 'email'
+       placeholder='' 
+       id="agoraUserEmail"
+
+     />
+     { errors.email && (
+        <ErrorMessage>{errors.email.message}</ErrorMessage>
+     )}
+    </InputErrorMessage>
+
+    </InputLabelContainer>
+
+    <InputLabelContainer>
+    <Label>Senha</Label>
+    <InputErrorMessage>
+     <InputForm
+       {...register('password')}
+       type= 'password'
+       placeholder='' 
+       id="agoraUserPassword"
+
+     />
+     { errors.password && (
+        <ErrorMessage>{errors.password.message}</ErrorMessage>
+     )}
+    </InputErrorMessage>
+    </InputLabelContainer>
+  
+    <InputLabelContainer>
+    <Label>Telefone</Label>
+    <InputErrorMessage>
+     <InputForm
+       {...register('tel')}
+       type= 'text'
+       placeholder='(xx) xxxxx-xxxx' 
+       id="agoraUserTel"
+
+     />
+     { errors.tel && (
+        <ErrorMessage>{errors.tel.message}</ErrorMessage>
+     )}
+    </InputErrorMessage>
+    </InputLabelContainer>
+
 
 <div 
 className={styles.agoraContainerLinkLogin}
@@ -288,8 +287,7 @@ className={styles.agoraContainerButtonForm}
 >
 
 <button type="submit"  
-className={styles.agoraButtonCancel} 
-disabled={!isSubmitButtonCad}>
+className={styles.agoraButtonCancel}>
 <p className={styles.agoraColorLetterForm}
 >
 Cancelar
@@ -298,8 +296,7 @@ Cancelar
 
 <button type="submit" 
 
-className={styles.agoraButtonCad} 
-disabled={!isSubmitButtonCad}>
+className={styles.agoraButtonCad}>
 <p 
 className={styles.agoraColorLetterForm}
 >

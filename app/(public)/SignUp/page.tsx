@@ -141,7 +141,6 @@ export default function SignUp(){
 
 
 
-   
 
 
 return(
@@ -180,10 +179,10 @@ return(
  <form onSubmit={handleSubmit(handleSubmitValues)}>
 
 <div className={styles.agoraContainsAllFormElements}>
+      
 
-
-
-<InputLabelContainer>
+      {/** Username input */}
+    <InputLabelContainer>
     <Label>Nome</Label>
     <InputErrorMessage>
      <InputForm
@@ -202,6 +201,7 @@ return(
     
     </InputLabelContainer>
 
+     {/** Apelido input */}
     <InputLabelContainer>
     <Label>Apelido</Label>
     <InputErrorMessage>
@@ -217,7 +217,7 @@ return(
     </InputErrorMessage>
     </InputLabelContainer>
 
-     
+     {/** email input */}
     <InputLabelContainer>
     <Label>Email</Label>
     <InputErrorMessage>
@@ -235,6 +235,7 @@ return(
 
     </InputLabelContainer>
 
+     {/** password input */}
     <InputLabelContainer>
     <Label>Senha</Label>
     <InputErrorMessage>
@@ -251,6 +252,7 @@ return(
     </InputErrorMessage>
     </InputLabelContainer>
   
+    {/** Telefone input */}
     <InputLabelContainer>
     <Label>Telefone</Label>
     <InputErrorMessage>

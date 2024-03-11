@@ -3,7 +3,7 @@
 import {useForm} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
-import styles from '../Login/login.module.css'
+import styles from './login.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import centralCompueterLoginImage from '../forgot/images/Computer_Lab_Abstract_Concept_Vector_Illustration 2.svg'
@@ -29,7 +29,7 @@ type  userForm =  zod.infer<typeof  userSchemaLogin>;
     
 
 
- const LoginPage = ()=>{
+ const LogandoPage = ()=>{
 
 
   const {authLogin} = useUserContext();
@@ -78,8 +78,8 @@ type  userForm =  zod.infer<typeof  userSchemaLogin>;
       <>
        
        
- 
-       
+    <div>
+
      <div className={styles.rightContainerElementAgora}>
      
      <div 
@@ -197,6 +197,8 @@ Logar
      
     
      </div>
+    </div>
+       
 
 
 
@@ -205,4 +207,4 @@ Logar
     )
 
     }
-export default LoginPage;
+export default LogandoPage;

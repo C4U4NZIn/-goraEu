@@ -4,6 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 import Link from 'next/link';
 import { InputLabelContainer , Label , InputErrorMessage , InputForm , ErrorMessage } from '../../SignUp/styled/Input';
+import { Container, ContainerAllSteps, FormContainer} from '../styled/ContainerInputs';
+import { useState } from 'react';
+import { Button, ContainerButtons } from '../styled/Button';
 
 
 
@@ -14,11 +17,12 @@ const userFormSchema = zod.object({
     .min(8, 'Informe seu nome completo'),
    
   
-    nickname: zod
+    confirmPassword: zod
     .string()
-    .min(3,"Informe um nome válido")
-    .max(12, "Informe um nome válido"),
-    
+    .min(8)
+    .regex(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,"Sua senha deve conter pelo menos um caracter em caixa alta , caixa baixa e um caracter númerico"
+      ),
+ 
     
      email: zod
      .string()
@@ -60,77 +64,74 @@ const userFormSchema = zod.object({
         defaultValues: 
         {
           username:'',
-          nickname:'',  
+          confirmPassword:'',  
           email:'',
           password:'',
           tel:''
         }
        });
 
+       const [currentStep , setCurrentStep] = useState(0);
+
        const handleSubmitValues =  (data:userForm)=>{
 
+        console.log(data);
 
+      }
+      const handleGoNext = () =>{
+       setCurrentStep(currentStep+1);
+      }
+      const handleGoBack = () =>{
+     setCurrentStep(currentStep - 1);
       }
        
 
     return(
         <>
-        <form onSubmit={handleSubmit(handleSubmitValues)}>
-
-             {/** Username input */}
-    <InputLabelContainer>
-    <Label>Nome</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('username')}
-       type= 'text'
-       placeholder='' 
-       id="agoraUsername"
-
-     />
-     { errors.username && (
-        <ErrorMessage>{errors.username.message}</ErrorMessage>
-     )}
-
-    </InputErrorMessage>
-
+        
     
-    </InputLabelContainer>
+     
+     <FormContainer>
+        <ContainerAllSteps $currentStep={currentStep}>
 
-     {/** Apelido input */}
-    <InputLabelContainer>
-    <Label>Apelido</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('nickname')}
-       type= 'text'
-       placeholder='' 
-       id="agoraUserNickname"
-     />
-     { errors.nickname && (
-        <ErrorMessage>{errors.nickname.message}</ErrorMessage>
-     )}
-    </InputErrorMessage>
-    </InputLabelContainer>
+        <Container>
 
-     {/** email input */}
-    <InputLabelContainer>
-    <Label>Email</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('email')}
-       type= 'email'
-       placeholder='' 
-       id="agoraUserEmail"
+{/** email input */}
+<InputLabelContainer>
+<Label>Email</Label>
+<InputErrorMessage>
+<InputForm
+  {...register('email')}
+  type= 'email'
+  placeholder='' 
+  id="agoraUserEmail"
 
-     />
-     { errors.email && (
-        <ErrorMessage>{errors.email.message}</ErrorMessage>
-     )}
-    </InputErrorMessage>
+/>
+{ errors.email && (
+   <ErrorMessage>{errors.email.message}</ErrorMessage>
+)}
+</InputErrorMessage>
 
-    </InputLabelContainer>
+</InputLabelContainer>
+{/** Telefone input */}
+<InputLabelContainer>
+<Label>Telefone</Label>
+<InputErrorMessage>
+<InputForm
+  {...register('tel')}
+  type= 'text'
+  placeholder='(xx) xxxxx-xxxx' 
+  id="agoraUserTel"
 
+/>
+{ errors.tel && (
+   <ErrorMessage>{errors.tel.message}</ErrorMessage>
+)}
+</InputErrorMessage>
+</InputLabelContainer>
+        </Container>
+ 
+        <Container>
      {/** password input */}
     <InputLabelContainer>
     <Label>Senha</Label>
@@ -140,33 +141,77 @@ const userFormSchema = zod.object({
        type= 'password'
        placeholder='' 
        id="agoraUserPassword"
-
-     />
+       
+       />
      { errors.password && (
-        <ErrorMessage>{errors.password.message}</ErrorMessage>
-     )}
+       <ErrorMessage>{errors.password.message}</ErrorMessage>
+       )}
     </InputErrorMessage>
     </InputLabelContainer>
-  
-    {/** Telefone input */}
-    <InputLabelContainer>
-    <Label>Telefone</Label>
+
+       {/** Confirmar senha input */}
+       <InputLabelContainer>
+    <Label>Confirmar Senha</Label>
     <InputErrorMessage>
      <InputForm
-       {...register('tel')}
+       {...register('confirmPassword')}
        type= 'text'
-       placeholder='(xx) xxxxx-xxxx' 
-       id="agoraUserTel"
-
-     />
-     { errors.tel && (
-        <ErrorMessage>{errors.tel.message}</ErrorMessage>
+       placeholder='' 
+       id="agoraUserConfirmPassword"
+       />
+     { errors.confirmPassword && (
+       <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
      )}
     </InputErrorMessage>
-    </InputLabelContainer>
+       </InputLabelContainer>
+        </Container>
+
+       {/** Username input */}
+        <Container>
+       <InputLabelContainer>
+    <Label>Nome</Label>
+    <InputErrorMessage>
+     <InputForm
+       {...register('username')}
+       type= 'text'
+       placeholder='' 
+       id="agoraUsername"
+
+       />
+     { errors.username && (
+       <ErrorMessage>{errors.username.message}</ErrorMessage>
+       )}
+
+    </InputErrorMessage>
+
+    
+       </InputLabelContainer>
+        </Container>
 
 
-        </form>
+  
+        </ContainerAllSteps>
+
+      <ContainerButtons>
+
+    {currentStep !== 0 && (
+     <Button onClick={handleGoBack}>
+      Voltar
+     </Button>
+    )}
+
+      <Button onClick={currentStep === 2 ? ()=>{handleSubmit(handleSubmitValues)} : handleGoNext}>
+      {currentStep === 2 ? 'Enviar' : 'Proximo'}
+      </Button>
+      </ContainerButtons>
+
+
+       </FormContainer>
+
+      
+       
+  
+       
         </>
     )
 }

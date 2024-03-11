@@ -1,6 +1,5 @@
 
 import { Inter } from 'next/font/google'
-import LoginPage from './page'
 import styles from '../Login/login.module.css'
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +14,7 @@ export default function LoginLayout({
       <body 
       className={styles.body}
       >
-      <LoginPage/>
+      {children}
       
       </body>
     </html>

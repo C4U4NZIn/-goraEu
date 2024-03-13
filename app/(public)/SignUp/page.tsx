@@ -24,25 +24,12 @@ const userFormSchema = zod.object({
     message:"O email deve ser um endereço gmail válido"
    }),
 
-   tel: zod
-   .string()
-   .regex(/^\(\d{2}\) \d{5}-\d{4}$/,
-    "Por favor digite seu número corretamente "
-  ),
     password: zod
    .string()
    .min(8)
    .regex(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,"Sua senha deve conter pelo menos um caracter em caixa alta , caixa baixa e um caracter númerico"
      ),
 
-     confirmPassword: zod
-     .string()
-     .min(8)
-     .regex(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,"Sua senha deve conter pelo menos um caracter em caixa alta , caixa baixa e um caracter númerico"
-       ),
-   username: zod
-  .string()
-  .min(8, 'Informe seu nome completo'),
 
 
 
@@ -67,10 +54,8 @@ export default function SignUp(){
   defaultValues: 
   {
     email:'',
-    tel:'',  
     password:'',
-    confirmPassword:'',
-    username:''
+  
   }
  });
  const handleSubmitValues =  (data:userForm)=>{
@@ -113,7 +98,7 @@ return(
   
   <div className={styles.agoraContainerLines}>
 
-<span className={styles.agoraCadastroLine}>Cadastro</span>
+<span className={styles.agoraCadastroLine}>Login</span>
 <a href="" className={styles.agoraCadastroFirstLine}></a>
 <a href="" className={styles.agoraCadastroSecondLine}></a>
 
@@ -146,21 +131,7 @@ return(
     
     </InputLabelContainer>
 
-     {/** Tel input */}
-    <InputLabelContainer>
-    <Label>Telefone</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('tel')}
-       type= 'text'
-       placeholder='(xx) xxxxx-xxxx' 
-       id="agoraUserTel"
-     />
-     { errors.tel && (
-        <ErrorMessage>{errors.tel.message}</ErrorMessage>
-     )}
-    </InputErrorMessage>
-    </InputLabelContainer>
+  
 
      {/** Senha input */}
     <InputLabelContainer>
@@ -180,39 +151,7 @@ return(
 
     </InputLabelContainer>
 
-     {/** Confirm Password input */}
-    <InputLabelContainer>
-    <Label>Confirmar Senha</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('confirmPassword')}
-       type= 'password'
-       placeholder='' 
-       id="agoraUserConfirmPassword"
-
-     />
-     { errors.confirmPassword && (
-        <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
-     )}
-    </InputErrorMessage>
-    </InputLabelContainer>
   
-    {/** Nome input */}
-    <InputLabelContainer>
-    <Label>Nome</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('username')}
-       type= 'text'
-       placeholder='' 
-       id="agoraUserUsername"
-
-     />
-     { errors.username && (
-        <ErrorMessage>{errors.username.message}</ErrorMessage>
-     )}
-    </InputErrorMessage>
-    </InputLabelContainer>
 
 
 
@@ -220,13 +159,6 @@ return(
 className={styles.agoraContainerButtonForm}
 >
 
-<button type="submit"  
-className={styles.agoraButtonCancel}>
-<p className={styles.agoraColorLetterForm}
->
-Cancelar
-</p>
-</button>
 
 <button type="submit" 
 
@@ -234,7 +166,7 @@ className={styles.agoraButtonCad}>
 <p 
 className={styles.agoraColorLetterForm}
 >
-Cadastrar
+Logar
 </p>
 </button>
 </div>
@@ -248,7 +180,7 @@ className={styles.agoraContainerLinkLogin}
   className={styles.agoraStylesLink} 
   href="/Login"
   >
-  Já tenho Login
+  Não tenho cadastro
   </Link>
   </div>
 

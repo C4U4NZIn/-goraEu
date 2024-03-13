@@ -1,0 +1,121 @@
+.containerProfile{
+    display: flex;
+    flex-direction: row;
+    width: 45.26rem;
+    height:15.6875rem;
+    background-color:rgba(253, 123, 35, 1);
+    border-radius: 15px 15px 15px 15px;
+    margin-top: 1.6875rem;
+    gap:2rem;
+}
+.containerPrincipal{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    gap:8rem;
+}
+.styles2Image{
+    width: 9.6875rem;
+    height: 9.733125rem;
+    border-radius: 281.5px;
+}
+.containerImage{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ height: 10.410625rem;
+ background-color: rgba(205, 224, 89, 1);
+ border-radius: 50%;
+}
+.containerImageText{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.339375rem;
+    margin-left: 0.539375rem;
+    width: 10.305rem;
+    height: 11.875rem;
+    
+    justify-content: center;
+}
+.stylesH3{
+    margin:0;
+    padding:0;
+
+}
+.containerCardClass{
+    width: 45.26rem;
+    margin-top: 1.6875rem;
+    height: 25rem;
+    align-items: center;
+
+}
+.cardClass{
+    width: 19.1875rem;
+    background-color: rgba(255, 255, 255, 1);
+    height: 23.75rem;
+    border-radius: 20px 20px 20px 20px;
+    margin-top: 0.5rem;
+    margin-left: 11.5rem;
+    position: relative;
+    border: 1px solid black;
+    box-shadow:  1px 1px;
+    
+}
+.cardTop{
+    width: 100%;
+    background-color: rgba(144, 215, 246, 1);
+    position: absolute;
+    z-index: 0;
+    height: 40%;
+    border-radius: 20px 20px 0 0;
+}
+.titleImageContainer{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 22.75%;
+    position: relative;
+    z-index: 2;
+    justify-content: space-between;
+    
+    
+
+}
+.stylesImage{
+  width: 4.125rem;
+  height: 4.125rem;
+}
+.dimensionImage{
+    width: 5.6875rem;
+    height: 5.6875rem;
+    border-radius: 46px ;
+    z-index: 2;
+}
+.containerProfessor{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    z-index: 3;
+
+}
+.h2Name{
+    z-index: 3;
+}
+.containerProfessorMessage{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    z-index: 3;
+}
+.colorText{
+    color: gray;
+    padding: 0;
+    margin-left: 6rem;
+}

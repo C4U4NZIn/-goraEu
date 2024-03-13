@@ -16,9 +16,7 @@ type loginType = {
     email:string;
     password:string;
 }
-type jwtToken = {
-    acess_token:string;
-}
+
 
 
 
@@ -26,6 +24,7 @@ export type userContextType = {
     user: userType;
     createUser: (user:userType) => void; 
     authLogin:(authUser:loginType) => void;
+    jwtToken:string;
 }
 
 
@@ -199,7 +198,7 @@ const userContext = createContext({} as userContextType);
 
 
   return (
-      <userContext.Provider value={{ user , createUser , authLogin}}>
+      <userContext.Provider value={{ user , createUser , authLogin , jwtToken}}>
         {children}
       </userContext.Provider>
   ) 

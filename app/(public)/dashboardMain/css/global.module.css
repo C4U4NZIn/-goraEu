@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Arsenal:wght@700&family=Tinos:wght@700&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arsenal:wght@700&family=Tinos:wght@700&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arsenal:wght@700&family=Tinos:wght@700&display=swap');
+
+
+.body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    width: 80rem;
+    height: 114.4375rem;
+    gap:0.1rem;
+    width: 100%;
+}

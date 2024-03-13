@@ -40,11 +40,12 @@
   display: flex;
   flex-direction: column;
   
-  height: 40.5rem;
+  height: 30.5rem;
   width: 30.9375rem;
   justify-content: center;
   align-items: center;
-  margin-top: 3.4375rem;
+  margin-top: 12.4375rem;
+  margin-left: 7rem;
   border-radius: 9px 9px 9px 9px;
   background-color: #fff;
 
@@ -57,7 +58,8 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 
 }
 .agoraContainerLines{
@@ -76,14 +78,14 @@
 }
 
 .agoraCadastroFirstLine{
-  height: 0.005rem;
+  height: 0.05rem;
   width: 11.6875rem;
   border: 1px;
   background-color: rgba(45, 118, 166, 1);
   
 }
 .agoraCadastroSecondLine{
-  height: 0.005rem;
+  height: 0.05rem;
   width: 13.289375rem;
   border: 1px;
   background-color: rgba(45, 118, 166, 1);
@@ -151,7 +153,7 @@ background-color:rgba(242, 105, 33, 1);
 
 .agoraStylesLink{
   color: rgba(33, 112, 151, 1);
-  ;
+  
   text-decoration: none;
   font-family: 'Tinos', serif;
   font-size: 1.125rem;
@@ -163,8 +165,8 @@ background-color:rgba(242, 105, 33, 1);
 .agoraContainerLinkLogin{
   width: 100%;
   display: flex;
-  padding-left: 6.625rem;
-  padding-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
  
 }
 .gapBetweenInputLabel{

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { isPublicRoute } from "@/functions/isPublic/is-public-route";
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { useUserContext } from "@/contexts";
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,8 +22,10 @@ export default function SignUpLayout({
 
   const isPublicPage = isPublicRoute(pathname!);
   
+  const { jwtToken } = useUserContext();
   
   console.log(isPublicPage);
+  console.log(jwtToken);
 
   return (
     <html lang="pt-br">

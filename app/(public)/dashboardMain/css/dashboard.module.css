@@ -1,0 +1,99 @@
+
+.verticalSideBar{
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+    width: 19.5625rem;
+    background-image: url('../../dashboardMain/image/image\ 20menuVertical.svg');
+    background-position: 0 0;   
+    background-repeat: no-repeat;
+    background-size: 100%;
+    gap:2rem;
+}
+.containerTextImage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 14.3rem;
+    height: 15.3rem;
+    margin:0;
+    border-radius: 58%;
+    background-color: rgba(255, 255, 255, 1);
+
+}
+.containerElipse{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    height: 16rem;
+    margin-top: 2.0625rem;
+    margin-left:2.5rem;
+    border-radius: 55%;
+    background-color: rgba(205, 224, 89, 1);
+}
+.styleImage{
+    width:14.25rem;
+    height:14.875rem;
+}
+.containerAgoraFmm{
+    display: flex;
+    flex-direction: column;
+   
+}
+.containerLinks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    margin-left: 1.875rem;
+    
+}
+.activeLinkColor{
+    background-color: rgba(251, 252, 254, 1);
+    text-decoration: none;
+    color: black;
+    border-radius: 5px 5px;
+    width: 85%;
+ 
+}
+.offLinkColor{
+ text-decoration: none;
+ border-bottom: 1px solid rgba(255, 255, 255, 1);
+ width: 50%;
+ display: inline-block;
+ color: rgba(255, 255, 255, 1);
+ 
+    
+}
+
+.stylesSalas{
+  width: 2.3125rem;
+  height: 2.3125rem;
+}
+.stylesUsuario{
+ width: 2.1875rem;
+ height: 2.1875rem;
+}
+.stylesDesempenho{
+ width: 2.6875rem;
+ height:2.6875rem;
+}
+.stylesMural{
+ 
+ width:2.75rem;
+ height:2.75rem;
+}
+
+.containerLink{
+
+ width: 100%;
+display: flex;
+flex-direction: row;
+gap: 1rem;
+}
+.stylesH1{
+    margin: 0;
+    padding: 0;
+}

@@ -2,22 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Arsenal:wght@700&family=Tinos:wght@700&family=Titan+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arsenal:wght@700&family=Tinos:wght@700&display=swap');
 
-.body{
 
-  margin: 0;
-  padding: 0;
-  display: flex;
-  max-width: 100%;
-  width: 80rem;
-  height: 52rem;
-  background-image: url('../forgot/images/Logo_Agora\ 2.svg');
-  background-position: 0 0;   
-  background-repeat: no-repeat;
-  background-size: 100%;
-  justify-content: center;
-  
-  
-}
 .agoraContainerLogoElementElipse{
  
     display: flex;

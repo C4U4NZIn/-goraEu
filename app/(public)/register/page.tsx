@@ -10,7 +10,7 @@ export default function Perfil(){
 
     const router = useRouter();
     const handleProfileRoute = (pathname:string) =>{
-        router.push(`perfil/${pathname}`);
+        router.push(`register/${pathname}`);
     }
     
    

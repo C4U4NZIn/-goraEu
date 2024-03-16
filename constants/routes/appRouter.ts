@@ -9,7 +9,8 @@ export const  APP_ROUTER = {
     public:{
         SignUp: '/SignUp',
         Login:'/Login',
-        forgotPassword:'/forgot'
+        forgotPassword:'/forgot',
+        register:'/register'
     }
 
 

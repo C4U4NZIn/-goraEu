@@ -100,8 +100,10 @@ export default function DashboardMainLayout({
       </aside>
 
     <div className={stylesChildren.containerChildrens}>
-
+        <UserProviderFromProviders>
           {children}  
+
+        </UserProviderFromProviders>
 
     </div>
 

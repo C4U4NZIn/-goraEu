@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import styles from './perfil.module.css'
+import { UserProviderFromProviders } from '@/providers'
 const inter = Inter({ subsets: ['latin'] })
 
 
@@ -13,7 +14,10 @@ export default function PerfilLayout({
       <body 
       className={styles.body}
       >
-      {children}
+        <UserProviderFromProviders>
+
+         {children}
+        </UserProviderFromProviders>
       
       </body>
     </html>

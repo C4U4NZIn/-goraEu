@@ -22,10 +22,10 @@ export default function SignUpLayout({
 
   const isPublicPage = isPublicRoute(pathname!);
   
-  const { jwtToken } = useUserContext();
+  const { jwtToken , user} = useUserContext();
   
   console.log(isPublicPage);
-  console.log(jwtToken);
+
 
   return (
     <html lang="pt-br">
@@ -33,7 +33,6 @@ export default function SignUpLayout({
       <UserProviderFromProviders>
 
           {children}  
-
       </UserProviderFromProviders>
       </body>
     </html>

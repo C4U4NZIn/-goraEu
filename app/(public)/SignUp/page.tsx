@@ -11,6 +11,10 @@ import { ZodError } from './styled/zodErros/zodError';
 import { Bounce, toast } from 'react-toastify';
 import { AppError } from '@/utils/AppError';
 import { InputLabelContainer , Label , InputErrorMessage , InputForm , ErrorMessage } from './styled/Input';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+
+
 
 const userFormSchema = zod.object({
 
@@ -38,9 +42,9 @@ const userFormSchema = zod.object({
 type  userForm =  zod.infer<typeof  userFormSchema>;
 
 export default function SignUp(){
-   const { createUser } = useUserContext();
+   const { authLogin , user , jwtToken} = useUserContext();
 
-  
+
  
  const {
   register,
@@ -58,14 +62,21 @@ export default function SignUp(){
   
   }
  });
- const handleSubmitValues =  (data:userForm)=>{
+ const handleSubmitValues = async (data:userForm)=>{
 
   try {
  
-     console.log(data);
+   
     // createUser(values);
+     const values ={
+      email:data.email,
+      password:data.password
+     }
+    await authLogin(values)
 
-     
+   
+
+
     } catch (error) {
 
    
@@ -75,10 +86,6 @@ export default function SignUp(){
    
 
 }
- 
-
-
-
 
 
 return(
@@ -186,6 +193,8 @@ className={styles.agoraContainerLinkLogin}
 
 
  </form>
+
+  
   </div>
 
 

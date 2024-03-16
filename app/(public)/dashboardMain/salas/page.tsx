@@ -1,9 +1,15 @@
+'use client';
 import styles from './css/salas.module.css'
 import Natalia from './images/image 25Natália.svg'
 import Image from 'next/image'
 import planeta from './images/image 47planeta.svg'
 import jose from './images/image 36José.svg'
+import { useUserContext } from '@/contexts'
 export default function Salas(){
+ 
+    const { user , jwtToken } = useUserContext();
+
+
     return(
 
         <> 
@@ -28,7 +34,7 @@ export default function Salas(){
         </div>
 
         <div>
-            <h1>Olá , Natália!</h1>
+            <h1>Olá , {jwtToken}!</h1>
             <h4>Bom dia de estudos<br />hoje, sei que você<br />consegue.</h4>
         </div>
 

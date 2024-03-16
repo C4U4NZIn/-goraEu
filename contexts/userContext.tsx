@@ -4,27 +4,33 @@ import api from '../app/services/__api';
 import axios from 'axios';
 import { AppError } from "@/utils/AppError";
 import { Bounce, toast } from 'react-toastify';
+import Cookies from "js-cookie";
+
 
 type userType = {
     username:string;
-    nickname:string;
     email:string;
-    phone:string;
+    nickname:string;
     password:string;
+    role:string;
 }
 type loginType = {
     email:string;
     password:string;
 }
 
-
+type auth = {
+    email:string;
+   jwtToken:string;
+}
 
 
 export type userContextType = {
-    user: userType;
-    createUser: (user:userType) => void; 
+    user: userType | void;
+    createUser: (user:userType) => Promise<void>; 
     authLogin:(authUser:loginType) => void;
     jwtToken:string;
+
 }
 
 
@@ -37,35 +43,36 @@ const userContext = createContext({} as userContextType);
 
  const UserProvider = ({children}:{children:React.ReactNode}) => {
 
-    const [user , setUser] = useState<userType>(
+    const [user , setUser] = useState<userType | void>(
         {
             username:'',
             nickname:'',
+            role:'',
             email:'',
-            phone:'',
             password:''
         }
     );
-    const [jwtToken , setJwtToken] = useState('');
-    const [userLoginTop , setUserLogin] = useState<loginType>(
+    const [jwtToken , setJwtToken] = useState('oi');
+    const [userLoginTop , setUserLogin] = useState<auth>(
         {
             email:'',
-            password:''
+            jwtToken:'',
         }
     )
 
-    const createUser = (data:userType) =>{
+    const createUser = async (data:userType) =>{
        try {
-        if(data){
-             
-        setUser(data);
+           if(data){
+               
+               setUser(data);
+      
         
-        api.post('/user/post',{
+       const response = await api.post('/aluno/post',{
 
             username: data.username,
             nickname:data.nickname,
+            role:data.role,
             email:data.email,
-            phone:data.phone,
             password:data.password
     
             }).then((resolve)=>{
@@ -74,21 +81,7 @@ const userContext = createContext({} as userContextType);
                 console.log(error);
             })
 
-            toast.success( 'Você foi cadastrado com sucesso!',
-                {
-                    position:'top-center',
-                    autoClose:5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                    transition:Bounce
-                });
-              
-           
-            console.log(data);
+            console.log(response);  
         }
        } catch (error) {
 
@@ -96,19 +89,7 @@ const userContext = createContext({} as userContextType);
 
       const title = isAppError ? error.message : 'Não foi possível registrar conta. Tente Novamente';
 
-      toast.error( title,
-        {
-            position:'top-center',
-            autoClose:5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition:Bounce
-        });
-
+    
 
       console.log(error);
         
@@ -119,13 +100,10 @@ const userContext = createContext({} as userContextType);
     const  authLogin = async (data:loginType) =>{
 
       if(data){
-
-      setUserLogin(data);
-
-       try {
+      try {
 
       if(data){
-      const response = await  api.post('/login',{
+      const response = await  api.post('/login-aluno',{
             email:data.email,
             password:data.password
          });
@@ -135,28 +113,17 @@ const userContext = createContext({} as userContextType);
 
          const user = response.data.user;
 
-         if(access_token){
-            setJwtToken(access_token);
+         const values = {
+            email:user.email,
+            jwtToken:access_token
          }
-         toast.success('Logado com sucesso',
-         {
-             position:'top-center',
-             autoClose:5000,
-             hideProgressBar: false,
-             closeOnClick: true,
-             pauseOnHover: true,
-             draggable: true,
-             progress: undefined,
-             theme: "colored",
-             transition:Bounce
-            });
-            
-                     console.log(access_token);
-                     console.log(response);
+         setUserLogin(values)
 
-         return {
-            acess_token: access_token,
-            user:user,
+         setJwtToken(access_token);
+    
+        Cookies.set('agorafmm-web@token',access_token,{expires: 10*365*60*60});
+          return {
+            access_token: access_token,
          }
 
 
@@ -171,20 +138,6 @@ const userContext = createContext({} as userContextType);
         const isAppError = error instanceof AppError;
 
         const title = isAppError ? error.message : 'Nenhum usuário do Ágora foi encontrado';
-
-
-        toast.error( title,
-        {
-            position:'top-center',
-            autoClose:5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition:Bounce
-        });
 
        }
 

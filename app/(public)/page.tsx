@@ -6,12 +6,14 @@ import { useState } from "react";
 import { Flex, Radio } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import CustomizedStepperIcon from "./components/stepper";
+
 
   const ContainerSteps = styled.div<{$transformProps:number}>`
   display: flex;
   flex-direction: row;
   height: 300px;
-  width: 1500px;
+  width: 2400px;
   border: 1px solid blue;
   border-radius: 10px;
   justify-content: stretch;
@@ -24,7 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
   align-items: center;
   justify-content: space-evenly;
   height: 300px;
-  width: 500px;
+  width: 800px;
   border: 3px solid black;
   border-radius: 10px;
   `
@@ -45,13 +47,13 @@ export default function Home() {
 
   const [step, setStep] = useState(0);
 
-  const transformProps = -step*500 + 500;
+  const transformProps = -step*800 + 800;
 
   const {
     register,
     handleSubmit,
     watch,
-    control,
+    getValues,
     formState:{errors , touchedFields},
     
   } = useForm({
@@ -63,8 +65,13 @@ export default function Home() {
       confirmPassword:'',
       username:'',
       nickname:''
-    }
+    },
+    mode:'onChange'
    });
+
+  const watchAllFields = watch();
+
+
 
   const handleNextStep = (event:React.MouseEvent<HTMLButtonElement>) =>{
     event.preventDefault();
@@ -85,7 +92,7 @@ export default function Home() {
    <form
    onSubmit={handleSubmit(handleFormSubmit)}
    style={{
-   width:'500px', 
+   width:'800px', 
    height:'700px', 
    display:"flex", 
    flexDirection:'column',
@@ -97,6 +104,12 @@ export default function Home() {
  
   
    }}>
+
+
+  <CustomizedStepperIcon
+  currentStep={step}
+  />
+
     <ContainerSteps
     $transformProps={transformProps}
     >
@@ -107,6 +120,13 @@ export default function Home() {
       type= 'email'
       placeholder='' 
      />
+
+     {
+       errors.email && (
+        <span>{errors.email.message}</span>
+      )
+     }
+
    
     </DefaultContainer>
     <DefaultContainer>
@@ -116,6 +136,12 @@ export default function Home() {
        placeholder='' 
      
      />
+      {
+       errors.password && (
+        <span>{errors.password.message}</span>
+      )
+     }
+   
 
        <input
        {...register('confirmPassword')}
@@ -123,6 +149,14 @@ export default function Home() {
        placeholder='' 
      
      />
+       {
+       errors.confirmPassword && (
+        <span>{errors.confirmPassword.message}</span>
+      )
+     }
+   
+  
+
 
          
       </DefaultContainer>
@@ -132,16 +166,32 @@ export default function Home() {
     {...register('username')}
      type= 'text'
      placeholder='' />
+
+    {
+       errors.username && (
+        <span>{errors.username.message}</span>
+      )
+     }
+   
+
     <input 
     {...register('nickname')}
      type= 'text'
      placeholder='' 
      />
+
+{
+       errors.nickname && (
+        <span>{errors.nickname.message}</span>
+      )
+     }
+     
+  
   
       </DefaultContainer>
     </ContainerSteps>
-    
-     <ContainerButtons>
+
+    <ContainerButtons>
     { step !==0 && (
       <Button onClick={handlePreviousStep}>
         anterior
@@ -163,6 +213,8 @@ export default function Home() {
       )
     }
      </ContainerButtons>
+    
+    
    </form>
   )
 }

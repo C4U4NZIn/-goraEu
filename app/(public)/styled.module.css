@@ -1,0 +1,5 @@
+.styledLink{
+    text-decoration: underline;
+    text-decoration-color: blue;
+    text-decoration-line: calc(10px);
+}

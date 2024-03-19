@@ -30,10 +30,6 @@ export default function SignUpLayout({
   return (
     <html lang="pt-br">
       <body style={{
-        width:'80rem',
-        height:'52rem',
-        display:"flex",
-        backgroundColor:'black'
       }}>
       <UserProviderFromProviders>
 

@@ -226,7 +226,7 @@ export default function ProfileAluno(){
    borderRadius:'10px',
    overflow:'hidden',
    marginLeft:'100px',
-   marginTop:'90px',
+   marginTop:'20px',
    backgroundColor:'#fff',
    gap:'2rem'
 

@@ -2,7 +2,6 @@
 import path from "path";
 import { useEffect } from "react"
 import { useState } from "react"
-import styles from '../css/register.module.css';
 import { useUserContext } from '@/contexts';
 import {useForm} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomizedStepperIcon from "./components/stepper";
 import Link from "next/link";
-import styles from './styled.module.css'
 
 
   const ContainerSteps = styled.div<{$transformProps:number}>`

@@ -25,7 +25,6 @@ export default function middleware(request:NextRequest){
 }
 export const config = {
     matcher:[
-        '/',
         '/SignUp',
         '/dashboardMain',
         '/dashboardMain/salas',

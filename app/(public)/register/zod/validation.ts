@@ -19,7 +19,7 @@ export const userFormSchema = zod.object({
       .string()
       .min(8)
       .regex(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,"Deve conter pelo menos um caractere em caixa alta, um em caixa baixa e um caractere numérico."
-        ),
+      ),
     
         username: zod
        .string()
@@ -32,6 +32,9 @@ export const userFormSchema = zod.object({
  
  
  
- })
+ }).refine((data)=> data.password === data.confirmPassword , {
+  message:"Digite sua senha corretamente",
+  path:['confirmPassword']
+ }) ;
  
 export  type  userForm =  zod.infer<typeof  userFormSchema>;

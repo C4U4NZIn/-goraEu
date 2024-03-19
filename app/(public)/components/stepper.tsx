@@ -15,14 +15,12 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     },
     [`&.${stepConnectorClasses.active}`]: {
       [`& .${stepConnectorClasses.line}`]: {
-        backgroundImage:
-          'linear-gradient(95deg, rgba(2,0,36,1) 0%, rgba(54,54,166,1) 50%, rgba(226,234,236,1) 100%)',
-      },
+        backgroundColor: 'rgba(242, 105, 33, 1)',
+        },
     },
     [`&.${stepConnectorClasses.completed}`]: {
       [`& .${stepConnectorClasses.line}`]: {
-        backgroundImage:
-          'linear-gradient( 95deg, rgba(2,0,36,1) 0%, rgba(54,54,166,1) 50%, rgba(226,234,236,1) 100%)',
+        backgroundColor: 'rgba(242, 105, 33, 1)',
       },
     },
     [`& .${stepConnectorClasses.line}`]: {
@@ -50,13 +48,11 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     justifyContent: 'center',
     alignItems: 'center',
     ...(ownerState.active && {
-      backgroundImage:
-        'linear-gradient( 136deg, rgba(2,0,36,1) 0%, rgba(54,54,166,1) 50%, rgba(226,234,236,1) 100%)',
+      backgroundColor: 'rgba(242, 105, 33, 1)',
       boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     }),
     ...(ownerState.completed && {
-      backgroundImage:
-        'linear-gradient( 136deg, rgba(2,0,36,1) 0%, rgba(54,54,166,1) 50%, rgba(226,234,236,1) 100%)',
+      backgroundColor: 'rgba(242, 105, 33, 1)',
     }),
   }));
 

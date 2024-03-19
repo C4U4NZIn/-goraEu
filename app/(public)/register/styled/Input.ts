@@ -1,10 +1,11 @@
 import styled from "styled-components"
 
 export const InputLabelContainer = styled.div`
-    flex: 1;
+    
     display:flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 4rem;
+    width: 80%;
   
   `
 export const ErrorMessage = styled.span`

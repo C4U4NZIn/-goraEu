@@ -10,12 +10,13 @@ import CustomizedStepperIcon from "./components/stepper";
 import Link from "next/link";
 import styles from './styled.module.css'
 
+
   const ContainerSteps = styled.div<{$transformProps:number}>`
   display: flex;
   flex-direction: row;
   height: 300px;
   width: 96.75rem;
-  border: 1px solid blue;
+
   border-radius: 10px;
   justify-content: stretch;
   transform: translateX(${props=>props.$transformProps}rem);
@@ -28,19 +29,26 @@ import styles from './styled.module.css'
   justify-content: space-evenly;
   height: 300px;
   width: 32.25rem;
-  border: 3px solid black;
+ 
   border-radius: 10px;
   `
   const Button = styled.button`
-  width: 80px;
-  height: 30px;
+  width: 11.25rem;
+  height: 2.2rem;
   border-radius: 10px;
+  background-color: rgba(242, 105, 33, 1);
+  &:disabled{
+    background-color: transparent;
+  }
 
   `
   const ContainerButtons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  width: 100%;
+  padding: 0;
+  margin-top: 2rem;
 
   `
   const ContainerTitleStepInputs = styled.div`
@@ -77,11 +85,45 @@ import styles from './styled.module.css'
  color:black;
 
  `
+ const H3 = styled.h3`
+ margin:0;
+ padding: 0;
+ `
  const Span = styled.div`
   border-bottom: 1px solid blue;
   width: 8rem;
  `
+ const ContainerInputTitle = styled.div`
+ display: flex;
+ flex-direction: column;
+ gap:0.5rem;
+ width: 60%;
+ min-height: 5.625rem;
+ `
+const Input = styled.input`
+height: 1.8125rem;
+width:100%;
+margin:0;
+padding-left: 10px;
+border-radius: 10px;
+background-color:  rgba(237, 237, 237, 1);
+border: none;
+`
+const TextError = styled.span`
+color:red;
+margin:0;
+padding:0;
 
+`
+const ContainerFieldsSpace = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 1.5rem;
+width: 100%;
+
+`
 
 export default function Home() {
 
@@ -171,17 +213,22 @@ export default function Home() {
     >
     <DefaultContainer>
      
-     <input 
+
+     <ContainerInputTitle>
+
+      <H3>Email</H3>
+     <Input
       {...register('email')}
       type= 'email'
       placeholder='' 
      />
-
      {
        errors.email && (
-        <span>{errors.email.message}</span>
+        <TextError>{errors.email.message}</TextError>
       )
      }
+     </ContainerInputTitle>
+
     
     <Button onClick={handleNextStep} disabled={!email}>
       proximo
@@ -190,7 +237,13 @@ export default function Home() {
    
     </DefaultContainer>
     <DefaultContainer>
-    <input
+
+ 
+
+    <ContainerInputTitle>
+
+      <H3>Senha</H3>
+    <Input
        {...register('password')}
        type= 'password'
        placeholder='' 
@@ -198,12 +251,16 @@ export default function Home() {
      />
       {
        errors.password && (
-        <span>{errors.password.message}</span>
+        <TextError>{errors.password.message}</TextError>
       )
      }
+    </ContainerInputTitle>
    
 
-       <input
+     <ContainerInputTitle>
+
+      <H3>Confirmar Senha</H3>
+       <Input
        {...register('confirmPassword')}
        type= 'password'
        placeholder='' 
@@ -211,9 +268,14 @@ export default function Home() {
      />
        {
        errors.confirmPassword && (
-        <span>{errors.confirmPassword.message}</span>
+        <TextError>{errors.confirmPassword.message}</TextError>
       )
      }
+     </ContainerInputTitle>
+  
+
+
+    <ContainerButtons>
    
     <Button onClick={handlePreviousStep}>
         anterior
@@ -222,23 +284,32 @@ export default function Home() {
    <Button onClick={handleNextStep} disabled={!isValidFieldStep2}>
       proximo
     </Button>
+
+    </ContainerButtons>
       
     </DefaultContainer>
     <DefaultContainer>
       
-    <input   
+
+      <ContainerInputTitle>
+
+      <H3>Nome</H3>
+    <Input  
     {...register('username')}
      type= 'text'
      placeholder='' />
 
     {
        errors.username && (
-        <span>{errors.username.message}</span>
+        <TextError>{errors.username.message}</TextError>
       )
      }
+      </ContainerInputTitle>
    
+   <ContainerInputTitle>
 
-    <input 
+    <H3>Apelido</H3>
+    <Input 
     {...register('nickname')}
      type= 'text'
      placeholder='' 
@@ -246,10 +317,13 @@ export default function Home() {
 
 {
        errors.nickname && (
-        <span>{errors.nickname.message}</span>
+        <TextError>{errors.nickname.message}</TextError>
       )
      }
+   </ContainerInputTitle>
 
+
+        <ContainerButtons>
       <Button onClick={handlePreviousStep}>
         anterior
       </Button>
@@ -257,6 +331,8 @@ export default function Home() {
       <Button type="submit" disabled={!isValidFieldStep3}>
          Criar Conta
         </Button>
+
+        </ContainerButtons>
   
       </DefaultContainer>
     </ContainerSteps>

@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 
-export default function SignUpLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -29,11 +29,9 @@ export default function SignUpLayout({
 
   return (
     <html lang="pt-br">
-      <body style={{
-      }}>
+      <body>
       <UserProviderFromProviders>
-
-          {children}  
+       {children}  
       </UserProviderFromProviders>
       </body>
     </html>

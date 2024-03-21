@@ -27,7 +27,6 @@ export const config = {
     matcher:[
         '/SignUp',
         '/dashboardMain',
-        '/dashboardMain/salas',
         '/dashboardMain/desempenho',
         '/dashboardMain/usuario',
         '/dashboardMain/mural',

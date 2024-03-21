@@ -1,38 +1,41 @@
+import Image from 'next/image';
 import Link from 'next/link'
 import styled from 'styled-components';
+import styles from '../styled/image.module.css'
+import logoAgoraFmm from '../images/WhatsApp Image 2024-03-11 at 20.05 1LogoAgoraFMM.svg'
 
 
 const ViewLandingPage = styled.div`
-height: 190.0625rem;
-width: 100%;
+min-height: 100vh;
+width: 98.6vw;
 display: flex;
 flex-direction: column;
-background-color: gray;
+
 
 `
 const ContainerTopLanding = styled.div`
 display: flex;
 flex-direction: row;
 width: 100%;
-height: 25.51%;
-background-color: aqua;
+height: 100vh;
+
 
 `
 const CenterContainer = styled.div`
 display: flex;
 flex-direction: column;
 width: 100%;
-height: 55.57%;
+height: 100vh;
 background-color: yellow;
 `
 const ContainerTitleButton = styled.div`
 display: flex;
 flex-direction: row;
 width: 100%;
-height: 55%;
-justify-content: space-evenly;
+height: 100%;
+justify-content: space-around;
 align-items: center;
-background-color: burlywood;
+background-color: #fff;
 `
 const ContainerTitleCards = styled.div`
 display: flex;
@@ -40,14 +43,14 @@ flex-direction: column;
 justify-content: space-evenly;
 align-items: center;
 width: 100%;
-height: 45%;
+height: 100vh;
 background-color: blueviolet;
 `
 const Footer = styled.footer`
 display: flex;
 flex-direction: column;
 width: 100%;
-height: 19.33%;
+height: 75vh;
 background-color: blue;
 `
 
@@ -65,8 +68,26 @@ width: 23.5rem;
 height: 6.8125rem;
 border-radius: 8px;
 `
+const LoginButton = styled.button`
+height: 5rem;
+width: 16rem;
+border-radius: 8px;
+background-color:rgba(205, 224, 89, 1);
+align-items: center;
+justify-content: center;
+margin-left:1.5rem;
 
+`
+const ContainerButtonLogo = styled.div`
+height: 25rem;
+width: 17.5rem;
+display: flex;
+flex-direction: column;
+gap: 6.25rem;
+margin-left: 60.5625rem;
+margin-top: 3.3125rem;
 
+`
 
 export default function LandingPage(){
     return(
@@ -77,7 +98,22 @@ export default function LandingPage(){
  
     <ContainerTopLanding>
 
-        <H1>Landing Page Container Principal</H1>
+      <ContainerButtonLogo>
+
+          <LoginButton>
+          <Link 
+          href='/SignUp'
+          style={{textDecoration:'none'}}
+          ><H1>Login</H1></Link></LoginButton>
+
+        <Image
+        alt=''
+        src={logoAgoraFmm}
+        priority
+        className={styles.stylesImage}
+        />
+      </ContainerButtonLogo>
+        
     </ContainerTopLanding>
     <CenterContainer>
         <ContainerTitleButton>

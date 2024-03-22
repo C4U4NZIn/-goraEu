@@ -67,14 +67,13 @@ width: 23.5rem;
 height: 6.8125rem;
 border-radius: 8px;
 `
-const LoginButton = styled.button`
+export const LoginButton = styled.button`
 height: 5rem;
 width: 16rem;
 border-radius: 8px;
 background-color:rgba(205, 224, 89, 1);
 align-items: center;
 justify-content: center;
-margin-left:1.5rem;
 
 `
 const ContainerButtonLogo = styled.div`

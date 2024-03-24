@@ -1,7 +1,7 @@
-import { Inter } from 'next/font/google'
+'use client';
 import styles from './perfil.module.css'
-import { UserProviderFromProviders } from '@/providers'
-const inter = Inter({ subsets: ['latin'] })
+import { Toaster } from 'sonner'
+
 
 
 export default function PerfilLayout({
@@ -14,10 +14,11 @@ export default function PerfilLayout({
       <body 
       className={styles.body}
       >
-        <UserProviderFromProviders>
-
+       
+        <>
          {children}
-        </UserProviderFromProviders>
+        </>
+        <Toaster richColors position='top-center'/>
       
       </body>
     </html>

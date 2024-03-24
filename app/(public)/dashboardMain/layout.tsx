@@ -1,14 +1,8 @@
 
-import Link from "next/link";
-import { UserProviderFromProviders } from "@/providers";
-import { usePathname } from "next/navigation";
-import { isPublicRoute } from "@/functions/isPublic/is-public-route";
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import globalStyle from './css/global.module.css'
 import styles from './css/dashboard.module.css'
 import Image from "next/image";
-import fogueteAgora from '../../(public)/dashboardMain/image/image 15foguete.svg'
 import fogueteAgora2 from '../dashboardMain/image/WhatsApp Image 2024-03-11 at 20.05 1fogueteAgora2.svg'
 import { ActiveLink } from "./components/active-link";
 import mural from './image/web-chat (1) 1.svg'
@@ -100,10 +94,10 @@ export default function DashboardMainLayout({
       </aside>
 
     <div className={stylesChildren.containerChildrens}>
-        <UserProviderFromProviders>
+      
           {children}  
 
-        </UserProviderFromProviders>
+      
 
     </div>
 

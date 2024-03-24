@@ -11,8 +11,8 @@ import { ZodError } from './styled/zodErros/zodError';
 import { Bounce, toast } from 'react-toastify';
 import { AppError } from '@/utils/AppError';
 import { InputLabelContainer , Label , InputErrorMessage , InputForm , ErrorMessage } from './styled/Input';
-import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import {useRouter} from 'next/navigation'
 
 
 
@@ -44,7 +44,7 @@ type  userForm =  zod.infer<typeof  userFormSchema>;
 export default function SignUp(){
    const { authLogin , user , jwtToken} = useUserContext();
 
-
+   const Router = useRouter();
  
  const {
   register,
@@ -72,7 +72,10 @@ export default function SignUp(){
       email:data.email,
       password:data.password
      }
+
     await authLogin(values)
+
+    Router.push('/dashboardMain');
 
    
 
@@ -185,7 +188,7 @@ className={styles.agoraContainerLinkLogin}
 >
   <Link 
   className={styles.agoraStylesLink} 
-  href="/Login"
+  href="/register"
   >
   Não tenho cadastro
   </Link>

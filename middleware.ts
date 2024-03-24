@@ -8,7 +8,7 @@ export default function middleware(request:NextRequest){
     
     const signInUrl = new URL('/SignUp', request.url)
 
-  
+   const dashboardMainUsuarioUrl = new URL('/dashboardMain/usuario' , request.url)
     
     if(!token){
         if(request.nextUrl.pathname === '/SignUp'){
@@ -16,7 +16,12 @@ export default function middleware(request:NextRequest){
         }
         return NextResponse.redirect(signInUrl);
     }
-
+   if(token){
+    if(request.nextUrl.pathname === '/SignUp'){
+     return NextResponse.redirect(dashboardMainUsuarioUrl)
+    }
+    
+   }
    
  
      

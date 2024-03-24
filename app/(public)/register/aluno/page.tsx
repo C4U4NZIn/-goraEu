@@ -1,17 +1,16 @@
 'use client';
-import { useEffect } from "react";
-import { useState } from "react";
-import styles from '../css/register.module.css';
+import { useEffect , useState } from "react";
 import { useUserContext } from '@/contexts';
 import {useForm} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { InputLabelContainer , Label , InputErrorMessage , InputForm , ErrorMessage } from '../styled/Input';
 import { userForm } from "../zod/validation";
 import { userFormSchema } from "../zod/validation";
 import Link from "next/link";
-import { Bounce, toast , ToastContainer} from "react-toastify";
+import { toast } from "sonner";
 import styled from "styled-components";
 import CustomizedStepperIcon from "../../components/stepper";
+import { AppError } from "@/utils/AppError";
+
 
 const ContainerSteps = styled.div<{$transformProps:number}>`
 display: flex;
@@ -190,50 +189,46 @@ export default function ProfileAluno(){
    const response = await createUser(values);
 
    
-   toast.success( 'Você foi cadastrado com sucesso!',
-   {
-       position:'top-center',
-       autoClose:5000,
-       hideProgressBar: false,
-       closeOnClick: true,
-       pauseOnHover: true,
-       draggable: true,
-       progress: undefined,
-       theme: "colored",
-       transition: Bounce
-   });
+    toast.success('Você foi cadastrado com sucesso!');
      
     } catch (error) {
 
-   console.log(error);
+      const isAppError = error instanceof AppError;
+
+      const title = isAppError ? error.message : 'Não foi possível registrar conta. Tente Novamente';
+     
+     toast.error(title);
+
+      
       }
-     console.log(data);
+     
    };
 
           
 
     return(
         
+   <>
        <form
    onSubmit={handleSubmit(handleFormSubmit)}
    style={{
-   width:'32.25rem', 
-   height:'579px', 
-   display:"flex", 
-   flexDirection:'column',
-   alignItems:'center',
-   border:'5px solid gray',
-   borderRadius:'10px',
-   overflow:'hidden',
-   marginLeft:'100px',
-   marginTop:'20px',
-   backgroundColor:'#fff',
-   gap:'2rem'
-
-   }}>
-
-
+     width:'32.25rem', 
+     height:'579px', 
+     display:"flex", 
+     flexDirection:'column',
+     alignItems:'center',
+     border:'5px solid gray',
+     borderRadius:'10px',
+     overflow:'hidden',
+     marginLeft:'100px',
+     marginTop:'20px',
+     backgroundColor:'#fff',
+     gap:'2rem'
+     
+    }}>
+    
  <ContainerTitleStepInputs>
+
    <ContainerTitleStepper>
     <ContainerTitleLine>
     <H1>Cadastro</H1>
@@ -380,5 +375,6 @@ export default function ProfileAluno(){
     
     
    </form>
+   </>
     )
 }

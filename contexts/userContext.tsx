@@ -52,7 +52,7 @@ const userContext = createContext({} as userContextType);
             password:''
         }
     );
-    const [jwtToken , setJwtToken] = useState('oi');
+    const [jwtToken , setJwtToken] = useState('');
     const [userLoginTop , setUserLogin] = useState<auth>(
         {
             email:'',
@@ -113,11 +113,7 @@ const userContext = createContext({} as userContextType);
 
          const user = response.data.user;
 
-         const values = {
-            email:user.email,
-            jwtToken:access_token
-         }
-         setUserLogin(values)
+      
 
          setJwtToken(access_token);
     

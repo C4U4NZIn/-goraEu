@@ -1,39 +1,20 @@
 'use client';
 import { UserProviderFromProviders } from "@/providers";
-import { usePathname } from "next/navigation";
-import { isPublicRoute } from "@/functions/isPublic/is-public-route";
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { useUserContext } from "@/contexts";
-
-
-const inter = Inter({ subsets: ['latin'] })
-
-
-
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-
-  const pathname = usePathname();
-
-  const isPublicPage = isPublicRoute(pathname!);
   
-  const { jwtToken , user} = useUserContext();
-  
-  console.log(isPublicPage);
-
-
   return (
+      <UserProviderFromProviders>
     <html lang="pt-br">
       <body>
-      <UserProviderFromProviders>
        {children}  
-      </UserProviderFromProviders>
       </body>
     </html>
+      </UserProviderFromProviders>
   )
 }

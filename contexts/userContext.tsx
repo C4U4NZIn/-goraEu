@@ -1,9 +1,7 @@
 'use client';
 import React, { createContext, useContext , useState } from "react";
 import api from '../app/services/__api';
-import axios from 'axios';
 import { AppError } from "@/utils/AppError";
-import { Bounce, toast } from 'react-toastify';
 import Cookies from "js-cookie";
 
 
@@ -24,10 +22,14 @@ type auth = {
    jwtToken:string;
 }
 
+type feedbackApi = {
+    status: boolean;
+    message:string;
+}
 
 export type userContextType = {
     user: userType | void;
-    createUser: (user:userType) => Promise<void>; 
+    createUser: (user:userType) => Promise<feedbackApi | undefined>; 
     authLogin:(authUser:loginType) => void;
     jwtToken:string;
 
@@ -66,37 +68,29 @@ const userContext = createContext({} as userContextType);
                
                setUser(data);
       
-        
-       const response = await api.post('/aluno/post',{
+           const response = await api.post('/aluno/post', data);
+            if(response.data){
+                return {
+                    status:true,
+                    message:'Você foi cadastrado com sucesso',
+                }
+            }
+            
 
-            username: data.username,
-            nickname:data.nickname,
-            role:data.role,
-            email:data.email,
-            password:data.password
-    
-            }).then((resolve)=>{
-                console.log(resolve.data);
-            }).catch(error=>{
-                console.log(error);
-            })
-
-            console.log(response);  
         }
        } catch (error) {
 
       const isAppError = error instanceof AppError;
-
       const title = isAppError ? error.message : 'Não foi possível registrar conta. Tente Novamente';
 
-    
-
-      console.log(error);
+         return {
+            status:false,
+            message:title
+         }
         
        }
     }
 
- 
     const  authLogin = async (data:loginType) =>{
 
       if(data){
@@ -114,7 +108,7 @@ const userContext = createContext({} as userContextType);
          const user = response.data.user;
 
       
-
+         setUser(user);
          setJwtToken(access_token);
     
         Cookies.set('agorafmm-web@token',access_token,{expires: 10*365*60*60});
@@ -144,10 +138,10 @@ const userContext = createContext({} as userContextType);
 
     }
 
-
+   const values = { user , createUser , authLogin , jwtToken}
 
   return (
-      <userContext.Provider value={{ user , createUser , authLogin , jwtToken}}>
+      <userContext.Provider value={values}>
         {children}
       </userContext.Provider>
   ) 

@@ -176,33 +176,29 @@ export default function ProfileAluno(){
    }
    const handleFormSubmit = async (data: userForm, event?: React.BaseSyntheticEvent) => {
      event?.preventDefault();
-     try {
+  
+     if(data){
+
+       const values = {
+           username:data.username,
+           email:data.email,
+           nickname:data.nickname,
+           password:data.password,
+           role:role
+       }
+ 
+    const response = await createUser(values);
+     if(response?.status){
+       toast.success(response.message);
+     }else{
        
-      const values = {
-          username:data.username,
-          email:data.email,
-          nickname:data.nickname,
-          password:data.password,
-          role:role
-      }
-
-   const response = await createUser(values);
-
+       toast.error(response?.message);
+     }
    
-    toast.success('Você foi cadastrado com sucesso!');
+        
      
-    } catch (error) {
-
-      const isAppError = error instanceof AppError;
-
-      const title = isAppError ? error.message : 'Não foi possível registrar conta. Tente Novamente';
-     
-     toast.error(title);
-
-      
-      }
-     
-   };
+    };
+  }
 
           
 

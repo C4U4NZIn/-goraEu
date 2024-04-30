@@ -29,12 +29,13 @@ export default function middleware(request:NextRequest){
      
 }
 export const config = {
-    matcher:[
+    matcherCoordenador:[
         '/SignUp',
         '/dashboardMain',
         '/dashboardMain/desempenho',
         '/dashboardMain/usuario',
         '/dashboardMain/mural',
         
-    ]    
+    ],
+
 } 

@@ -1,48 +1,24 @@
 'use client';
 import {useForm} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as zod from 'zod';
-import Image from 'next/image';
 import Link from 'next/link';
-import agoraLogoSignUp from '../forgot/images/Logo_Agora 2.svg';
 import styles from '../SignUp/background.module.css';
 import { useUserContext } from '@/contexts';
-import { ZodError } from './styled/zodErros/zodError';
-import { Bounce, toast } from 'react-toastify';
-import { AppError } from '@/utils/AppError';
-import { InputLabelContainer , Label , InputErrorMessage , InputForm , ErrorMessage } from './styled/Input';
-import Cookies from 'js-cookie';
 import {useRouter} from 'next/navigation'
+import { toast } from "sonner";
+import {userForm , userFormSchema} from '../SignUp/zod/loginSchema'
+import api from '@/app/services/__api';
+import {
+  H3,
+  ContainerInputTitle,
+  Input,
+  TextError,
+  DefaultContainer
+} from '../register/styled/coordenador';
 
-
-
-const userFormSchema = zod.object({
-
-
- 
-  
-   email: zod
-   .string()
-   .email()
-   .refine(email=>/^[\w.+\-]+@gmail\.com$/.test(email),{
-    message:"O email deve ser um endereço gmail válido"
-   }),
-
-    password: zod
-   .string()
-   .min(8)
-   .regex(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,"Sua senha deve conter pelo menos um caracter em caixa alta , caixa baixa e um caracter númerico"
-     ),
-
-
-
-
-})
-
-type  userForm =  zod.infer<typeof  userFormSchema>;
 
 export default function SignUp(){
-   const { authLogin , user , jwtToken} = useUserContext();
+   const { authLogin } = useUserContext();
 
    const Router = useRouter();
  
@@ -50,8 +26,7 @@ export default function SignUp(){
   register,
   handleSubmit,
   watch,
-  control,
-  formState:{errors , touchedFields},
+  formState:{errors},
   
 } = useForm({
   resolver: zodResolver(userFormSchema),
@@ -60,30 +35,33 @@ export default function SignUp(){
     email:'',
     password:'',
   
-  }
+  },
+  mode:'onChange'
  });
  const handleSubmitValues = async (data:userForm)=>{
 
   try {
  
-   
+   console.log(data);
     // createUser(values);
      const values ={
       email:data.email,
       password:data.password
      }
 
-    await authLogin(values)
-
-    Router.push('/dashboardMain');
-
+   const response = await authLogin(values)
    
-
-
-    } catch (error) {
-
    
-      
+   if(!response?.access_token){
+     
+     toast.error(response?.message);
+   }
+  
+  Router.push('/dashboardMain');
+  
+
+    } catch (error) {     
+      console.log(error); 
     }
     
    
@@ -94,15 +72,7 @@ export default function SignUp(){
 return(
 
   <>
-
-
-
-     
- 
-
- 
-
- <div className={styles.agoraContainerForm}>
+  <div className={styles.agoraContainerForm}>
 
   <div className={styles.agoraContentCadastroLineForm}>
   
@@ -115,54 +85,54 @@ return(
 </div>
 
 
- <form onSubmit={handleSubmit(handleSubmitValues)}>
+ <form 
+ style={{
+  alignItems:'center',
+  justifyContent:"center",
+  display:'flex',
+  flexDirection:'column',
+ }}
+ onSubmit={handleSubmit(handleSubmitValues)}
+ >
 
-<div className={styles.agoraContainsAllFormElements}>
-      
-     <div className={styles.agoraContainerInputsButton}>
 
-      {/** Email input */}
-    <InputLabelContainer>
-    <Label>Email</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('email')}
-       type= 'email'
-       placeholder='' 
-       id="agoraEmail"
 
-     />
-     { errors.email && (
-        <ErrorMessage>{errors.email.message}</ErrorMessage>
-     )}
+  <DefaultContainer>
 
-    </InputErrorMessage>
-
-    
-    </InputLabelContainer>
-
-  
+     {/** Email */}
+     <ContainerInputTitle>
+ 
+    <H3>Email</H3>
+    <Input
+   {...register('email')}
+    type= 'email'
+    placeholder='' 
+    />
+{
+  errors.email && (
+   <TextError
+   >{errors.email.message}</TextError>
+ )
+}
+     </ContainerInputTitle>
 
      {/** Senha input */}
-    <InputLabelContainer>
-    <Label>Senha</Label>
-    <InputErrorMessage>
-     <InputForm
-       {...register('password')}
-       type= 'password'
-       placeholder='' 
-       id="agoraUserPassword"
-
-     />
-     { errors.password && (
-        <ErrorMessage>{errors.password.message}</ErrorMessage>
-     )}
-    </InputErrorMessage>
-
-    </InputLabelContainer>
-
-  
-
+     <ContainerInputTitle>
+ 
+       <H3>Senha</H3>
+     <Input
+        {...register('password')}
+        type= 'password'
+        placeholder='' 
+      
+      />
+       {
+        errors.password && (
+         <TextError>{errors.password.message}</TextError>
+       )
+      }
+     </ContainerInputTitle>
+  </DefaultContainer>
 
 
 <div 
@@ -180,8 +150,8 @@ Logar
 </p>
 </button>
 </div>
-     </div>
-</div>
+    
+
 
 <div 
 className={styles.agoraContainerLinkLogin}
@@ -202,9 +172,6 @@ className={styles.agoraContainerLinkLogin}
 
 
   </div>
-   
-  
-
   </>
 
 );

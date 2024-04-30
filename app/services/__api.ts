@@ -1,6 +1,4 @@
 import axios from 'axios';
-import Config from '../../config.json';
-import { error } from 'console';
 import { AppError } from '@/utils/AppError';
     
 const api = axios.create({

@@ -21,7 +21,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(251, 248, 251, 1);
-    margin-left: 12.25rem;
+    margin-left: 13.25rem;
     border-radius: 7px 7px 7px 7px;
     width: 23.4375rem;
     height: 5.3125rem;
@@ -48,7 +48,7 @@
 .containerButtons{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+   justify-content: center;
     width: 100%;
 }
 .containerPrincipal{

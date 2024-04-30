@@ -21,22 +21,7 @@ export default function Perfil(){
         <div className={styles.containerPrincipal}>
            <div className={styles.containerTexto}><h1>Escolha o tipo de conta</h1></div>
            <div className={styles.containerButtons}>
-            <button 
-            className={styles.buttonClass}
-            onClick={()=>handleProfileRoute('aluno')}
-            >
-               <div className={styles.containerLeftImage}>
-                <Image
-                priority
-                src={student}
-                className={styles.imageStyle}
-                alt=''
-                />
-               </div>
-
-           <div className={styles.centerTextButton}><h1>Aluno</h1> </div>
-            
-            </button>
+        
             <button 
             className={styles.buttonClass}
             onClick={()=>handleProfileRoute('coordenador')}

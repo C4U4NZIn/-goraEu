@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import  styles from './globals.module.css';
 import { UserProviderFromProviders } from '@/providers';
-
+import { Toaster } from 'sonner';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -21,7 +21,10 @@ export default function SignUpLayout({
       className={styles.body}
       >
         <UserProviderFromProviders>
+        <>
         {children}
+        </>
+        <Toaster richColors position='top-center'/>
         </UserProviderFromProviders>
       
       </body>

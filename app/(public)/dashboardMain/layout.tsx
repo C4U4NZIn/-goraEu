@@ -10,7 +10,7 @@ import desempenho from './image/diagrama 1.svg'
 import usuario from './image/do-utilizador (2) 1.svg'
 import salas from './image/casa 1.svg'
 import stylesChildren from './css/children.module.css'
-
+import { UserProviderFromProviders } from '@/providers';
 const inter = Inter({ subsets: ['latin'] })
 
 
@@ -25,6 +25,7 @@ export default function DashboardMainLayout({
 
 
   return (
+   <UserProviderFromProviders>
     <html lang="pt-br">
       <body className={globalStyle.body}>
       
@@ -104,5 +105,9 @@ export default function DashboardMainLayout({
 
       </body>
     </html>
+
+
+   </UserProviderFromProviders>
+
   )
 }

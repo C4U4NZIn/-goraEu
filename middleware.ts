@@ -29,7 +29,7 @@ export default function middleware(request:NextRequest){
      
 }
 export const config = {
-    matcherCoordenador:[
+    matcher:[
         '/SignUp',
         '/dashboardMain',
         '/dashboardMain/desempenho',

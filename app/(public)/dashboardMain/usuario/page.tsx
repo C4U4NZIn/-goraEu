@@ -1,7 +1,8 @@
 'use client';
 import { useUserContext, userContext } from "@/contexts";
 import { userContextType } from "@/contexts";
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
+
 import Natalia from '../salas/images/image 25Natália.svg'
 import Delete from './images/lixeira 1.svg'
 import EditProfile from './images/lapis 2.svg'
@@ -16,6 +17,8 @@ import {
   ContainerButtons
 } from "../usuario/styled/usuario"
 import { ContainerImage } from "../usuario/styled/usuario";
+import { useModalAluno } from "./modals/zustand/useModalAluno";
+import ModalAluno from "./modals/modal/modalAluno";
 
 
 export default function Usuario(){
@@ -23,13 +26,38 @@ export default function Usuario(){
     const {userLogin} = useUserContext();
 
 
+    const [isOpenDelete , setIsOpenDelete] = useState<Boolean>(false);
+    const [isOpenEdit , setIsOpenEdit] = useState<Boolean>(false);
+
+
+    const fecharDelete = () =>{
+        setIsOpenDelete(false);
+    }
+    const fecharEdit = () =>{
+        setIsOpenEdit(false);
+    }
+    const abrirDelete = () =>{
+         setIsOpenDelete(true)
+    }
+    const abrirEdit = () =>{
+         setIsOpenEdit(false);
+    }
+
     if(!userLogin){
         return ""
     }
+    
+    useEffect(()=>{
+        console.log(isOpenDelete);
+        console.log(isOpenEdit);
+
+    })
+
+
 
     return(
      <ContainerPage>
-        {/**Componente de imagem */}
+        {/**Componente de imagem e botões*/}
         <ContainerImageAndButtons>
             <ContainerImage>
 
@@ -63,8 +91,10 @@ export default function Usuario(){
        
        <ContainerButtons>
        {/** delete profile */}
+
+        { (!isOpenDelete && !isOpenEdit)  && (
         <ButtonComponent
-  
+        onClick={()=>{setIsOpenDelete(true)}}
         >
         <Image
         alt="imgDeleteProfile"
@@ -76,9 +106,12 @@ export default function Usuario(){
         }}
         />
         </ButtonComponent>
-        {/** edit profile */}
-        <ButtonComponent
+        )}
 
+        {/** edit profile */}
+        {((!isOpenEdit && !isOpenDelete) || (!isOpenDelete)) && (
+        <ButtonComponent
+         onClick={()=>{setIsOpenEdit(true)}}
         >
 
         <Image
@@ -91,12 +124,14 @@ export default function Usuario(){
         }}
         />
         </ButtonComponent>
+         )}
+
 
        </ContainerButtons>
-     
         </ContainerImageAndButtons>
      
      {/** Componente de Card das informações */}
+      {(!isOpenDelete === !isOpenEdit) && (
       <CardUserContainer>
         <TopUserContainerTitle>
             <h2>Informações</h2>
@@ -123,8 +158,19 @@ export default function Usuario(){
         </CardUserInfo>
 
       </CardUserContainer>    
-
+       )}
      
+     {/**botão que chama a função do componente de excluir */}
+     {isOpenDelete && (
+     <button onClick={fecharDelete}>Fechar Delete</button>
+    )}
+
+  {/**Botão que a função do componente de update 
+   * - possui outras funções */}
+  {isOpenEdit && (
+  <button onClick={fecharEdit}>Fechar Edit</button> 
+  )}
+
      </ContainerPage>
     )
 }

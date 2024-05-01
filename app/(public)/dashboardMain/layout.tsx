@@ -1,4 +1,4 @@
-
+"use client";
 import { Inter } from 'next/font/google'
 import globalStyle from './css/global.module.css'
 import styles from './css/dashboard.module.css'
@@ -11,6 +11,9 @@ import usuario from './image/do-utilizador (2) 1.svg'
 import salas from './image/casa 1.svg'
 import stylesChildren from './css/children.module.css'
 import { UserProviderFromProviders } from '@/providers';
+import ModalAluno from './usuario/modals/modal/modalAluno';
+import { useModalAluno } from './usuario/modals/zustand/useModalAluno';
+
 const inter = Inter({ subsets: ['latin'] })
 
 
@@ -22,7 +25,7 @@ export default function DashboardMainLayout({
   children: React.ReactNode
 }) {
 
-
+  const {isOpen} = useModalAluno();
 
   return (
    <UserProviderFromProviders>
@@ -93,15 +96,13 @@ export default function DashboardMainLayout({
         </div>
 
       </aside>
+   
+    {isOpen && <ModalAluno/>}
 
     <div className={stylesChildren.containerChildrens}>
-      
-          {children}  
-
-      
-
+      {children}  
     </div>
-
+ 
 
       </body>
     </html>

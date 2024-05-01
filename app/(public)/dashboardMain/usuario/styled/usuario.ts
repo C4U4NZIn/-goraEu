@@ -10,8 +10,6 @@ export const ContainerPage = styled.div`
  gap:0rem;
  
 `
-
-
 export const ContainerImageAndButtons = styled.div`
     display: flex;
     flex-direction: column;
@@ -117,4 +115,14 @@ export const ContainerImage = styled.div`
  border-radius: 50%;
  align-self: center ;
 
+`
+export const Dialog = styled.div`
+  box-shadow: 0px 0px 5px #757575;
+  border-radius: 5px;
+  border: .5px solid #757575;
+  width: 30rem;
+  height: 30rem;
+  background-color: #e7ffb6;
+  position:absolute;
+  left:37rem;
 `

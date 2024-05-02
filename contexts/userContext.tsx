@@ -25,8 +25,55 @@ type userType = {
         complemento:string|undefined;
     }
 }
-type userLoginType = {
-
+type userLoginType = professorLoginType | alunoLoginType | coordenadorLoginType;
+type professorLoginType = {
+    id:string;
+    email:string;
+    emailInstitutional:string;
+    phonePersonal:string;
+    phoneInstitutional:string;
+    avatar:string;
+    username:string;
+    role:string;
+    address:{
+        cep:string | undefined;
+        numberHouse:string|undefined;
+        bairro:string|undefined;
+        estado:string|undefined;
+        cidade:string|undefined;
+        country:string|undefined;
+        logradouro:string|undefined;
+        complemento:string|undefined;
+    }
+}
+type alunoLoginType = {
+    id:string;
+    email:string;
+    emailInstitutional:string;
+    phonePersonal:string;
+    phoneInstitutional:string;
+    avatar:string;
+    username:string;
+    role:string;
+    address:{
+        cep:string | undefined;
+        numberHouse:string|undefined;
+        bairro:string|undefined;
+        estado:string|undefined;
+        cidade:string|undefined;
+        country:string|undefined;
+        logradouro:string|undefined;
+        complemento:string|undefined;
+    }
+    filiacao:{
+        id:string;
+        telefone1:string;
+        telefone2:string;
+        tipo_Relacionamento:string;
+        username:string;
+    }
+}
+type coordenadorLoginType = {
     id:string;
     email:string;
     emailInstitutional:string;
@@ -50,12 +97,11 @@ type loginType = {
     email:string;
     password:string;
 }
-
-
 type feedbackApi = {
     status: boolean;
     message:string;
     access_token?:string;
+    role?:string;
 }
 
 
@@ -65,6 +111,7 @@ export type userContextType = {
     createUser: (user:userType) => Promise<feedbackApi | undefined>; 
     authLogin:(authUser:loginType) => Promise<feedbackApi | undefined>;
     jwtToken:string | undefined;
+    role:string | undefined;
 }
 
 
@@ -78,7 +125,10 @@ export type userContextType = {
         {} as userLoginType
     );
     const [jwtToken , setJwtToken] = useState<string>();
-  
+    const [role , setRole] = useState<string>();
+
+
+
     const createUser = async (data:userType) =>{
        try {
            if(data){
@@ -116,7 +166,7 @@ export type userContextType = {
          });
          const access_token = response.data.accessToken;
         Cookies.set('agorafmm-web@token',access_token,{expires: 10*365*60*60});
-         
+        Cookies.set('role',response.data.role);
         return {
             access_token:access_token,
             message:'Autenticado com Sucesso!',
@@ -155,6 +205,7 @@ export type userContextType = {
  
      const atualizarUserToken  = async () =>{
          const userToken = Cookies.get('agorafmm-web@token');
+        if(userToken)
          setJwtToken(userToken);
       }
 
@@ -162,35 +213,99 @@ export type userContextType = {
      const atualizarDataUser = async () => {
 
        const tokenUser = Cookies.get('agorafmm-web@token');
-       const responseFromGetDataUser = await api.get('/auth/data' , {
-        headers:{
-         Authorization: `Bearer ${tokenUser}`
-        }
-       })
+       if(tokenUser){
+           const responseFromGetDataUser = await api.get('/auth/data' , {
+            headers:{
+             Authorization: `Bearer ${tokenUser}`
+            }
+           })
+    
+         if(responseFromGetDataUser.data.status === 202){
+            const newUser = {...responseFromGetDataUser.data.user} 
+            console.log(newUser);
+            switch(newUser.role){
+               case 'coordenador':
+                setUserLogin({
+                    id:newUser.id,
+                    avatar:newUser.avatar,
+                    email:newUser.email,
+                    emailInstitutional:newUser.emailInstitutional,
+                    phonePersonal:newUser.phonePersonal,
+                    phoneInstitutional:newUser.phoneInstitutional,
+                    username:newUser.username,
+                    role:newUser.role,
+                    address:{
+                       cep:newUser.address.cep,
+                       numberHouse:newUser.address.numberHouse,
+                       bairro:newUser.address.bairro,
+                       estado:newUser.address.estado,
+                       cidade:newUser.address.cidade,
+                       country:newUser.address.country,
+                       logradouro:newUser.address.logradouro,
+                complemento:newUser.address.complemento }   } )   
+                setRole(newUser.role);
+                break;
+               case 'professor':
+                setUserLogin({
+                    id:newUser.id,
+                    avatar:newUser.avatar,
+                    email:newUser.email,
+                    emailInstitutional:newUser.emailInstitutional,
+                    phonePersonal:newUser.phonePersonal,
+                    phoneInstitutional:newUser.phoneInstitutional,
+                    username:newUser.username,
+                    role:newUser.role,
+                    address:{
+                       cep:newUser.address.cep,
+                       numberHouse:newUser.address.numberHouse,
+                       bairro:newUser.address.bairro,
+                       estado:newUser.address.estado,
+                       cidade:newUser.address.cidade,
+                       country:newUser.address.country,
+                       logradouro:newUser.address.logradouro,
+                      complemento:newUser.address.complemento }, 
+                  } )   
+                setRole(newUser.role)
+                break;
+               case 'aluno':
+                setUserLogin({
+                    id:newUser.id,
+                    avatar:newUser.avatar,
+                    email:newUser.email,
+                    emailInstitutional:newUser.emailInstitutional,
+                    phonePersonal:newUser.phonePersonal,
+                    phoneInstitutional:newUser.phoneInstitutional,
+                    username:newUser.username,
+                    role:newUser.role,
+                    address:{
+                       cep:newUser.address.cep,
+                       numberHouse:newUser.address.numberHouse,
+                       bairro:newUser.address.bairro,
+                       estado:newUser.address.estado,
+                       cidade:newUser.address.cidade,
+                       country:newUser.address.country,
+                       logradouro:newUser.address.logradouro,
+                      complemento:newUser.address.complemento }, 
+                    filiacao:{
+                        id:newUser.filiacao.id,
+                        telefone1:newUser.filiacao.telefone1,
+                        telefone2:newUser.filiacao.telefone2,
+                        tipo_Relacionamento:newUser.filiacao.tipo_Relacionamento,
+                        username:newUser.filiacao.username,
+                    }
+            } )   
+                setRole(newUser.role)
+                break;
+               default:
+                console.log('Algo deu errado no servidor! Tente novamente!');
+            }
 
-     if(responseFromGetDataUser.data.status === 202){
-        const newUser = {...responseFromGetDataUser.data.user} 
-        console.log(newUser);
-        
-        setUserLogin({
-         id:newUser.id,
-         avatar:newUser.avatar,
-         email:newUser.email,
-         emailInstitutional:newUser.emailInstitutional,
-         phonePersonal:newUser.phonePersonal,
-         phoneInstitutional:newUser.phoneInstitutional,
-         username:newUser.username,
-         role:newUser.role,
-         address:{
-            cep:newUser.address.cep,
-            numberHouse:newUser.address.numberHouse,
-            bairro:newUser.address.bairro,
-            estado:newUser.address.estado,
-            cidade:newUser.address.cidade,
-            country:newUser.address.country,
-            logradouro:newUser.address.logradouro,
-            complemento:newUser.address.complemento }   } )   
-         }
+             
+               
+
+             }
+
+       }
 
      }
 
@@ -202,7 +317,7 @@ export type userContextType = {
       },[])
 
 
-   const values = { userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
+   const values = { role , userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
 
   return (
       <userContext.Provider value={values}>

@@ -1,13 +1,20 @@
 import { create } from 'zustand'
 
 type modalAlunoState = {
-    isOpen:boolean;
-    open:()=>void;
-    close:()=>void;
+    isOpenDelete:boolean;
+    isOpenEdit:boolean;
+    openDelete:()=>void;
+    closeDelete:()=>void;
+    openEdit:()=>void;
+    closeEdit:()=>void;
 }
 
 export const useModalAluno = create<modalAlunoState>((set)=>({
-    isOpen:false,
-    open:()=>set({isOpen:true}),
-    close:()=> set({isOpen:false})
+    isOpenDelete:false,
+    isOpenEdit:false,
+    openDelete:()=>set({isOpenDelete:true}),
+    closeDelete:()=> set({isOpenDelete:false}),
+    openEdit:()=>set({isOpenEdit:true}),
+    closeEdit:()=> set({isOpenEdit:false}),
+
 }))

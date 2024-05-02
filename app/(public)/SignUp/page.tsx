@@ -18,7 +18,7 @@ import {
 
 
 export default function SignUp(){
-   const { authLogin } = useUserContext();
+   const { authLogin , role } = useUserContext();
 
    const Router = useRouter();
  
@@ -53,12 +53,9 @@ export default function SignUp(){
    
    
    if(!response?.access_token){
-     
-     toast.error(response?.message);
+       toast.error(response?.message);
    }
-  
-  Router.push('/dashboardMain');
-  
+   Router.push('/dashboardMain');
 
     } catch (error) {     
       console.log(error); 

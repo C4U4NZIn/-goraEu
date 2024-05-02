@@ -17,11 +17,18 @@ export const ContainerImageAndButtons = styled.div`
     height:15.6875rem;
 `
 
-export const ButtonComponent = styled.button`
-width: 2.5rem;
-height: 2.5rem;
-border-radius: 100%;
-background-color: rgba(242, 105, 33, 1);
+// 2.5 - w
+// 2.5 - w
+// rgba(242, 105, 33, 1)
+//100% - borderR
+//29.25rem - w
+//25.9rem - h
+
+export const ButtonComponent = styled.button<{$width:number; $height:number;$borderRadius:number; $backgroundColor:string}>`
+width: ${props=>props.$width}rem;
+height: ${props=>props.$height}rem;
+border-radius: ${props=> props.$borderRadius}%;
+background-color:${props=>props.$backgroundColor};
 display: flex;
 justify-content: center;
 align-items: center;
@@ -39,47 +46,87 @@ z-index: 1;
 margin-top: 8rem;
 margin-left: 8rem;
 `
-
-export const CardUserContainer = styled.div`
-position: relative;
-z-index: 0;
-width: 29.25rem;
-height: 25.9rem;
+export const CardUserContainer = styled.div<{$width:number , $height:number}>`
+width: ${props=> props.$width}rem;
+height: ${props=>props.$height}rem;
 margin-left: 7rem;
 background-color: rgba(244, 244, 244, 1);
 border-radius: 10px 10px 10px 10px;
+display: flex;
+flex-direction: column;
+gap:0;
 `;
-
-export const CardUserInfo = styled.div`
+export const CardUserContainerExclude = styled.div<{$width:number , $height:number}>`
+width: ${props=> props.$width}rem;
+height: ${props=>props.$height}rem;
+margin-left: 7rem;
 background-color: rgba(244, 244, 244, 1);
+border-radius: 10px 10px 10px 10px;
+display: flex;
+flex-direction: column;
+gap:0;
+`;
+export const Label = styled.h4`
+padding: 0;
+margin:0;
+`
+export const TextInfo = styled.p`
+font-size: small;
+color: black;
+padding:0;
+margin:0;
+`
+export const CardUserInfo = styled.div`
+background-color:rgba(244, 244, 244, 1);
 display: flex;
 flex-direction: column;
 
 align-items: center;
-justify-content: flex-start;
-
-margin-top: 5rem;
+justify-content: center;
+gap:2rem;
 width: 100%;
-height: 50%;
-
-div{
+height: 85%;
+:hover{
   display: flex;
-  flex-direction: column;
-  
+  border-radius: 25px;
+  background-color: #fff;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black;
+  width: 100%;
+  transition: all 3 ease-in-out;
+  transform: unset;
+ 
+  ${TextInfo} {
+    border: none;
+    border-radius: none;
+  }
+  ${Label}{
+    border-radius: none;
+    border:none;
+  }
+
+
 }
-h4{
- margin: 0;
- padding:0;
-}
+
+
 
 
 `
+export const CardUserInfoExclude = styled.div`
+background-color:rgba(244, 244, 244, 1);
+display: flex;
+flex-direction: column;
 
+align-items: center;
+justify-content: center;
+gap:2rem;
+width: 100%;
+height: 85%;
+`
 export const TopUserContainerTitle = styled.div`
-position: absolute;
 width: 100%;
 height: 15%;
-z-index: 1;
 background-color: rgba(242, 105, 33, 1);
 display: flex;
 align-items: center;
@@ -101,7 +148,6 @@ span{
 
 
 `
-
 export const ContainerImage = styled.div`
  position:relative;
  display: flex;
@@ -116,6 +162,25 @@ export const ContainerImage = styled.div`
  align-self: center ;
 
 `
+export const ContainerInfoField =  styled.div`
+width:100%;
+height: 3rem;
+display:flex;
+flex-direction: column;
+gap:1px;
+align-items: center;
+justify-content: center;
+`
+export const ContainerInfoFieldExclude =  styled.div`
+width:100%;
+height: 3rem;
+display:flex;
+flex-direction: column;
+gap:1px;
+align-items: center;
+justify-content: center;
+
+`
 export const Dialog = styled.div`
   box-shadow: 0px 0px 5px #757575;
   border-radius: 5px;
@@ -126,3 +191,14 @@ export const Dialog = styled.div`
   position:absolute;
   left:37rem;
 `
+export const InputStyles = styled.input`
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;

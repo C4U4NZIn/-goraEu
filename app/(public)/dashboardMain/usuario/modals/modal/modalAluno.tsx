@@ -5,7 +5,7 @@ import { Dialog } from "../../styled/usuario";
 
 const ModalAluno = () =>{
 
-const {close} = useModalAluno();
+const {closeDelete} = useModalAluno();
 
 return (
     <>

@@ -1,17 +1,16 @@
 "use client";
 import { Inter } from 'next/font/google'
-import globalStyle from './css/global.module.css'
-import styles from './css/dashboard.module.css'
+import globalStyle from '../dashboardMain/css/global.module.css'
+import styles from '../dashboardMain/css/dashboard.module.css'
 import Image from "next/image";
 import fogueteAgora2 from '../dashboardMain/image/WhatsApp Image 2024-03-11 at 20.05 1fogueteAgora2.svg'
-import { ActiveLink } from "./components/active-link";
-import mural from './image/web-chat (1) 1.svg'
-import desempenho from './image/diagrama 1.svg'
-import usuario from './image/do-utilizador (2) 1.svg'
-import salas from './image/casa 1.svg'
-import stylesChildren from './css/children.module.css'
+import { ActiveLink } from "../dashboardMain/components/active-link";
+import mural from '../dashboardMain/image/web-chat (1) 1.svg'
+import desempenho from '../dashboardMain/image/diagrama 1.svg'
+import usuario from '../dashboardMain/image/do-utilizador (2) 1.svg'
+import salas from '../dashboardMain/image/casa 1.svg'
+import stylesChildren from '../dashboardMain/css/children.module.css'
 import { UserProviderFromProviders } from '@/providers';
-import ModalAluno from './usuario/modals/modal/modalAluno';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,7 +18,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 
-export default function DashboardMainLayout({
+export default function DashboardProfessorLayout({
   children,
 }: {
   children: React.ReactNode
@@ -60,7 +59,7 @@ export default function DashboardMainLayout({
         src={salas}
         className={styles.stylesSalas}
         />
-           <ActiveLink href="/dashboardMain/salas"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
+           <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -69,7 +68,7 @@ export default function DashboardMainLayout({
         src={usuario}
         className={styles.stylesUsuario}
         />
-           <ActiveLink href="/dashboardMain/usuario"><h1 className={styles.stylesH1}>Usuário</h1></ActiveLink>
+           <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Usuário</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -78,7 +77,7 @@ export default function DashboardMainLayout({
         src={desempenho}
         className={styles.stylesDesempenho}
         />
-           <ActiveLink href="/dashboardMain/desempenho"><h1 className={styles.stylesH1}>Desempenho</h1></ActiveLink>
+           <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Desempenho</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -87,7 +86,7 @@ export default function DashboardMainLayout({
         src={mural}
         className={styles.stylesMural}
         />
-      <ActiveLink href="/dashboardMain/mural"><h1 className={styles.stylesH1}>Mural</h1></ActiveLink>
+      <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Mural</h1></ActiveLink>
        </div>
 
 

@@ -32,6 +32,9 @@ background-color:${props=>props.$backgroundColor};
 display: flex;
 justify-content: center;
 align-items: center;
+&:disabled{
+  background-color: transparent;
+}
 `
 export const ContainerButtons = styled.div`
 width: 20%;
@@ -202,3 +205,20 @@ export const InputStyles = styled.input`
     margin: 0;
   }
 `;
+
+export const InputUsuarioPage = styled.input`
+width: 80%;
+height: 100%;
+border:none;
+background-color:rgba(232, 218, 218, 1);
+border-radius: 5px;
+padding:10px;
+font-size: 22px;
+`
+export const TextError =  styled.p`
+width: 80%;
+margin-top: 1.25rem;
+color:red;
+margin: 0;
+padding: 0;
+`

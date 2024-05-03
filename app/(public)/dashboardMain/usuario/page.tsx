@@ -6,6 +6,7 @@ import Natalia from '../salas/images/image 25Natália.svg'
 import Delete from './images/lixeira 1.svg'
 import EditProfile from './images/lapis 2.svg'
 import Image from "next/image";
+import bcrypt from 'bcryptjs'
 import {
   ContainerPage,
   ContainerImageAndButtons,
@@ -20,23 +21,45 @@ import {
   InputStyles,
   CardUserContainerExclude,
   ContainerInfoFieldExclude,
-  CardUserInfoExclude
+  CardUserInfoExclude,
+  InputUsuarioPage,
+  TextError
   
 } from "../usuario/styled/usuario"
 import { ContainerImage } from "../usuario/styled/usuario";
 import OtpInput from 'react-otp-input'
-
-
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+   userFormExclude,
+   userFormSchema,
+   userFormSchemaUpdate,
+   userFormUpdateUser,
+   alunoFormUpdate
+ } from "./zod/usuario";
 
 
 export default function Usuario(){
     // realizar posteriormente o processo de componentização
-    //todos os componentes serão componentizados
-    const {userLogin} = useUserContext();
+    //todos os componentes serão componentizados- redundancia
+    const {userLogin , sendEmailToUser , verifyCode} = useUserContext();
     const [isOpenDelete , setIsOpenDelete] = useState<Boolean>(false);
     const [isOpenEdit , setIsOpenEdit] = useState<Boolean>(false);
-    const [otp , setOtp] = useState('');
+    const [otp , setOtp] = useState<string>('');
+    const {
+      register,
+      handleSubmit,
+      watch,
+      formState:{errors},
+      
+    } = useForm({
+      resolver: zodResolver(userFormSchema),
+      defaultValues: 
+      {
+        password:'',
+      },
+      mode:'onChange'
+     });
 
     const fecharDelete = () =>{
         setIsOpenDelete(false);
@@ -44,12 +67,47 @@ export default function Usuario(){
     const fecharEdit = () =>{
         setIsOpenEdit(false);
     }
-    const abrirDelete = () =>{
-         setIsOpenDelete(true)
-    }
+    const abrirDelete = async () =>{
+         const response = await sendEmailToUser({
+          email:userLogin?.email
+         })
+         console.log(response?.message);
+        setIsOpenDelete(true)
+      }
     const abrirEdit = () =>{
          setIsOpenEdit(false);
     }
+   const deleteUser = () =>{
+    console.log('usuário deletado=>' , userLogin?.username);
+   }
+  const handleSubmitPassword = async (data:userFormExclude) =>{
+    console.log(data.password);
+    const userPassHashed = userLogin?.password;
+    let isValidPassword
+    if(userPassHashed){
+      isValidPassword = bcrypt.compareSync(data.password,userPassHashed);
+    }
+   let response
+  if(isVoidOtpField){
+     response = await verifyCode({
+      id:userLogin?.id,
+      currentCode:otp
+    })
+  }
+  const isValidOtp = response?.isValidOtpCode;
+
+    if(isValidPassword && isValidOtp){
+      deleteUser();
+    }else{
+      console.log('usuario não deletado=>',isValidPassword,isValidOtp);
+    }
+
+  }
+  const handleSubmitUpdate = (data:any) =>{
+
+  }
+ 
+
 
     if(!userLogin){
         return ""
@@ -58,12 +116,16 @@ export default function Usuario(){
     useEffect(()=>{
         console.log(isOpenDelete);
         console.log(isOpenEdit);
-
+        console.log(otp);
     })
+   const isActivePasswordField = watch('password') && !errors.password;
+   const isVoidOtpField = otp !== '';
+  
 
 
-
+// quando tiver tempo componentizo isso tudo
     return(
+      
      <ContainerPage>
         {/**Componente de imagem e botões*/}
         <ContainerImageAndButtons>
@@ -106,7 +168,7 @@ export default function Usuario(){
         $height={2.5}
         $borderRadius={100}
         $backgroundColor="rgba(242, 105, 33, 1)"
-        onClick={()=>{setIsOpenDelete(true)}}
+        onClick={abrirDelete}
         >
         <Image
         alt="imgDeleteProfile"
@@ -180,19 +242,35 @@ export default function Usuario(){
       *  a função  de excluir */}
      {isOpenDelete && (
       <>
-      {/**Fazer outro Container só que sem o hover */}
+      {/**Componente de Exclude */}
 
-      <CardUserContainerExclude $width={29.25} $height={20}>
-    <form>
+      <CardUserContainerExclude $width={29.25} $height={29}>
+    <form
+    onSubmit={handleSubmit(handleSubmitPassword)}
+    >
 <TopUserContainerTitle>
     <h2>Excluir Conta</h2>
    
 </TopUserContainerTitle>
 {/**Componente de Informações */}
-<CardUserInfoExclude>
+<CardUserInfoExclude
+style={{
+  marginTop:'2rem',
+  gap:'4rem'
+}}
+>
 <ContainerInfoFieldExclude>
- <Label>Nome</Label>
- <TextInfo>{userLogin?.username}</TextInfo>
+ <Label
+ style={{
+  fontSize:'22px',
+  marginLeft:'2.2rem',
+  alignSelf:'flex-start'
+ }}
+ >Insira a senha</Label>
+ <InputUsuarioPage
+ {...register('password')}
+ />
+ {errors.password && (<TextError>{errors.password.message}</TextError>)}
 </ContainerInfoFieldExclude>
 <ContainerInfoFieldExclude
 style={{
@@ -207,6 +285,12 @@ style={{
    * digitar números
    * Componentizar esse OtpInput depois
    */}
+  <Label
+ style={{
+  fontSize:'20px',
+  alignSelf:'center'
+ }}
+ >Insira o código enviado no E-mail</Label>
    <OtpInput
       value={otp}
       onChange={setOtp}
@@ -279,6 +363,8 @@ style={{
   }}
   >Cancelar</p></ButtonComponent>
   <ButtonComponent
+  type="submit"
+  disabled={!isActivePasswordField || !isVoidOtpField}
       style={{
           borderRadius:'15px'
         }}

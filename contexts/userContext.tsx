@@ -5,6 +5,12 @@ import { AppError } from "@/utils/AppError";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
+//temporariamente eu vou fazer as requisições aqui
+//ou seja
+//como esse contexto tá por volta de tds as pags
+// vou fzer requisição de tudo que é tipo aq
+//e que Deus me perdoe pela minha decisão
+
 type userType = {
     username:string;
     email:string;
@@ -35,6 +41,7 @@ type professorLoginType = {
     avatar:string;
     username:string;
     role:string;
+    password:string;
     address:{
         cep:string | undefined;
         numberHouse:string|undefined;
@@ -55,6 +62,7 @@ type alunoLoginType = {
     avatar:string;
     username:string;
     role:string;
+    password:string;
     address:{
         cep:string | undefined;
         numberHouse:string|undefined;
@@ -82,6 +90,7 @@ type coordenadorLoginType = {
     avatar:string;
     username:string;
     role:string;
+    password:string;
     address:{
         cep:string | undefined;
         numberHouse:string|undefined;
@@ -103,8 +112,17 @@ type feedbackApi = {
     access_token?:string;
     role?:string;
 }
-
-
+type otpType = {
+    currentCode:string;
+    id:string|undefined;
+}
+type dataFromOtpRequestType = {
+  message:string;
+  isValidOtpCode:boolean;
+}
+type sendEmailToUserType = {
+    email:string | undefined;
+}
 export type userContextType = {
     user: userType | undefined;
     userLogin:userLoginType | undefined;
@@ -112,6 +130,8 @@ export type userContextType = {
     authLogin:(authUser:loginType) => Promise<feedbackApi | undefined>;
     jwtToken:string | undefined;
     role:string | undefined;
+    sendEmailToUser:(data:sendEmailToUserType) => Promise<feedbackApi | undefined>;
+    verifyCode:(data:otpType) => Promise<dataFromOtpRequestType | undefined>;
 }
 
 
@@ -126,8 +146,63 @@ export type userContextType = {
     );
     const [jwtToken , setJwtToken] = useState<string>();
     const [role , setRole] = useState<string>();
+    //temporariamente vou fazer uma função de verify aq no front
+    //tem no backend - mas preguiça pra consumir...
+   
+
+    //passar email to api
+    //acessar 
+    const sendEmailToUser = async (data:sendEmailToUserType) =>{
+       try {
+        const response = await api.post('/email/SendEmail',{
+            email:data.email
+        });
+        if(response.data.status === 202){
+        return {
+            message:response.data.message,
+            status:response.data.status,
+        }
+        }else{
+            return {
+                status:403,
+                message:response.data.message,
+            }
+        }
+       } catch (error) {
+        
+       }
+    }
+    //passar id e o currentCode
+    //acessar user/verify
+    const verifyCode = async (data:otpType) =>{
+
+      if(data){
+          try {
+            const response = await api.post('/user/verify', {
+                id:data.id,
+                currentCode:data.currentCode
+            });
+
+           if(response.data.status !== 202){
+            return {
+                message:response.data.message,
+                isValidOtpCode:response.data.isValidCode
+            } 
+           }
+
+          return {
+            message:response.data.message,
+            isValidOtpCode:response.data.isValidCode
+          }
 
 
+
+          } catch (error) {
+            
+          }
+
+      }
+    }
 
     const createUser = async (data:userType) =>{
        try {
@@ -209,7 +284,6 @@ export type userContextType = {
          setJwtToken(userToken);
       }
 
-
      const atualizarDataUser = async () => {
 
        const tokenUser = Cookies.get('agorafmm-web@token');
@@ -234,6 +308,7 @@ export type userContextType = {
                     phoneInstitutional:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
+                    password:newUser.password,
                     address:{
                        cep:newUser.address.cep,
                        numberHouse:newUser.address.numberHouse,
@@ -255,6 +330,7 @@ export type userContextType = {
                     phoneInstitutional:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
+                    password:newUser.password,
                     address:{
                        cep:newUser.address.cep,
                        numberHouse:newUser.address.numberHouse,
@@ -277,6 +353,7 @@ export type userContextType = {
                     phoneInstitutional:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
+                    password:newUser.password,
                     address:{
                        cep:newUser.address.cep,
                        numberHouse:newUser.address.numberHouse,
@@ -317,7 +394,7 @@ export type userContextType = {
       },[])
 
 
-   const values = { role , userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
+   const values = { verifyCode , sendEmailToUser , role , userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
 
   return (
       <userContext.Provider value={values}>

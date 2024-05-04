@@ -37,15 +37,29 @@ import {
    userFormUpdateUser,
    alunoFormUpdate
  } from "./zod/usuario";
+import UpdateComponent from "./components/update";
+
+export  type updateFieldType = {
+    nameField:string;
+    widthContainer:number;
+    heightContainer:number;
+    tipoCampo:string;
+    isOpenUpdateField?:boolean
+  }
 
 
 export default function Usuario(){
     // realizar posteriormente o processo de componentização
     //todos os componentes serão componentizados- redundancia
+    //por enquanto não vou componentizar nada 
+    //mas vou deixar comentado onde devem estar os componentes
     const {userLogin , sendEmailToUser , verifyCode} = useUserContext();
     const [isOpenDelete , setIsOpenDelete] = useState<Boolean>(false);
     const [isOpenEdit , setIsOpenEdit] = useState<Boolean>(false);
     const [otp , setOtp] = useState<string>('');
+    const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
+    const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
+    
     const {
       register,
       handleSubmit,
@@ -80,6 +94,14 @@ export default function Usuario(){
    const deleteUser = () =>{
     console.log('usuário deletado=>' , userLogin?.username);
    }
+   const abrirUpdateFieldComponent = (data:updateFieldType) =>{
+    setPropsUpdateComponent(data);
+    setIsOpenUpdateField(true);
+
+  }
+   const fecharUpdateFieldComponent = () =>{
+    setIsOpenUpdateField(false);
+   }
   const handleSubmitPassword = async (data:userFormExclude) =>{
     console.log(data.password);
     const userPassHashed = userLogin?.password;
@@ -103,9 +125,7 @@ export default function Usuario(){
     }
 
   }
-  const handleSubmitUpdate = (data:any) =>{
-
-  }
+ 
  
 
 
@@ -158,7 +178,6 @@ export default function Usuario(){
 
             </ContainerImage>
         {/** Botoes que vão abrir outros componentes*/}
-       
        <ContainerButtons>
        {/** delete profile */}
 
@@ -381,17 +400,17 @@ style={{
 </CardUserInfoExclude>
     </form>
 
-</CardUserContainerExclude>  
+      </CardUserContainerExclude>  
       </>
     )}
 
   {/**Componente que puxa função de update 
    * - possui outras funções */}
-  {isOpenEdit && (
+  {(isOpenEdit && !isOpenUpdateField) && (
 <>
      {/**Componente de edit que puxa um formulário de update */}
    <div
-style={{
+   style={{
     width:'29.25rem',
     height:'21rem',
     display:'flex',
@@ -407,19 +426,36 @@ style={{
 </TopUserContainerTitle>
 {/**Componente de Informações update*/}
 <CardUserInfo>
-<ContainerInfoField>
- <Label>Nome</Label>
- <TextInfo>{userLogin?.username}</TextInfo>
-</ContainerInfoField>
-<ContainerInfoField>
+<ContainerInfoField
+onClick={()=>{abrirUpdateFieldComponent({
+  nameField:'Email',
+  widthContainer:29.25,
+  heightContainer:15,
+  tipoCampo:'text'
+})}}
+>
  <Label>Email</Label>
  <TextInfo>{userLogin?.email}</TextInfo>
 </ContainerInfoField>
-<ContainerInfoField>
+<ContainerInfoField
+onClick={()=>{abrirUpdateFieldComponent({
+  nameField:'Telefone',
+  widthContainer:29.25,
+  heightContainer:15,
+  tipoCampo:'text'
+})}}
+>
 <Label>Telefone</Label>
 <TextInfo>{userLogin?.phonePersonal}</TextInfo>
 </ContainerInfoField>
-<ContainerInfoField>
+<ContainerInfoField
+onClick={()=>{abrirUpdateFieldComponent({
+  nameField:'Senha',
+  widthContainer:29.25,
+  heightContainer:25,
+  tipoCampo:'password'
+})}}
+>
 <Label>Senha</Label>
 <TextInfo>********</TextInfo>
 </ContainerInfoField>
@@ -458,6 +494,20 @@ style={{
     
 </>
   )}
+
+  {
+    isOpenUpdateField  && (
+      <>
+      <UpdateComponent
+      nameField={propsUpdateComponent.nameField}
+      widthContainer={propsUpdateComponent.widthContainer}
+      heightContainer={propsUpdateComponent.heightContainer}
+      tipoCampo={propsUpdateComponent.tipoCampo}
+      isOpenUpdateField={true}
+      />
+      </>
+    )
+  }
 
      </ContainerPage>
     )

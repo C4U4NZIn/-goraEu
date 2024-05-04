@@ -32,7 +32,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
    userFormExclude,
-   userFormSchema,
+   userFormSchemaPassword,
    userFormSchemaUpdate,
    userFormUpdateUser,
    alunoFormUpdate
@@ -45,6 +45,10 @@ export  type updateFieldType = {
     heightContainer:number;
     tipoCampo:string;
     isOpenUpdateField?:boolean
+    fecharUpdateFieldComponent?:()=>void;
+    children?:React.ReactNode;
+    OtpCode?:string;
+  
   }
 
 
@@ -67,7 +71,7 @@ export default function Usuario(){
       formState:{errors},
       
     } = useForm({
-      resolver: zodResolver(userFormSchema),
+      resolver: zodResolver(userFormSchemaPassword),
       defaultValues: 
       {
         password:'',
@@ -225,8 +229,7 @@ export default function Usuario(){
 
 
        </ContainerButtons>
-        </ContainerImageAndButtons>
-     
+       </ContainerImageAndButtons>
      {/** Componente de Card das informações */}
       {(!isOpenDelete === !isOpenEdit) && (
       <CardUserContainer $width={29.25} $height={25.9}>
@@ -256,7 +259,6 @@ export default function Usuario(){
 
       </CardUserContainer>    
        )}
-     
      {/**Componente que chama
       *  a função  de excluir */}
      {isOpenDelete && (
@@ -264,7 +266,7 @@ export default function Usuario(){
       {/**Componente de Exclude */}
 
       <CardUserContainerExclude $width={29.25} $height={29}>
-    <form
+      <form
     onSubmit={handleSubmit(handleSubmitPassword)}
     >
 <TopUserContainerTitle>
@@ -398,8 +400,7 @@ style={{
   >Excluir</p></ButtonComponent>
 </ContainerButtons>
 </CardUserInfoExclude>
-    </form>
-
+      </form>
       </CardUserContainerExclude>  
       </>
     )}
@@ -504,6 +505,70 @@ onClick={()=>{abrirUpdateFieldComponent({
       heightContainer={propsUpdateComponent.heightContainer}
       tipoCampo={propsUpdateComponent.tipoCampo}
       isOpenUpdateField={true}
+      children={(
+      <>
+      <ContainerInfoFieldExclude
+style={{
+  display:'flex',
+  flexDirection:'column',
+  gap:'0.25rem',
+  height:'5rem'
+}}
+>
+  {/** O onKeyPress está com dias contados
+   * verifica e apenas permite o usuario 
+   * digitar números
+   * Componentizar esse OtpInput depois
+   */}
+  <Label
+ style={{
+  fontSize:'20px',
+  alignSelf:'center'
+ }}
+ >Insira o código enviado no E-mail</Label>
+   <OtpInput
+      value={otp}
+      onChange={setOtp}
+      numInputs={4}
+      renderInput={(props) =>
+      <InputStyles
+       {...props}
+   
+      />}
+      containerStyle={{
+        width:'60%',
+        height:'100%',
+        borderRadius:'none',
+        border:'none',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        gap:'10px'
+      }}
+      inputStyle={{
+        width:'15%',
+        height:'80%',
+        border:'1px solid rgba(242, 105, 33, 1)',
+        fontSize:'40px',
+        backgroundColor:'rgba(232, 218, 218, 1)',
+        borderRadius:'10px',
+        WebkitAppearance:'none',
+        margin:'0'
+      }}
+      inputType="text"
+    />
+    <p
+    style={{
+      margin:0,
+      padding:0,
+      border:'none',
+      borderRadius:'none',
+      color:'rgba(242, 105, 33, 1)'
+    }}
+    >Reenviar código</p>
+      </ContainerInfoFieldExclude>
+      </>
+        )}
       />
       </>
     )

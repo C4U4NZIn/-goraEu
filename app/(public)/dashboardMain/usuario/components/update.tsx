@@ -20,22 +20,47 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
     userFormExclude,
-    userFormSchema,
     userFormSchemaUpdate,
     userFormUpdateUser,
-    alunoFormUpdate
+    alunoFormUpdate,
+    userFormSchemaPassword,
+    userFormSchemaEmail
   } from "../zod/usuario";
 import { updateFieldType } from '../page';
-
-
-
+import styled from 'styled-components';
+import { useState } from 'react';
+import OtpInput from 'react-otp-input';
+import { useEffect } from 'react';
 type ErrorsType = {
     [key:string]:{message:string};
 }
 
 
-const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCampo , isOpenUpdateField}:updateFieldType) =>{
 
+    const DefaultContainerExclude = styled.div`
+     width: 100%;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+    `
+     const StepContainer = styled.div<{$transformProps:number;}>`
+     width: 58.50rem;
+     height: 100%;
+     transform: translateX(${props=>props.$transformProps}rem);
+     transition: 250ms ease-in-out;
+     display: flex;
+     margin-left:-29.25rem;
+     flex-direction: row;
+     padding: 0;
+   `
+const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCampo , isOpenUpdateField , children}:updateFieldType) =>{
+  
+    const [otp , setOtp] = useState<string>('');
+    const [stepExclude , setStepExclude] = useState<number>(0);
+    const transformProps = -stepExclude*29.25 + 29.25;
+    const [isSubmited , setIsSubmited] = useState<boolean>(false);
     const {
         register,
         handleSubmit,
@@ -57,11 +82,66 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
        });
 
 
-       const fecharUpdateField = () =>{
+    const useFormFactoryParcial = (nameField:string) =>{
+   
+         let field = nameField.toLowerCase();
+         let resolverUser;
+         let defaultValues;
+          
+         switch(field){
+
+         case 'password':
+          resolverUser = zodResolver(userFormSchemaPassword);
+          defaultValues = {
+            password:''
+          }
+          break;
+          case 'email':
+            resolverUser = zodResolver(userFormSchemaEmail);
+            defaultValues = {
+            email:''
+            }
+
+         default:
+          throw new Error(`Campo ${field} inválido`); 
+       }
+     
+      return useForm({
+        resolver:resolverUser,
+        defaultValues:defaultValues,
+        mode:'onChange'
+      })
+   
+    }
+
+    const {
+      register:registerPassword,
+      handleSubmit:handlSubmitPassword,
+      watch:watchPassword,
+      formState:{
+        errors:errorsPassword
+      }
+    } = useFormFactoryParcial('password');
+
+
+
+
+    const fecharUpdateField = () =>{
         isOpenUpdateField = false;
        }
-       const handleSubmitUpdateComponent = (data:any) =>{
-       console.log(data);   
+     const handleSubmitUpdateComponent = (data:userFormUpdateUser) =>{
+      console.log(data.password);  
+      }
+      const handleSubmitPasswordComponent = (data:userFormExclude) =>{
+        console.log(data.password);
+      }
+    const goToNextStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
+     event?.preventDefault();
+     setStepExclude(stepExclude+1);
+    }
+    const goToPreviusStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
+       event?.preventDefault();
+       setStepExclude(stepExclude-1);
     }
       //mesmo truque do middleware
       const strToRegisterUpdateField = nameField.toLowerCase();
@@ -71,10 +151,19 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
         telefone:"telefone",
                 email:"email"
       }
+   
       let errorsDynamic:ErrorsType
-    // se o campo for pra alterar a password
-    //fazer literalmente algo chamado step...
-   return(
+      const email = watch('email');
+      const username = watch('username');
+      const telefone = watch('telefone');
+      const password = watchPassword('password');
+      
+  
+    
+     
+
+  
+      return(
     <>
 
      {tipoCampo !== 'password' ? (
@@ -86,6 +175,8 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
     <h2>Alterar {nameField}</h2>
    
 </TopUserContainerTitle>
+
+
 {/**Componente de Informações */}
 <CardUserInfoExclude
 style={{
@@ -154,9 +245,19 @@ style={{
 
       </CardUserContainerExclude>  
      ):(
-        <CardUserContainerExclude $width={widthContainer} $height={heightContainer}>
+        <CardUserContainerExclude
+         $width={widthContainer} $height={heightContainer}
+         style={{
+          overflow:'hidden'
+         }}
+         >
+        
         <form
-        onSubmit={handleSubmit(handleSubmitUpdateComponent)}
+        style={{
+      
+        
+        }}
+        onSubmit={handlSubmitPassword(handleSubmitPasswordComponent)}
         >
     <TopUserContainerTitle>
         <h2>Alterar a {nameField}</h2>
@@ -169,7 +270,12 @@ style={{
       gap:'4rem'
     }}
     >
-    <ContainerInfoFieldExclude>
+     <StepContainer $transformProps={transformProps}>
+      <DefaultContainerExclude>
+       {children}
+      </DefaultContainerExclude>
+      <DefaultContainerExclude>
+       <ContainerInfoFieldExclude>
      <Label
      style={{
       fontSize:'22px',
@@ -178,23 +284,19 @@ style={{
      }}
      >Insira a senha</Label>
      <InputUsuarioPage
-     {...register('password')}
+     {...registerPassword('password')}
      />
-     {errors.password && (<TextError>{errors.password.message}</TextError>)}
-    </ContainerInfoFieldExclude>
-    <ContainerInfoFieldExclude
-    style={{
-      display:'flex',
-      flexDirection:'column',
-      gap:'0.25rem',
-      height:'5rem'
-    }}
-    >
+     {errorsPassword.password && (<TextError>{errorsPassword.password.message}</TextError>)}
+     </ContainerInfoFieldExclude>
+      </DefaultContainerExclude>
+     </StepContainer>
+
      
-    
-    </ContainerInfoFieldExclude>
     {/**Adicionar um form nesse container */}
     {/**Foram utilizados vários inline aqui, mas nada que prejudique legibilidade */}
+    
+    {
+       stepExclude === 0 && (
     <ContainerButtons
     style={{
       position:'unset',
@@ -205,6 +307,7 @@ style={{
       zIndex:0
     }}
     >
+      {/** fechar componente */}
       <ButtonComponent
         style={{
           borderRadius:'15px'
@@ -217,8 +320,10 @@ style={{
       style={{
         color:'#fff'
       }}
+     
       >Cancelar</p></ButtonComponent>
       <ButtonComponent
+      onClick={goToNextStep}
       type="submit"
           style={{
               borderRadius:'15px'
@@ -231,8 +336,61 @@ style={{
       style={{
         color:"#fff"
       }}
-      >Confirmar</p></ButtonComponent>
+      >Próximo</p></ButtonComponent>
     </ContainerButtons>
+
+       )
+    }
+    {
+      stepExclude === 1 && (
+        <ContainerButtons
+        style={{
+          position:'unset',
+          width:'100%',
+          marginTop:'-2rem',
+          padding:0,
+          gap:'1rem',
+          zIndex:0
+        }}
+        >
+          {/** fechar componente */}
+          <ButtonComponent
+            style={{
+              borderRadius:'15px'
+            }}
+            $width={10}
+            $height={2}
+            $borderRadius={0}
+            $backgroundColor="rgba(242, 105, 33, 1)"
+          ><p
+          style={{
+            color:'#fff'
+          }}
+         
+          >Cancelar</p></ButtonComponent>
+          <ButtonComponent
+           type="submit"
+           onClick={()=>{
+            setIsSubmited(true)
+           }}
+              style={{
+                  borderRadius:'15px'
+                }}
+              $width={10}
+              $height={2}
+              $borderRadius={0}
+              $backgroundColor="rgba(242, 105, 33, 1)"
+          ><p
+          style={{
+            color:"#fff"
+          }}
+          >Confirmar</p></ButtonComponent>
+        </ContainerButtons>
+      )
+    }
+    
+
+
     </CardUserInfoExclude>
         </form>
     

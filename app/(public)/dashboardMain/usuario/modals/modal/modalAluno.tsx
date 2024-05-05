@@ -5,14 +5,14 @@ import { Dialog } from "../../styled/usuario";
 
 const ModalAluno = () =>{
 
-const {closeDelete} = useModalAluno();
+
 
 return (
     <>
     <Dialog>
        <h1>Fechar Modal teste</h1>
         <button
-        onClick={close}
+      
         >fechar</button> 
     </Dialog>
     </>

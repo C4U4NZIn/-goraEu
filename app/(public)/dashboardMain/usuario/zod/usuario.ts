@@ -9,6 +9,10 @@ export const userFormSchemaPassword = zod.object({
 export const userFormSchemaEmail = zod.object({
     email:zod.string().email().optional(),
 });
+export const userFormSchemaTelefone = zod.object({
+    telefone:zod.string().regex(/^(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})$/, "Deve ser (xx) xxxxx-xxxx"
+)
+});
 export const userFormSchemaUpdate = zod.object({
     username: zod.string().optional(),
     email:zod.string().email().optional(),
@@ -24,3 +28,5 @@ export type userFormExclude = zod.infer<typeof userFormSchemaPassword>;
 export type userFormUpdateUser = zod.infer<typeof userFormSchemaUpdate>;
 export type alunoFormUpdate = userFormUpdateUser & userFormExclude;
 export type userFormUpdateEmail = zod.infer<typeof userFormSchemaEmail>;
+export type userFormUpdateTelefone = zod.infer<typeof userFormSchemaTelefone>;
+export type userFormTypeUpdate = userFormUpdateEmail | userFormUpdateTelefone | userFormExclude;

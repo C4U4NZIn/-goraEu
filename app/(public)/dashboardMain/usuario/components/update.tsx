@@ -24,13 +24,16 @@ import {
     userFormUpdateUser,
     alunoFormUpdate,
     userFormSchemaPassword,
-    userFormSchemaEmail
+    userFormSchemaEmail,
+    userFormSchemaTelefone,
+    userFormTypeUpdate
   } from "../zod/usuario";
 import { updateFieldType } from '../page';
 import styled from 'styled-components';
 import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { useEffect } from 'react';
+import { useModalAluno } from '../modals/zustand/useModalAluno';
 type ErrorsType = {
     [key:string]:{message:string};
 }
@@ -56,11 +59,9 @@ type ErrorsType = {
      padding: 0;
    `
 const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCampo , isOpenUpdateField , children}:updateFieldType) =>{
-  
-    const [otp , setOtp] = useState<string>('');
+    const {close} = useModalAluno();
     const [stepExclude , setStepExclude] = useState<number>(0);
     const transformProps = -stepExclude*29.25 + 29.25;
-    const [isSubmited , setIsSubmited] = useState<boolean>(false);
     const {
         register,
         handleSubmit,
@@ -81,7 +82,7 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
         mode:'onChange'
        });
 
-
+     
     const useFormFactoryParcial = (nameField:string) =>{
    
          let field = nameField.toLowerCase();
@@ -96,14 +97,18 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
             password:''
           }
           break;
-          case 'email':
-            resolverUser = zodResolver(userFormSchemaEmail);
-            defaultValues = {
+        case 'email':
+          resolverUser = zodResolver(userFormSchemaEmail);
+          defaultValues = {
             email:''
-            }
-
-         default:
-          throw new Error(`Campo ${field} inválido`); 
+          }
+          break;
+        case 'telefone':
+          resolverUser = zodResolver(userFormSchemaTelefone);
+          defaultValues = {
+            telefone:''
+          }
+          break;
        }
      
       return useForm({
@@ -123,33 +128,65 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
       }
     } = useFormFactoryParcial('password');
 
+    const {
+      register:registerUpdateComponent,
+      handleSubmit:handlSubmitUpdateComponent,
+      watch:watchUpdateComponent,
+      formState:{
+        errors:errorsUpdateComponent
+      }
+    } = useFormFactoryParcial(nameField);
 
 
 
-    const fecharUpdateField = () =>{
+      const fecharUpdateField = () =>{
         isOpenUpdateField = false;
        }
-     const handleSubmitUpdateComponent = (data:userFormUpdateUser) =>{
-      console.log(data.password);  
-      }
-      const handleSubmitPasswordComponent = (data:userFormExclude) =>{
-        console.log(data.password);
-      }
-    const goToNextStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
+       //envia o dado do input pra função do contexto atualizar 
+       //os dados do usuário
+       //recebe a confirmação do toast de update
+      const handleSubmitUserUpdateComponent = (data:userFormTypeUpdate) =>{
+        
+        let value;
+        
+        // erro de tipagem
+         switch(nameField.toLowerCase()){
+          case 'email':
+           if('email' in data){
+             value = data.email;
+           }
+
+             break;
+          case 'telefone':
+             if('telefone' in data){
+                 value = data.telefone;
+             }
+            break;
+          
+            default:
+              console.log('Porque tu vens pra cá?');
+          }
+      
+        console.log("pq dá certo?=>",data,value);  
+       }
+      const handleSubmitPasswordComponent = (data:userFormTypeUpdate) =>{
+        console.log(data);
+       }
+      const goToNextStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
      event?.preventDefault();
      setStepExclude(stepExclude+1);
-    }
-    const goToPreviusStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
+       }
+      const goToPreviusStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
        event?.preventDefault();
        setStepExclude(stepExclude-1);
-    }
+       }
       //mesmo truque do middleware
       const strToRegisterUpdateField = nameField.toLowerCase();
       const fieldsPossible:any = {
         username:"username",
         password:"password",
         telefone:"telefone",
-                email:"email"
+        email:"email"
       }
    
       let errorsDynamic:ErrorsType
@@ -169,7 +206,7 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
      {tipoCampo !== 'password' ? (
       <CardUserContainerExclude $width={widthContainer} $height={heightContainer}>
     <form
-    onSubmit={handleSubmit(handleSubmitUpdateComponent)}
+    onSubmit={handlSubmitUpdateComponent(handleSubmitUserUpdateComponent)}
     >
 <TopUserContainerTitle>
     <h2>Alterar {nameField}</h2>
@@ -193,10 +230,10 @@ style={{
  }}
  >Insira o(a) {nameField}</Label>
  <InputUsuarioPage
- {...register(fieldsPossible[strToRegisterUpdateField])}
+ {...registerUpdateComponent(nameField.toLowerCase())}
  />
- {errors.email  && (<TextError>{errors.email.message}</TextError>)}
- {errors.telefone  && (<TextError>{errors.telefone.message}</TextError>)}
+ {errorsUpdateComponent.email && typeof errorsUpdateComponent.email.message === 'string'  && (<TextError>{errorsUpdateComponent.email.message}</TextError>)}
+ {errorsUpdateComponent.telefone && typeof errorsUpdateComponent.telefone.message === 'string' && (<TextError>{errorsUpdateComponent.telefone.message}</TextError>)}
 </ContainerInfoFieldExclude>
 
 {/**Adicionar um form nesse container */}
@@ -212,7 +249,7 @@ style={{
 }}
 >
   <ButtonComponent
-   onClick={fecharUpdateField}
+   onClick={close}
     style={{
       borderRadius:'15px'
     }}
@@ -286,7 +323,8 @@ style={{
      <InputUsuarioPage
      {...registerPassword('password')}
      />
-     {errorsPassword.password && (<TextError>{errorsPassword.password.message}</TextError>)}
+     {/** Erro de baitola- tipagem */}
+     {errorsPassword.password && typeof errorsPassword.password?.message === 'string' && (<TextError>{errorsPassword.password?.message}</TextError>)}
      </ContainerInfoFieldExclude>
       </DefaultContainerExclude>
      </StepContainer>
@@ -370,9 +408,6 @@ style={{
           >Cancelar</p></ButtonComponent>
           <ButtonComponent
            type="submit"
-           onClick={()=>{
-            setIsSubmited(true)
-           }}
               style={{
                   borderRadius:'15px'
                 }}

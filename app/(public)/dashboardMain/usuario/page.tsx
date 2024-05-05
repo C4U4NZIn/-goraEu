@@ -64,6 +64,8 @@ export default function Usuario(){
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     
+
+    
     const {
       register,
       handleSubmit,
@@ -90,6 +92,7 @@ export default function Usuario(){
           email:userLogin?.email
          })
          console.log(response?.message);
+         console.log(response?.status);
         setIsOpenDelete(true)
       }
     const abrirEdit = () =>{
@@ -183,7 +186,7 @@ export default function Usuario(){
             </ContainerImage>
         {/** Botoes que vão abrir outros componentes*/}
        <ContainerButtons>
-       {/** delete profile */}
+       {/** button delete profile */}
 
         { (!isOpenDelete && !isOpenEdit)  && (
         <ButtonComponent
@@ -205,7 +208,7 @@ export default function Usuario(){
         </ButtonComponent>
         )}
 
-        {/** edit profile */}
+        {/** button edit profile */}
         {((!isOpenEdit && !isOpenDelete) || (!isOpenDelete)) && (
         <ButtonComponent
         $width={2.5}

@@ -44,15 +44,11 @@ export default function ProfileCoordenador(){
 
     },[])
     
-    const [step, setStep] = useState(0);
-    const transformProps = -step*50.75 + 50.75;
-  
+   const [step, setStep] = useState(0);
+   const transformProps = -step*50.75 + 50.75;
    const { createUser , jwtToken } = useUserContext();
    const router = useRouter();
- 
- 
- 
-    const {
+   const {
       register,
       handleSubmit,
       watch,

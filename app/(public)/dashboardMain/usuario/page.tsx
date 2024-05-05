@@ -1,7 +1,7 @@
 'use client';
 import { useUserContext, userContext } from "@/contexts";
 import { userContextType } from "@/contexts";
-import { useEffect , useState } from "react";
+import React, { useEffect , useState } from "react";
 import Natalia from '../salas/images/image 25Natália.svg'
 import Delete from './images/lixeira 1.svg'
 import EditProfile from './images/lapis 2.svg'
@@ -48,9 +48,10 @@ export  type updateFieldType = {
     isOpenUpdateField?:boolean
     fecharUpdateFieldComponent?:()=>void;
     children?:React.ReactNode;
-    OtpCode?:string;
+    otpCode?:string;
   
   }
+
 
 
 export default function Usuario(){
@@ -65,8 +66,6 @@ export default function Usuario(){
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     const {isOpen , open , close} = useModalAluno();
-
-    
     const {
       register,
       handleSubmit,
@@ -81,14 +80,13 @@ export default function Usuario(){
       },
       mode:'onChange'
      });
-
-    const fecharDelete = () =>{
+     const fecharDelete = () =>{
         setIsOpenDelete(false);
     }
-    const fecharEdit = () =>{
+     const fecharEdit = () =>{
         setIsOpenEdit(false);
-    }
-    const abrirDelete = async () =>{
+     }
+     const abrirDelete = async () =>{
          const response = await sendEmailToUser({
           email:userLogin?.email
          })
@@ -96,57 +94,74 @@ export default function Usuario(){
          console.log(response?.status);
         setIsOpenDelete(true)
       }
-    const abrirEdit = () =>{
-         setIsOpenEdit(false);
-    }
-   const deleteUser = () =>{
-    console.log('usuário deletado=>' , userLogin?.username);
-   }
-   const abrirUpdateFieldComponent = (data:updateFieldType) =>{
-    setPropsUpdateComponent(data);
-    setIsOpenUpdateField(true);
-    open();
-  }
+     const abrirEdit = () =>{
+        setIsOpenEdit(false);
+      }
+      const deleteUser = () =>{
+        console.log('usuário deletado=>' , userLogin?.username);
+      }
+      const abrirUpdateFieldComponent = (data:updateFieldType) =>{
+        setPropsUpdateComponent(data);
+        setIsOpenUpdateField(true);
+        open();
+        resendEmailToUser();
+      }
+      const handleSubmitPassword = async (data:userFormExclude) =>{
+        console.log(data.password);
+        const userPassHashed = userLogin?.password;
+        let isValidPassword
+        if(userPassHashed){
+          isValidPassword = bcrypt.compareSync(data.password,userPassHashed);
+        }
+        let response
+        if(isVoidOtpField){
+          response = await verifyCode({
+            id:userLogin?.id,
+            currentCode:otp
+          })
+        }
+        const isValidOtp = response?.isValidOtpCode;
+        
+        if(isValidPassword && isValidOtp){
+          deleteUser();
+        }else{
+          console.log('usuario não deletado=>',isValidPassword,isValidOtp);
+        }
+        
+      }
+      const resendEmailToUser = async (event?:React.BaseSyntheticEvent) =>{
+         event?.preventDefault();
+        const response = await sendEmailToUser({
+          email:userLogin?.email
+        })
+        console.log("código reenviado?=>",response?.message)
+      }
+      const verifyCodeToUpdateComponent = async () =>{
+        let response
+        if(isVoidOtpField){
+          response = await verifyCode({
+            id:userLogin?.id,
+            currentCode:otp
+          })
+        }
+        const isValidOtp = response?.isValidOtpCode;
 
-  const handleSubmitPassword = async (data:userFormExclude) =>{
-    console.log(data.password);
-    const userPassHashed = userLogin?.password;
-    let isValidPassword
-    if(userPassHashed){
-      isValidPassword = bcrypt.compareSync(data.password,userPassHashed);
-    }
-   let response
-  if(isVoidOtpField){
-     response = await verifyCode({
-      id:userLogin?.id,
-      currentCode:otp
-    })
-  }
-  const isValidOtp = response?.isValidOtpCode;
-
-    if(isValidPassword && isValidOtp){
-      deleteUser();
-    }else{
-      console.log('usuario não deletado=>',isValidPassword,isValidOtp);
-    }
-
-  }
- 
- 
-
-
-    if(!userLogin){
+        return isValidOtp
+      }
+      
+      if(!userLogin){
         return ""
-    }
-    
-    useEffect(()=>{
+      }
+      
+      useEffect(()=>{
         console.log(isOpenDelete);
         console.log(isOpenEdit);
         console.log(otp);
-    })
-   const isActivePasswordField = watch('password') && !errors.password;
-   const isVoidOtpField = otp !== '';
-  
+      })
+      const isActivePasswordField = watch('password') && !errors.password;
+      const isVoidOtpField = otp !== '';
+      
+      console.log(otp);
 
 
 // quando tiver tempo componentizo isso tudo
@@ -357,6 +372,7 @@ style={{
       borderRadius:'none',
       color:'rgba(242, 105, 33, 1)'
     }}
+    onClick={resendEmailToUser}
     >Reenviar código</p>
 </ContainerInfoFieldExclude>
 {/**Adicionar um form nesse container */}
@@ -403,7 +419,8 @@ style={{
 </ContainerButtons>
 </CardUserInfoExclude>
       </form>
-      </CardUserContainerExclude>  
+      </CardUserContainerExclude> 
+
       </>
     )}
 
@@ -497,7 +514,9 @@ onClick={()=>{abrirUpdateFieldComponent({
     
 </>
   )}
-
+   {/**Update Component - isso daq é um componente
+    * 1% do arquivo componentizado
+    */}
   {
     isOpen && (
       <>
@@ -507,16 +526,17 @@ onClick={()=>{abrirUpdateFieldComponent({
       heightContainer={propsUpdateComponent.heightContainer}
       tipoCampo={propsUpdateComponent.tipoCampo}
       isOpenUpdateField={true}
+      otpCode={otp}
       children={(
       <>
       <ContainerInfoFieldExclude
-style={{
+   style={{
   display:'flex',
   flexDirection:'column',
   gap:'0.25rem',
   height:'5rem'
-}}
->
+     }}
+       >
   {/** O onKeyPress está com dias contados
    * verifica e apenas permite o usuario 
    * digitar números
@@ -560,6 +580,7 @@ style={{
       inputType="text"
     />
     <p
+    onClick={resendEmailToUser}
     style={{
       margin:0,
       padding:0,
@@ -571,6 +592,7 @@ style={{
       </ContainerInfoFieldExclude>
       </>
         )}
+     
       />
       </>
     )

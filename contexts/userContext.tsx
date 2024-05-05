@@ -119,6 +119,7 @@ type otpType = {
 type dataFromOtpRequestType = {
   message:string;
   isValidOtpCode:boolean;
+  returnedCode:string;
 }
 type sendEmailToUserType = {
     email:string | undefined;
@@ -186,13 +187,15 @@ export type userContextType = {
            if(response.data.status !== 202){
             return {
                 message:response.data.message,
-                isValidOtpCode:response.data.isValidCode
+                isValidOtpCode:response.data.isValidCode,
+                returnedCode:response.data.currentCode
             } 
            }
 
           return {
             message:response.data.message,
-            isValidOtpCode:response.data.isValidCode
+            isValidOtpCode:response.data.isValidCode,
+            returnedCode:response.data.currentCode
           }
 
 

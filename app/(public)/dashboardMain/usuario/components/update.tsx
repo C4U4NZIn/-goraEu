@@ -34,6 +34,7 @@ import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { useEffect } from 'react';
 import { useModalAluno } from '../modals/zustand/useModalAluno';
+import { useUserContext } from '@/contexts';
 type ErrorsType = {
     [key:string]:{message:string};
 }
@@ -58,10 +59,13 @@ type ErrorsType = {
      flex-direction: row;
      padding: 0;
    `
-const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCampo , isOpenUpdateField , children}:updateFieldType) =>{
+const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer , tipoCampo , isOpenUpdateField , children}:updateFieldType) =>{
+    const [isValidOtp , setIsValidOtp] = useState<boolean>(false);
+    const [verifiedCode , setVerifiedCode] = useState<string>('I');
     const {open , close} = useModalAluno();
     const [stepExclude , setStepExclude] = useState<number>(0);
     const transformProps = -stepExclude*29.25 + 29.25;
+    const {verifyCode ,  userLogin} = useUserContext();
     const {
         register,
         handleSubmit,
@@ -180,6 +184,7 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
        event?.preventDefault();
        setStepExclude(stepExclude-1);
        }
+     
       //mesmo truque do middleware
       const strToRegisterUpdateField = nameField.toLowerCase();
       const fieldsPossible:any = {
@@ -195,10 +200,41 @@ const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCam
       const telefone = watch('telefone');
       const password = watchPassword('password');
       
-  
-    
-     
+    let isLengthValidOtp = otpCode?.length === 4;
 
+     const verifyOtpCodeProps = async () =>{
+      let response;    
+      if(!isLengthValidOtp && otpCode){
+        response = await verifyCode({
+         id:userLogin?.id,
+         currentCode:otpCode
+        })          
+        const isValidOtpUser = response?.isValidOtpCode;
+        const returnedCode = response?.returnedCode;
+        if(returnedCode){
+         setVerifiedCode(returnedCode);
+        }
+       
+        if(!isValidOtpUser){
+          setIsValidOtp(false);
+        }
+        setIsValidOtp(true);
+
+ 
+        }
+     }
+
+     useEffect(()=>{
+       if(otpCode?.length === 4){
+         verifyOtpCodeProps();
+        }
+
+     },[otpCode])
+
+     const isOtpValid = otpCode === verifiedCode;
+
+
+      console.log(isOtpValid);
   
       return(
     <>
@@ -364,6 +400,7 @@ style={{
       <ButtonComponent
       onClick={goToNextStep}
       type="submit"
+      disabled={!isValidOtp && !isLengthValidOtp && !isOtpValid}
           style={{
               borderRadius:'15px'
             }}

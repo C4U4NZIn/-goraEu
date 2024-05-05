@@ -7,7 +7,7 @@ type modalAlunoState = {
 }
 
 export const useModalAluno = create<modalAlunoState>((set)=>({
-    isOpen:true,
+    isOpen:false,
     open:()=>set({isOpen:true}),
     close:()=> set({isOpen:false}),
 }))

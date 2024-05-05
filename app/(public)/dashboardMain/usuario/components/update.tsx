@@ -59,7 +59,7 @@ type ErrorsType = {
      padding: 0;
    `
 const UpdateComponent = ({nameField , widthContainer , heightContainer , tipoCampo , isOpenUpdateField , children}:updateFieldType) =>{
-    const {close} = useModalAluno();
+    const {open , close} = useModalAluno();
     const [stepExclude , setStepExclude] = useState<number>(0);
     const transformProps = -stepExclude*29.25 + 29.25;
     const {
@@ -347,6 +347,7 @@ style={{
     >
       {/** fechar componente */}
       <ButtonComponent
+      onClick={close}
         style={{
           borderRadius:'15px'
         }}
@@ -393,6 +394,7 @@ style={{
         >
           {/** fechar componente */}
           <ButtonComponent
+          onClick={close}
             style={{
               borderRadius:'15px'
             }}

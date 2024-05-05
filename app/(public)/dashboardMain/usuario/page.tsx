@@ -38,6 +38,7 @@ import {
    alunoFormUpdate
  } from "./zod/usuario";
 import UpdateComponent from "./components/update";
+import { useModalAluno } from "./modals/zustand/useModalAluno";
 
 export  type updateFieldType = {
     nameField:string;
@@ -63,7 +64,7 @@ export default function Usuario(){
     const [otp , setOtp] = useState<string>('');
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
-    
+    const {isOpen , open , close} = useModalAluno();
 
     
     const {
@@ -104,11 +105,9 @@ export default function Usuario(){
    const abrirUpdateFieldComponent = (data:updateFieldType) =>{
     setPropsUpdateComponent(data);
     setIsOpenUpdateField(true);
-
+    open();
   }
-   const fecharUpdateFieldComponent = () =>{
-    setIsOpenUpdateField(false);
-   }
+
   const handleSubmitPassword = async (data:userFormExclude) =>{
     console.log(data.password);
     const userPassHashed = userLogin?.password;
@@ -410,7 +409,7 @@ style={{
 
   {/**Componente que puxa função de update 
    * - possui outras funções */}
-  {(isOpenEdit && !isOpenUpdateField) && (
+  {(isOpenEdit && !isOpen) && (
 <>
      {/**Componente de edit que puxa um formulário de update */}
    <div
@@ -500,7 +499,7 @@ onClick={()=>{abrirUpdateFieldComponent({
   )}
 
   {
-    isOpenUpdateField  && (
+    isOpen && (
       <>
       <UpdateComponent
       nameField={propsUpdateComponent.nameField}

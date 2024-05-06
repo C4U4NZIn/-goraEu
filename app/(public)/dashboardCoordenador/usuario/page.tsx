@@ -1,8 +1,7 @@
 'use client';
-import { useUserContext, userContext } from "@/contexts";
-import { userContextType } from "@/contexts";
+import { useUserContext} from "@/contexts";
 import React, { useEffect , useState } from "react";
-import Natalia from '../salas/images/image 25Natália.svg'
+import Natalia from './images/image 25Natália.svg'
 import Delete from './images/lixeira 1.svg'
 import EditProfile from './images/lapis 2.svg'
 import Image from "next/image";
@@ -33,12 +32,9 @@ import { useForm } from "react-hook-form";
 import {
    userFormExclude,
    userFormSchemaPassword,
-   userFormSchemaUpdate,
-   userFormUpdateUser,
-   alunoFormUpdate
  } from "./zod/usuario";
 import UpdateComponent from "./components/update";
-import { useModalAluno } from "./modals/zustand/useModalAluno";
+import { useModalCoordenador } from "./modals/zustand/useModalCoordenador";
 export  type updateFieldType = {
     nameField:string;
     widthContainer:number;
@@ -61,7 +57,7 @@ export default function Usuario(){
     const [otp , setOtp] = useState<string>('');
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
-    const {isOpen , open , close} = useModalAluno();
+    const {isOpen , open} = useModalCoordenador();
     const {
       register,
       handleSubmit,
@@ -89,9 +85,6 @@ export default function Usuario(){
          console.log(response?.message);
          console.log(response?.status);
         setIsOpenDelete(true)
-      }
-     const abrirEdit = () =>{
-        setIsOpenEdit(false);
       }
       const deleteUser = () =>{
         console.log('usuário deletado=>' , userLogin?.username);
@@ -132,23 +125,12 @@ export default function Usuario(){
         })
         console.log("código reenviado?=>",response?.message)
       }
-      const verifyCodeToUpdateComponent = async () =>{
-        let response
-        if(isVoidOtpField){
-          response = await verifyCode({
-            id:userLogin?.id,
-            currentCode:otp
-          })
-        }
-        const isValidOtp = response?.isValidOtpCode;
-
-        return isValidOtp
-      }
-      
+    
+    {/** certfica se o usuário existe */}
       if(!userLogin){
         return ""
       }
-      
+      {/** debug de código - tirar depois */}
       useEffect(()=>{
         console.log(isOpenDelete);
         console.log(isOpenEdit);
@@ -156,7 +138,6 @@ export default function Usuario(){
       })
       const isActivePasswordField = watch('password') && !errors.password;
       const isVoidOtpField = otp !== '';
-      
       console.log(otp);
 
 
@@ -165,6 +146,11 @@ export default function Usuario(){
       
      <ContainerPage>
         {/**Componente de imagem e botões*/}
+        {/**mudar para o avatar padrão da material ui
+         * fazer um componente de image e fazer um componente 
+         * de avatar
+         * 
+        */}
         <ContainerImageAndButtons>
             <ContainerImage>
 

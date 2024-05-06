@@ -13,8 +13,10 @@ export default function middleware(request:NextRequest){
         '/dashboardMain/usuario':'aluno',
         '/dashboardMain/desempenho':'aluno',
         '/dashboardMain/mural':'aluno',
+        '/dashboardCoordenador/usuario':'coordenador',
         '/dashboardCoordenador':'coordenador',
         '/dashboardProfessor':'professor',
+        '/dashboardProfessor/usuario':'professor',
     }
     const pattern = new URLPattern({pathname:currentPath});
     const isRoleValida =  privateRoutes[pattern.pathname] === role; 
@@ -80,13 +82,15 @@ export default function middleware(request:NextRequest){
     }
 
    }
-   
+   {/** colocar todas as rotas que devem sofrer
+    influencia da função middleware neste objeto config com o matcher
+  */}
 export const config = {
     matcher:[
         '/SignUp',
         '/dashboardMain/:path*',
-        '/dashboardCoordenador',
-        '/dashboardProfessor'
+        '/dashboardCoordenador/:path*',
+        '/dashboardProfessor/:path*',
     ],
 
       } 

@@ -25,7 +25,11 @@ export default function DashboardCoordenadorLayout({
 }) {
 
 
-
+   {/** componentizar essa barra lateral aside
+      dar vida para ela
+      torná-la responsiva e interativa
+      clonar com ela algumas asides de famosos sites
+  */}
   return (
    <UserProviderFromProviders>
     <html lang="pt-br">
@@ -59,7 +63,7 @@ export default function DashboardCoordenadorLayout({
         src={salas}
         className={styles.stylesSalas}
         />
-           <ActiveLink href="/dashboardAluno"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
+           <ActiveLink href="/dashboardCoordenador"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -68,7 +72,7 @@ export default function DashboardCoordenadorLayout({
         src={usuario}
         className={styles.stylesUsuario}
         />
-           <ActiveLink href="/dashboardAluno"><h1 className={styles.stylesH1}>Usuário</h1></ActiveLink>
+           <ActiveLink href="/dashboardCoordenador/usuario"><h1 className={styles.stylesH1}>Usuário</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -77,7 +81,7 @@ export default function DashboardCoordenadorLayout({
         src={desempenho}
         className={styles.stylesDesempenho}
         />
-           <ActiveLink href="/dashboardAluno"><h1 className={styles.stylesH1}>Desempenho</h1></ActiveLink>
+           <ActiveLink href="/dashboardCoordenador"><h1 className={styles.stylesH1}>Desempenho</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -86,7 +90,7 @@ export default function DashboardCoordenadorLayout({
         src={mural}
         className={styles.stylesMural}
         />
-      <ActiveLink href="/dashboardAluno"><h1 className={styles.stylesH1}>Mural</h1></ActiveLink>
+      <ActiveLink href="/dashboardCoordenador"><h1 className={styles.stylesH1}>Mural</h1></ActiveLink>
        </div>
 
 

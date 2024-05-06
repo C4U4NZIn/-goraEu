@@ -1,8 +1,7 @@
 'use client';
-import { useUserContext, userContext } from "@/contexts";
-import { userContextType } from "@/contexts";
+import { useUserContext} from "@/contexts";
 import React, { useEffect , useState } from "react";
-import Natalia from '../salas/images/image 25Natália.svg'
+import Natalia from './images/image 25Natália.svg'
 import Delete from './images/lixeira 1.svg'
 import EditProfile from './images/lapis 2.svg'
 import Image from "next/image";
@@ -38,7 +37,7 @@ import {
    alunoFormUpdate
  } from "./zod/usuario";
 import UpdateComponent from "./components/update";
-import { useModalAluno } from "./modals/zustand/useModalAluno";
+import { useModalProfessor } from "./modals/zustand/useProfessorModal";
 export  type updateFieldType = {
     nameField:string;
     widthContainer:number;
@@ -50,6 +49,7 @@ export  type updateFieldType = {
     otpCode?:string;
   
   }
+  {/** infelizmente esse código todo era pra tá divido em mais de 10 arquivos e não está... */}
 export default function Usuario(){
     // realizar posteriormente o processo de componentização
     //todos os componentes serão componentizados- redundancia
@@ -61,7 +61,7 @@ export default function Usuario(){
     const [otp , setOtp] = useState<string>('');
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
-    const {isOpen , open , close} = useModalAluno();
+    const {isOpen , open} = useModalProfessor();
     const {
       register,
       handleSubmit,
@@ -149,6 +149,7 @@ export default function Usuario(){
         return ""
       }
       
+      {/** funções de debug */}
       useEffect(()=>{
         console.log(isOpenDelete);
         console.log(isOpenEdit);
@@ -165,6 +166,9 @@ export default function Usuario(){
       
      <ContainerPage>
         {/**Componente de imagem e botões*/}
+        {/** Alterar apenas a imagem para um avatar padrão da material UI
+         * Depois fazer tela de update de imagem
+         */}
         <ContainerImageAndButtons>
             <ContainerImage>
 

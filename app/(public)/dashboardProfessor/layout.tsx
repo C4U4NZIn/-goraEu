@@ -68,7 +68,7 @@ export default function DashboardProfessorLayout({
         src={usuario}
         className={styles.stylesUsuario}
         />
-           <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Usuário</h1></ActiveLink>
+           <ActiveLink href="/dashboardProfessor/usuario"><h1 className={styles.stylesH1}>Usuário</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image

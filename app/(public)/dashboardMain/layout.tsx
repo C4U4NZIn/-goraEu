@@ -11,7 +11,7 @@ import usuario from './image/do-utilizador (2) 1.svg'
 import salas from './image/casa 1.svg'
 import stylesChildren from './css/children.module.css'
 import { UserProviderFromProviders } from '@/providers';
-import ModalAluno from './usuario/modals/modal/modalAluno';
+import { Toaster } from 'sonner';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -100,7 +100,10 @@ export default function DashboardMainLayout({
    
 
     <div className={stylesChildren.containerChildrens}>
+       <>
       {children}  
+       </>
+       <Toaster richColors position='top-center'/>
     </div>
  
 

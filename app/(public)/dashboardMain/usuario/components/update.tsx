@@ -35,6 +35,7 @@ import OtpInput from 'react-otp-input';
 import { useEffect } from 'react';
 import { useModalAluno } from '../modals/zustand/useModalAluno';
 import { useUserContext } from '@/contexts';
+import { toast } from "sonner";
 type ErrorsType = {
     [key:string]:{message:string};
 }
@@ -175,15 +176,9 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
        }
       const handleSubmitPasswordComponent = (data:userFormTypeUpdate) =>{
         console.log(data);
-       }
-      const goToNextStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
-     event?.preventDefault();
-     setStepExclude(stepExclude+1);
-       }
-      const goToPreviusStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
-       event?.preventDefault();
-       setStepExclude(stepExclude-1);
-       }
+      }
+      let isLengthValidOtp = otpCode?.length === 4;
+
      
       //mesmo truque do middleware
       const strToRegisterUpdateField = nameField.toLowerCase();
@@ -200,41 +195,39 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
       const telefone = watch('telefone');
       const password = watchPassword('password');
       
-    let isLengthValidOtp = otpCode?.length === 4;
 
-     const verifyOtpCodeProps = async () =>{
-      let response;    
-      if(!isLengthValidOtp && otpCode){
-        response = await verifyCode({
-         id:userLogin?.id,
-         currentCode:otpCode
-        })          
-        const isValidOtpUser = response?.isValidOtpCode;
-        const returnedCode = response?.returnedCode;
-        if(returnedCode){
-         setVerifiedCode(returnedCode);
-        }
-       
-        if(!isValidOtpUser){
-          setIsValidOtp(false);
-        }
-        setIsValidOtp(true);
+     
+     const goToNextStep = async (event?:React.MouseEvent<HTMLButtonElement>) =>{
+       let response;    
+       event?.preventDefault();
+      if(isLengthValidOtp && otpCode){
 
- 
+          response = await verifyCode({
+           id:userLogin?.id,
+           currentCode:otpCode
+          }) 
+            
+          const isValidOtpUser = response?.isValidOtpCode;
+     
+          console.log(isValidOtp);
+           if(isValidOtpUser){
+            
+             setStepExclude(stepExclude+1);
+           }else{
+             toast.error('Digite um código válido!');
+           }
+      }
         }
-     }
-
-     useEffect(()=>{
-       if(otpCode?.length === 4){
-         verifyOtpCodeProps();
+       const goToPreviusStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
+        event?.preventDefault();
+        setStepExclude(stepExclude-1);
         }
-
-     },[otpCode])
 
      const isOtpValid = otpCode === verifiedCode;
 
 
-      console.log(isOtpValid);
+    console.log("código correto=>",verifiedCode);
+    console.log("Ele é válido?=>",isValidOtp);
   
       return(
     <>

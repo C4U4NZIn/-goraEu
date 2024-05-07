@@ -6,13 +6,15 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 
 export type alunoContextType  = {
-
+  DataClass:any[]
 }
-
+//Que Deus me perdoe por isso...
+//vejo mais vantagem em fazer a requisição na página mesmo e fazer a lógica por lá
+//depois mudo a cagada
 const alunoContext = createContext({} as alunoContextType);
 
 const AlunoProvider = () => {
-
+   
 }
 export const useUserContext = () =>{
     

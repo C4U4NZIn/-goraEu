@@ -6,13 +6,55 @@ import planeta from './images/image 47planeta.svg'
 import jose from './images/image 36José.svg'
 import { useUserContext } from '@/contexts'
 import AvatarTemplate from '../../usuario/avatar';
+import { convertBufferToImage } from '@/default';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import api from '@/app/services/__api';
+export type dataAlunoClass = {
+    DataClass:any[]
+}
+
+
+
 
 
 export default function Salas(){
  
     const {userLogin} = useUserContext();
     //const image = convertBufferToImage(userLogin?.avatar);
+    const [salas , setSalas] = useState<any[]>([]);
+    
     const username = userLogin?.username;
+    const image = convertBufferToImage(userLogin?.avatar);
+    const router = useRouter();
+    const goToClassById = () =>{
+
+    }
+    const alunoId = userLogin?.id;
+
+    const getAllSalas = async () =>{
+        let salas
+         const AllSalasHavingAluno = await api.post('/coordenador/getAllSalas',{
+            alunoId:alunoId
+         })
+         console.log(AllSalasHavingAluno);
+         if(AllSalasHavingAluno.data.status === 202){
+            salas = AllSalasHavingAluno.data.data;
+         }
+
+         setSalas(salas);
+    }
+
+    useEffect(()=>{
+        getAllSalas();
+    },[])
+
+    setTimeout(()=>{
+        console.log(salas);
+        
+    },1500)
+
 
     return(
 
@@ -55,7 +97,7 @@ export default function Salas(){
 
 
         </div>
-
+       {/** containerTemplate - styled components */}
         <div className={styles.containerCardClass}>
 
             <div className={styles.cardClass}>

@@ -40,15 +40,15 @@ export default function middleware(request:NextRequest){
         // e ele for aluno
       if(role === 'aluno'){
         // é redirecionado para seu dashboard
-        const dashboardAlunoUrl = new URL('/dashboardMain' , request.url);
+        const dashboardAlunoUrl = new URL('/dashboardMain/usuario' , request.url);
         return NextResponse.redirect(dashboardAlunoUrl)
     }else if(role === 'coordenador') {
         // se o usuário for coordenador
-        const dashboardCoordenadorUrl = new URL('/dashboardCoordenador', request.url);
+        const dashboardCoordenadorUrl = new URL('/dashboardCoordenador/usuario', request.url);
         return NextResponse.redirect(dashboardCoordenadorUrl);
       } else if(role === 'professor') {
         // se o usuário for professor
-        const dashboardProfessorUrl = new URL('/dashboardProfessor', request.url);
+        const dashboardProfessorUrl = new URL('/dashboardProfessor/usuario', request.url);
         return NextResponse.redirect(dashboardProfessorUrl);
       }
     }

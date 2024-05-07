@@ -141,6 +141,7 @@ type message = {
     status:number;
 }
 
+
 //invés de fazer os 3 em 3 contextos diferentes, infelizmente vou fazer em um contexto só
 //pq eu to - infelizmente-sem tempo pra pensar e isso me quebra por dentro
 //meu código não está nem um pouco organizado
@@ -158,11 +159,14 @@ export type userContextType = {
     updateAlunoByPartialFields:(updateAluno:updateAlunoPartial)=> Promise<message | undefined>;
     updateProfessorByPartialFields:(updateProfessor:updateProfessorPartial)=> Promise<message | undefined>;
     updateCoordenadorByPartialFields:(updateCoordenador:updateCoordenadorPartial)=>Promise<message|undefined>;
+    salas:any[];
 }
 
 
  const userContext = createContext({} as userContextType);  
  const UserProvider = ({children}:{children:React.ReactNode}) => {
+ 
+    const [salas , setSalas] = useState<any[]>([]);
 
     const [user , setUser] = useState<userType | undefined>(
      {} as userType
@@ -400,6 +404,7 @@ export type userContextType = {
                     }
             } )   
                 setRole(newUser.role)
+                getAllSalas(newUser.id);
                 break;
                default:
                 console.log('Algo deu errado no servidor! Tente novamente!');
@@ -526,15 +531,33 @@ export type userContextType = {
      }
 
 
+     const getAllSalas = async (alunoId:string) =>{
+        let salas
+        if(alunoId){
+            const AllSalasHavingAluno = await api.post('/coordenador/getAllSalas',{
+               alunoId:alunoId
+            })
+            console.log(AllSalasHavingAluno);
+            if(AllSalasHavingAluno.data.status === 202){
+               salas = Object.values(AllSalasHavingAluno.data.data);
+               setSalas(salas);
+               
+            }
+
+        }
+        console.log(salas);
+    }
+
+    
     useEffect(() => {
-       atualizarDataUser();
-      },[]);
-      useEffect(()=>{
+        atualizarDataUser();
+    },[]);
+    useEffect(()=>{
         atualizarUserToken();
-      },[])
+    },[])
 
 
-   const values = { updateCoordenadorByPartialFields, updateProfessorByPartialFields , updateAlunoByPartialFields ,  verifyCode , sendEmailToUser , role , userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
+   const values = {salas , updateCoordenadorByPartialFields, updateProfessorByPartialFields , updateAlunoByPartialFields ,  verifyCode , sendEmailToUser , role , userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
 
   return (
       <userContext.Provider value={values}>

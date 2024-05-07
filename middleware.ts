@@ -44,7 +44,7 @@ export default function middleware(request:NextRequest){
         return NextResponse.redirect(dashboardAlunoUrl)
     }else if(role === 'coordenador') {
         // se o usuário for coordenador
-        const dashboardCoordenadorUrl = new URL('/dashboardCoordenador/usuario', request.url);
+        const dashboardCoordenadorUrl = new URL('/dashboardCoordenador', request.url);
         return NextResponse.redirect(dashboardCoordenadorUrl);
       } else if(role === 'professor') {
         // se o usuário for professor

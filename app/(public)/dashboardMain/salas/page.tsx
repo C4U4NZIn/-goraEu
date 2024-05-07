@@ -21,9 +21,9 @@ export type dataAlunoClass = {
 
 export default function Salas(){
  
-    const {userLogin} = useUserContext();
+    const {userLogin , salas} = useUserContext();
     //const image = convertBufferToImage(userLogin?.avatar);
-    const [salas , setSalas] = useState<any[]>([]);
+
     
     const username = userLogin?.username;
     const image = convertBufferToImage(userLogin?.avatar);
@@ -31,29 +31,12 @@ export default function Salas(){
     const goToClassById = () =>{
 
     }
-    const alunoId = userLogin?.id;
+    
+    
+    console.log("todas as salas que o aluno está veinculado" ,salas);
 
-    const getAllSalas = async () =>{
-        let salas
-         const AllSalasHavingAluno = await api.post('/coordenador/getAllSalas',{
-            alunoId:alunoId
-         })
-         console.log(AllSalasHavingAluno);
-         if(AllSalasHavingAluno.data.status === 202){
-            salas = AllSalasHavingAluno.data.data;
-         }
+  
 
-         setSalas(salas);
-    }
-
-    useEffect(()=>{
-        getAllSalas();
-    },[])
-
-    setTimeout(()=>{
-        console.log(salas);
-        
-    },1500)
 
 
     return(
@@ -98,7 +81,11 @@ export default function Salas(){
 
         </div>
        {/** containerTemplate - styled components */}
-        <div className={styles.containerCardClass}>
+
+      
+
+        {salas.map((salas)=>(
+        <div className={styles.containerCardClass} key={salas.salaId}>
 
             <div className={styles.cardClass}>
                 <div className={styles.cardTop}>
@@ -106,7 +93,7 @@ export default function Salas(){
                 </div>
 
                 <div className={styles.titleImageContainer}>
-                 <h2>Física B</h2>
+                 <h2>{salas.salaName}</h2>
 
                 
                     <Image
@@ -127,7 +114,7 @@ export default function Salas(){
                         className={styles.dimensionImage}
                         priority
                         />
-                        <h2 className={styles.h2Name}>José Neto</h2>
+                        <h2 className={styles.h2Name}>{salas.professorName}</h2>
                     </div>
 
                     <h3 className={styles.colorText}> Sem atividades </h3>
@@ -137,6 +124,10 @@ export default function Salas(){
             </div>
 
         </div>
+           
+        ))}
+
+
 
         </div>
         </>

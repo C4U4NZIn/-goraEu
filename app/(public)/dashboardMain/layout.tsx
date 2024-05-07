@@ -14,7 +14,12 @@ import { UserProviderFromProviders } from '@/providers';
 import { Toaster } from 'sonner';
 
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter(
+  {
+     subsets: ['latin']
+   },
+
+)
 
 
 
@@ -29,6 +34,8 @@ export default function DashboardMainLayout({
 
   return (
    <UserProviderFromProviders>
+
+    
     <html lang="pt-br">
       <body className={globalStyle.body}>
       

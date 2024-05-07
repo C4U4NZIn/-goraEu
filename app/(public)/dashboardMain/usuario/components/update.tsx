@@ -188,7 +188,7 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
             toast.success(response?.messageFromApi);
             console.log('resposta=>',response?.messageFromApi);
             setTimeout(()=>{
-           router.push('/dashboardMain/usuario');
+            router.push('/dashboardMain/usuario')
            window.location.reload();
             },1000);
 

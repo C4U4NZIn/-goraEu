@@ -26,6 +26,7 @@ import OtpInput from 'react-otp-input';
 import { useModalProfessor } from '../modals/zustand/useProfessorModal';
 import { useUserContext } from '@/contexts';
 import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
     const DefaultContainerExclude = styled.div`
      width: 100%;
      height: 100%;
@@ -50,7 +51,8 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
     const {open , close} = useModalProfessor();
     const [stepExclude , setStepExclude] = useState<number>(0);
     const transformProps = -stepExclude*29.25 + 29.25;
-    const {verifyCode ,  userLogin} = useUserContext();
+    const {verifyCode ,  userLogin, updateProfessorByPartialFields } = useUserContext();
+    const router = useRouter();
     const useFormFactoryParcial = (nameField:string) =>{
    
          let field = nameField.toLowerCase();
@@ -104,30 +106,51 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
        //envia o dado do input pra função do contexto atualizar 
        //os dados do usuário
        //recebe a confirmação do toast de update
-      const handleSubmitUserUpdateComponent = (data:userFormTypeUpdate) =>{
-        let value;
+      const handleSubmitUserUpdateComponent = async (data:userFormTypeUpdate) =>{
+        let fieldName =nameField.toString().toLowerCase();
         // erro de tipagem
-         switch(nameField.toLowerCase()){
-          case 'email':
-           if('email' in data){
-             value = data.email;
-           }
+       let response
+       
+        if(fieldName){
+         response = await updateProfessorByPartialFields({
+          data,
+          fieldName
+         });
+        if(response?.status === 202){
+          toast.success(response?.messageFromApi);
+          console.log("resposta=>",response?.messageFromApi);
+        }
 
-             break;
-          case 'telefone':
-             if('telefone' in data){
-                 value = data.telefone;
-             }
-            break;
-          
-            default:
-              console.log('Porque tu vens pra cá?');
-          }
-      
-        console.log("pq dá certo?=>",data,value);  
+
+        }
+        setTimeout(()=>{
+          router.push('/dashboardProfessor/usuario');
+          window.location.reload();
+        },1000) 
+        
+
+
        }
-      const handleSubmitPasswordComponent = (data:userFormTypeUpdate) =>{
-        console.log(data);
+      const handleSubmitPasswordComponent = async (data:userFormTypeUpdate) =>{
+        let fieldName = nameField.toString().toLowerCase();
+        let response
+        if(fieldName){
+        response = await updateProfessorByPartialFields({
+          data,
+          fieldName
+        });
+         if(response?.status === 202){
+            toast.success(response?.messageFromApi);
+            console.log('resposta=>',response?.messageFromApi);
+            setTimeout(()=>{
+           router.push('/dashboardProfessor/usuario');
+           window.location.reload();
+            },1000);
+
+         }else{
+           toast.error(response?.messageFromApi);
+         }
+        }
       }
       let isLengthValidOtp = otpCode?.length === 4;
       

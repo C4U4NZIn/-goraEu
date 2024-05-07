@@ -13,7 +13,7 @@
     "@chakra-ui/toast": "^7.0.2",
     "@hookform/resolvers": "^3.3.2",
     "@mui/icons-material": "^5.15.13",
-    "@mui/material": "^5.15.13",
+    "@mui/material": "^5.15.16",
     "@types/bcryptjs": "^2.4.6",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.6.7",

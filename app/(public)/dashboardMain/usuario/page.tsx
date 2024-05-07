@@ -32,10 +32,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
    userFormExclude,
-   userFormSchemaPassword,
-   userFormSchemaUpdate,
-   userFormUpdateUser,
-   alunoFormUpdate
+   userFormSchemaPassword
  } from "./zod/usuario";
 import UpdateComponent from "./components/update";
 import { useModalAluno } from "./modals/zustand/useModalAluno";
@@ -50,6 +47,8 @@ export  type updateFieldType = {
     otpCode?:string;
   
   }
+  import AvatarTemplate from "../../usuario/avatar";
+  import { convertBufferToImage } from "@/default";
 export default function Usuario(){
     // realizar posteriormente o processo de componentização
     //todos os componentes serão componentizados- redundancia
@@ -62,6 +61,8 @@ export default function Usuario(){
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     const {isOpen , open , close} = useModalAluno();
+    const username = userLogin?.username;
+    const image = convertBufferToImage(userLogin?.avatar);
     const {
       register,
       handleSubmit,
@@ -168,30 +169,22 @@ export default function Usuario(){
         <ContainerImageAndButtons>
             <ContainerImage>
 
-                { userLogin?.avatar === "" ? (
-                    <Image
-                    style={{
-                        width: '9.6875rem',
-                        height: '9.733125rem',
-                        borderRadius: '281.5px',
-                    }}
-                    alt="photoProfileUser"
-                    priority
-                    src={userLogin.avatar}
-                    />
+            {
+                 (image === null) &&  username ? (
+                        <>
+                   <AvatarTemplate username={username}/>
+                        </>
 
-                ):(
-                    <Image
-                    style={{
-                        width: '9.6875rem',
-                        height: '9.733125rem',
-                        borderRadius: '281.5px',
-                    }}
-                    alt="photoProfileUser"
-                    priority
-                    src={Natalia}
-                    />
-                )}
+                    ):(
+                <>
+                     <Image
+                        priority
+                        alt=''
+                        src={Natalia}
+                        />
+                   
+                </>
+                    ) }
 
             </ContainerImage>
         {/** Botoes que vão abrir outros componentes*/}

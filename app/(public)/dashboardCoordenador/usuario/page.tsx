@@ -35,6 +35,8 @@ import {
  } from "./zod/usuario";
 import UpdateComponent from "./components/update";
 import { useModalCoordenador } from "./modals/zustand/useModalCoordenador";
+import AvatarTemplate from "../../usuario/avatar";
+import { convertBufferToImage } from "@/default";
 export  type updateFieldType = {
     nameField:string;
     widthContainer:number;
@@ -58,6 +60,8 @@ export default function Usuario(){
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     const {isOpen , open} = useModalCoordenador();
+    const username = userLogin?.username;
+    const image = userLogin?.avatar;
     const {
       register,
       handleSubmit,
@@ -154,30 +158,27 @@ export default function Usuario(){
         <ContainerImageAndButtons>
             <ContainerImage>
 
-                { userLogin?.avatar === "" ? (
-                    <Image
-                    style={{
-                        width: '9.6875rem',
-                        height: '9.733125rem',
-                        borderRadius: '281.5px',
-                    }}
-                    alt="photoProfileUser"
-                    priority
-                    src={userLogin.avatar}
-                    />
+              {/** melhorar isso daq - só pra não aparecer a foto da natália mesmo
+              /**melhorar isso , pois vai ter uma seção para ele alterar a foto de perfil */
+                }
+    
+            {
+             
+                 (image !== null) &&  username ? (
+                        <>
+                   <AvatarTemplate username={username}/>
+                        </>
 
-                ):(
-                    <Image
-                    style={{
-                        width: '9.6875rem',
-                        height: '9.733125rem',
-                        borderRadius: '281.5px',
-                    }}
-                    alt="photoProfileUser"
-                    priority
-                    src={Natalia}
-                    />
-                )}
+                    ):(
+                <>
+                     <Image
+                        priority
+                        alt=''
+                        src={Natalia}
+                        />
+                   
+                </>
+                    ) }
 
             </ContainerImage>
         {/** Botoes que vão abrir outros componentes*/}

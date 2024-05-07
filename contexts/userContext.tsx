@@ -38,7 +38,7 @@ type professorLoginType = {
     emailInstitutional:string;
     phonePersonal:string;
     phoneInstitutional:string;
-    avatar:string;
+    avatar:any|undefined;
     username:string;
     role:string;
     password:string;
@@ -59,7 +59,7 @@ type alunoLoginType = {
     emailInstitutional:string;
     phonePersonal:string;
     phoneInstitutional:string;
-    avatar:string;
+    avatar:any | undefined;
     username:string;
     role:string;
     password:string;
@@ -87,7 +87,7 @@ type coordenadorLoginType = {
     emailInstitutional:string;
     phonePersonal:string;
     phoneInstitutional:string;
-    avatar:string;
+    avatar:any|undefined;
     username:string;
     role:string;
     password:string;
@@ -124,6 +124,28 @@ type dataFromOtpRequestType = {
 type sendEmailToUserType = {
     email:string | undefined;
 }
+type updateAlunoPartial = {
+    data:any;
+    fieldName:string
+}
+type updateProfessorPartial = {
+    data:any;
+    fieldName:string;
+}
+type updateCoordenadorPartial = {
+    data:any;
+    fieldName:string;
+}
+type message = {
+    messageFromApi:any;
+    status:number;
+}
+
+//invés de fazer os 3 em 3 contextos diferentes, infelizmente vou fazer em um contexto só
+//pq eu to - infelizmente-sem tempo pra pensar e isso me quebra por dentro
+//meu código não está nem um pouco organizado
+//meu raciocinio já foi morto há bastante tempo
+//dividir a lógica pra 3 contextos pq senão vai dar merda
 export type userContextType = {
     user: userType | undefined;
     userLogin:userLoginType | undefined;
@@ -133,6 +155,9 @@ export type userContextType = {
     role:string | undefined;
     sendEmailToUser:(data:sendEmailToUserType) => Promise<feedbackApi | undefined>;
     verifyCode:(data:otpType) => Promise<dataFromOtpRequestType | undefined>;
+    updateAlunoByPartialFields:(updateAluno:updateAlunoPartial)=> Promise<message | undefined>;
+    updateProfessorByPartialFields:(updateProfessor:updateProfessorPartial)=> Promise<message | undefined>;
+    updateCoordenadorByPartialFields:(updateCoordenador:updateCoordenadorPartial)=>Promise<message|undefined>;
 }
 
 
@@ -329,7 +354,7 @@ export type userContextType = {
                     avatar:newUser.avatar,
                     email:newUser.email,
                     emailInstitutional:newUser.emailInstitutional,
-                    phonePersonal:newUser.phonePersonal,
+                    phonePersonal:newUser.telefone1,
                     phoneInstitutional:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
@@ -352,7 +377,7 @@ export type userContextType = {
                     avatar:newUser.avatar,
                     email:newUser.email,
                     emailInstitutional:newUser.emailInstitutional,
-                    phonePersonal:newUser.phonePersonal,
+                    phonePersonal:newUser.telefone,
                     phoneInstitutional:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
@@ -388,6 +413,118 @@ export type userContextType = {
        }
 
      }
+     const updateAlunoByPartialFields = async  (updateAluno:updateAlunoPartial) =>{
+      
+         const {fieldName , data} = updateAluno;
+         let fieldUpdate
+ 
+
+         if('telefone' in data){
+          fieldUpdate = data.telefone;
+         }
+         if('email' in data){
+         fieldUpdate = data.email
+         }
+         if('password' in data){
+            fieldUpdate = data.password;
+         }
+
+        try {
+            if(fieldUpdate){
+                const updatedAlunoByPartialField = await api.post('/aluno/updatePartial',{
+                    idAluno:userLogin?.id,
+                    fieldName:fieldName,
+                    fieldUpdate:fieldUpdate
+                });
+                if(updatedAlunoByPartialField){
+                return {
+                    status:updatedAlunoByPartialField.data.status,
+                    messageFromApi:updatedAlunoByPartialField.data.message
+                }
+                }
+
+            }
+
+        } catch (error) {
+            
+        }
+
+
+     }
+    
+     const updateProfessorByPartialFields = async (updateProfessor:updateProfessorPartial) =>{
+     
+        const {fieldName , data} = updateProfessor;
+        let fieldUpdate
+
+
+        if('telefone' in data){
+         fieldUpdate = data.telefone;
+        }
+        if('email' in data){
+        fieldUpdate = data.email
+        }
+        if('password' in data){
+           fieldUpdate = data.password;
+        }
+
+       try {
+           if(fieldUpdate){
+               const updatedProfessorByPartialField = await api.post('/professor/updatePartial',{
+                   idProfessor:userLogin?.id,
+                   fieldName:fieldName,
+                   fieldUpdate:fieldUpdate
+               });
+               if(updatedProfessorByPartialField){
+               return {
+                   status:updatedProfessorByPartialField.data.status,
+                   messageFromApi:updatedProfessorByPartialField.data.message
+               }
+               }
+
+           }
+
+       } catch (error) {
+           
+       }
+
+     }
+     const updateCoordenadorByPartialFields = async (updateCoordenador:updateCoordenadorPartial) =>{
+        const {fieldName , data} = updateCoordenador;
+        let fieldUpdate
+
+
+        if('telefone' in data){
+         fieldUpdate = data.telefone;
+        }
+        if('email' in data){
+        fieldUpdate = data.email
+        }
+        if('password' in data){
+           fieldUpdate = data.password;
+        }
+
+       try {
+           if(fieldUpdate){
+               const updatedCoordenadorByPartialField = await api.post('/coordenador/updatePartial',{
+                   idAluno:userLogin?.id,
+                   fieldName:fieldName,
+                   fieldUpdate:fieldUpdate
+               });
+               if(updatedCoordenadorByPartialField){
+               return {
+                   status:updatedCoordenadorByPartialField.data.status,
+                   messageFromApi:updatedCoordenadorByPartialField.data.message
+               }
+               }
+
+           }
+
+       } catch (error) {
+           
+       }
+     }
+
 
     useEffect(() => {
        atualizarDataUser();
@@ -397,7 +534,7 @@ export type userContextType = {
       },[])
 
 
-   const values = { verifyCode , sendEmailToUser , role , userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
+   const values = { updateCoordenadorByPartialFields, updateProfessorByPartialFields , updateAlunoByPartialFields ,  verifyCode , sendEmailToUser , role , userLogin , setUserLogin,  user ,  createUser , authLogin , jwtToken , setUser }
 
   return (
       <userContext.Provider value={values}>

@@ -11,7 +11,7 @@ import usuario from '../dashboardMain/image/do-utilizador (2) 1.svg'
 import salas from '../dashboardMain/image/casa 1.svg'
 import stylesChildren from '../dashboardMain/css/children.module.css'
 import { UserProviderFromProviders } from '@/providers';
-
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -103,7 +103,10 @@ export default function DashboardCoordenadorLayout({
    
 
     <div className={stylesChildren.containerChildrens}>
+      <>
       {children}  
+      </>
+      <Toaster richColors position='top-center'/>
     </div>
  
 

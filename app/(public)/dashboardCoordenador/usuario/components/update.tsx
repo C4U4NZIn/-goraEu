@@ -25,6 +25,7 @@ import { useState } from 'react';
 import { useModalCoordenador } from '../modals/zustand/useModalCoordenador';
 import { useUserContext } from '@/contexts';
 import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
     const DefaultContainerExclude = styled.div`
      width: 100%;
      height: 100%;
@@ -49,10 +50,10 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
     const {close} = useModalCoordenador();
     const [stepExclude , setStepExclude] = useState<number>(0);
     const transformProps = -stepExclude*29.25 + 29.25;
-    const {verifyCode ,  userLogin} = useUserContext();
+    const {verifyCode ,  userLogin , updateCoordenadorByPartialFields} = useUserContext();
     let isLengthValidOtp = otpCode?.length === 4;
     const isOtpValid = otpCode === verifiedCode;
-     
+    const router = useRouter();
     const useFormFactoryParcial = (nameField:string) =>{
          let field = nameField.toLowerCase();
          let resolverUser;
@@ -105,31 +106,50 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
        //envia o dado do input pra função do contexto atualizar 
        //os dados do usuário
        //recebe a confirmação do toast de update
-      const handleSubmitUserUpdateComponent = (data:userFormTypeUpdate) =>{
-        let value;
+      const handleSubmitUserUpdateComponent = async (data:userFormTypeUpdate) =>{
+        let fieldName = nameField.toString().toLowerCase();
         // erro de tipagem
-         switch(nameField.toLowerCase()){
-          case 'email':
-           if('email' in data){
-             value = data.email;
-           }
+        let response;
 
-             break;
-          case 'telefone':
-             if('telefone' in data){
-                 value = data.telefone;
-             }
-            break;
-          
-            default:
-              console.log('Porque tu vens pra cá?');
+        if(fieldName){
+          response = await updateCoordenadorByPartialFields({
+           data,
+           fieldName
+          })
+          if(response?.status === 202){
+            toast.success(response?.messageFromApi);
+            console.log("resposta=>",response?.messageFromApi);
           }
-      
-        console.log("pq dá certo?=>",data,value);  
+         }
+         //dá reload pra ele atualizar com os novos dados do user
+         setTimeout(()=>{
+           router.push('/dashboardCoordenador/usuario');
+           window.location.reload();
+ 
+         },1000)
+       
        }
     
-      const handleSubmitPasswordComponent = (data:userFormTypeUpdate) =>{
-        console.log(data);
+      const handleSubmitPasswordComponent = async (data:userFormTypeUpdate) =>{
+        let fieldName = nameField.toString().toLowerCase();
+        let response
+        if(fieldName){
+        response = await updateCoordenadorByPartialFields({
+          data,
+          fieldName
+        });
+         if(response?.status === 202){
+            toast.success(response?.messageFromApi);
+            console.log('resposta=>',response?.messageFromApi);
+            setTimeout(()=>{
+           router.push('/dashboardCoordenador/usuario');
+           window.location.reload();
+            },1000);
+
+         }else{
+           toast.error(response?.messageFromApi);
+         }
+        }
       }
 
      const goToNextStep = async (event?:React.MouseEvent<HTMLButtonElement>) =>{

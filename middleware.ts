@@ -69,11 +69,11 @@ export default function middleware(request:NextRequest){
           // e ele for um aluno
           if(role === 'aluno'){
             // então ele volta para seu dashboard
-            const dashboardAlunoUrl = new URL('/dashboardMain' , request.url);
+            const dashboardAlunoUrl = new URL('/dashboardMain/usuario' , request.url);
             return NextResponse.redirect(dashboardAlunoUrl)
           }else{
               // então ele é redirecionado para seu próprio dashboard
-              const dashboardRole = new URL(`/dashboard${pathRole}`,request.url);
+              const dashboardRole = new URL(`/dashboard${pathRole}/usuario`,request.url);
               return NextResponse.redirect(dashboardRole);
           }
           }else{

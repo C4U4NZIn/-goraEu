@@ -5,10 +5,14 @@ import Image from 'next/image'
 import planeta from './images/image 47planeta.svg'
 import jose from './images/image 36José.svg'
 import { useUserContext } from '@/contexts'
+import AvatarTemplate from '../../usuario/avatar';
+
+
 export default function Salas(){
  
     const {userLogin} = useUserContext();
-
+    //const image = convertBufferToImage(userLogin?.avatar);
+    const username = userLogin?.username;
 
     return(
 
@@ -20,16 +24,25 @@ export default function Salas(){
         <div className={styles.containerImageText}>
 
             <div className={styles.containerImage}>
-          <Image
-          priority
-          alt=''
-          src={Natalia}
-          className={styles.styles2Image}
+                {
+                    username ? (
+                        <>
+                   <AvatarTemplate username={username}/>
+                        </>
 
-          />
+                    ):(
+                <>
+                     <Image
+                        priority
+                        alt=''
+                        src={Natalia}
+                        className={styles.styles2Image}
+                        />
+                   
+                </>
+                    ) }
             </div>
 
-        <h3 className={styles.stylesH3}>Natália Braga</h3>
 
         </div>
 

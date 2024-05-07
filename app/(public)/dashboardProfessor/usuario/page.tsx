@@ -38,6 +38,8 @@ import {
  } from "./zod/usuario";
 import UpdateComponent from "./components/update";
 import { useModalProfessor } from "./modals/zustand/useProfessorModal";
+import AvatarTemplate from "../../usuario/avatar";
+import { convertBufferToImage } from "@/default";
 export  type updateFieldType = {
     nameField:string;
     widthContainer:number;
@@ -62,6 +64,8 @@ export default function Usuario(){
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     const {isOpen , open} = useModalProfessor();
+    const username = userLogin?.username;
+    const image = convertBufferToImage(userLogin?.avatar);
     const {
       register,
       handleSubmit,
@@ -171,31 +175,22 @@ export default function Usuario(){
          */}
         <ContainerImageAndButtons>
             <ContainerImage>
+            {
+                 (image === null) &&  username ? (
+                        <>
+                   <AvatarTemplate username={username}/>
+                        </>
 
-                { userLogin?.avatar === "" ? (
-                    <Image
-                    style={{
-                        width: '9.6875rem',
-                        height: '9.733125rem',
-                        borderRadius: '281.5px',
-                    }}
-                    alt="photoProfileUser"
-                    priority
-                    src={userLogin.avatar}
-                    />
-
-                ):(
-                    <Image
-                    style={{
-                        width: '9.6875rem',
-                        height: '9.733125rem',
-                        borderRadius: '281.5px',
-                    }}
-                    alt="photoProfileUser"
-                    priority
-                    src={Natalia}
-                    />
-                )}
+                    ):(
+                <>
+                     <Image
+                        priority
+                        alt=''
+                        src={Natalia}
+                        />
+                   
+                </>
+                    ) }
 
             </ContainerImage>
         {/** Botoes que vão abrir outros componentes*/}

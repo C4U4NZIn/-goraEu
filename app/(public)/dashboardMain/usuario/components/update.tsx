@@ -36,6 +36,8 @@ import { useEffect } from 'react';
 import { useModalAluno } from '../modals/zustand/useModalAluno';
 import { useUserContext } from '@/contexts';
 import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
+import { shallow } from 'zustand/shallow';
 type ErrorsType = {
     [key:string]:{message:string};
 }
@@ -66,7 +68,8 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
     const {open , close} = useModalAluno();
     const [stepExclude , setStepExclude] = useState<number>(0);
     const transformProps = -stepExclude*29.25 + 29.25;
-    const {verifyCode ,  userLogin} = useUserContext();
+    const {verifyCode ,  userLogin , updateAlunoByPartialFields} = useUserContext();
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -144,57 +147,57 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
 
 
 
-      const fecharUpdateField = () =>{
-        isOpenUpdateField = false;
-       }
        //envia o dado do input pra função do contexto atualizar 
        //os dados do usuário
        //recebe a confirmação do toast de update
-      const handleSubmitUserUpdateComponent = (data:userFormTypeUpdate) =>{
+      const handleSubmitUserUpdateComponent = async (data:userFormTypeUpdate) =>{
         
-        let value;
-        
+  
+        let fieldName = nameField.toString().toLowerCase();
         // erro de tipagem
-         switch(nameField.toLowerCase()){
-          case 'email':
-           if('email' in data){
-             value = data.email;
-           }
+         let response  
+     
+        if(fieldName){
+         response = await updateAlunoByPartialFields({
+          data,
+          fieldName
+         })
+         if(response?.status === 202){
+           toast.success(response?.messageFromApi);
+           console.log("resposta=>",response?.messageFromApi);
+         }
+        }
+        //dá reload pra ele atualizar com os novos dados do user
+        setTimeout(()=>{
+          router.push('/dashboardMain/usuario');
+          window.location.reload();
 
-             break;
-          case 'telefone':
-             if('telefone' in data){
-                 value = data.telefone;
-             }
-            break;
-          
-            default:
-              console.log('Porque tu vens pra cá?');
-          }
+        },1000)
+       
       
-        console.log("pq dá certo?=>",data,value);  
        }
-      const handleSubmitPasswordComponent = (data:userFormTypeUpdate) =>{
-        console.log(data);
+      const handleSubmitPasswordComponent = async (data:userFormTypeUpdate) =>{
+        let fieldName = nameField.toString().toLowerCase();
+        let response
+        if(fieldName){
+        response = await updateAlunoByPartialFields({
+          data,
+          fieldName
+        });
+         if(response?.status === 202){
+            toast.success(response?.messageFromApi);
+            console.log('resposta=>',response?.messageFromApi);
+            setTimeout(()=>{
+           router.push('/dashboardMain/usuario');
+           window.location.reload();
+            },1000);
+
+         }else{
+           toast.error(response?.messageFromApi);
+         }
+        }
       }
       let isLengthValidOtp = otpCode?.length === 4;
-
-     
-      //mesmo truque do middleware
-      const strToRegisterUpdateField = nameField.toLowerCase();
-      const fieldsPossible:any = {
-        username:"username",
-        password:"password",
-        telefone:"telefone",
-        email:"email"
-      }
-   
-      let errorsDynamic:ErrorsType
-      const email = watch('email');
-      const username = watch('username');
-      const telefone = watch('telefone');
-      const password = watchPassword('password');
-      
 
      
      const goToNextStep = async (event?:React.MouseEvent<HTMLButtonElement>) =>{
@@ -218,16 +221,9 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
            }
       }
         }
-       const goToPreviusStep = (event?:React.MouseEvent<HTMLButtonElement>) =>{
-        event?.preventDefault();
-        setStepExclude(stepExclude-1);
-        }
+
 
      const isOtpValid = otpCode === verifiedCode;
-
-
-    console.log("código correto=>",verifiedCode);
-    console.log("Ele é válido?=>",isValidOtp);
   
       return(
     <>

@@ -8,7 +8,6 @@ import Image from "next/image";
 import bcrypt from 'bcryptjs'
 import {
   ContainerPage,
-  ContainerImageAndButtons,
   ButtonComponent,
   CardUserContainer,
   CardUserInfo,
@@ -36,7 +35,9 @@ import {
 import UpdateComponent from "./components/update";
 import { useModalCoordenador } from "./modals/zustand/useModalCoordenador";
 import AvatarTemplate from "../../usuario/avatar";
-import { convertBufferToImage } from "@/default";
+import CardInfoComponent from "../../components/global/info";
+import ImageContainerButton from "../../components/global/imageContainer";
+import CancelUpdate from "../../components/global/cancelUpdate";
 export  type updateFieldType = {
     nameField:string;
     widthContainer:number;
@@ -81,6 +82,9 @@ export default function Usuario(){
     }
      const fecharEdit = () =>{
         setIsOpenEdit(false);
+     }
+     const abrirEdit = () =>{
+       setIsOpenEdit(true);
      }
      const abrirDelete = async () =>{
          const response = await sendEmailToUser({
@@ -143,121 +147,36 @@ export default function Usuario(){
       const isActivePasswordField = watch('password') && !errors.password;
       const isVoidOtpField = otp !== '';
       console.log(otp);
-
-
 // quando tiver tempo componentizo isso tudo
     return(
       
      <ContainerPage>
-        {/**Componente de imagem e botões*/}
-        {/**mudar para o avatar padrão da material ui
-         * fazer um componente de image e fazer um componente 
-         * de avatar
-         * 
-        */}
-        <ContainerImageAndButtons>
-            <ContainerImage>
+      {/** componentizado */}
+      <ImageContainerButton
+       username={userLogin.username}
+       imageDefault={Natalia}
+       imageProfile={image}
+       isOpenDelete={isOpenDelete}
+       isOpenEdit={isOpenEdit}
+       openEdit={abrirEdit}
+       openDelete={abrirDelete}
+       imageDelete={Delete}
+       imageEdit={EditProfile}
+       widthButton={2.5}
+       heightButton={2.5}
+       borderRadiusButton={100}
+      />
 
-              {/** melhorar isso daq - só pra não aparecer a foto da natália mesmo
-              /**melhorar isso , pois vai ter uma seção para ele alterar a foto de perfil */
-                }
-    
-            {
-             
-                 (image !== null) &&  username ? (
-                        <>
-                   <AvatarTemplate username={username}/>
-                        </>
-
-                    ):(
-                <>
-                     <Image
-                        priority
-                        alt=''
-                        src={Natalia}
-                        />
-                   
-                </>
-                    ) }
-
-            </ContainerImage>
-        {/** Botoes que vão abrir outros componentes*/}
-       <ContainerButtons>
-       {/** button delete profile */}
-
-        { (!isOpenDelete && !isOpenEdit)  && (
-        <ButtonComponent
-        $width={2.5}
-        $height={2.5}
-        $borderRadius={100}
-        $backgroundColor="rgba(242, 105, 33, 1)"
-        onClick={abrirDelete}
-        >
-        <Image
-        alt="imgDeleteProfile"
-        priority
-        src={Delete}
-        style={{
-            width:'1.5rem',
-            height:'1.5rem'
-        }}
-        />
-        </ButtonComponent>
-        )}
-
-        {/** button edit profile */}
-        {((!isOpenEdit && !isOpenDelete) || (!isOpenDelete)) && (
-        <ButtonComponent
-        $width={2.5}
-        $height={2.5}
-        $borderRadius={100}
-        $backgroundColor="rgba(242, 105, 33, 1)"
-         onClick={()=>{setIsOpenEdit(true)}}
-        >
-
-        <Image
-        alt="imgEditProfile"
-        priority
-        src={EditProfile}
-        style={{
-            width:'1.5rem',
-            height:'1.5rem'
-        }}
-        />
-        </ButtonComponent>
-         )}
-
-
-       </ContainerButtons>
-       </ContainerImageAndButtons>
-     {/** Componente de Card das informações */}
+      {/** componentizado */}
       {(!isOpenDelete === !isOpenEdit) && (
-      <CardUserContainer $width={29.25} $height={25.9}>
-        <TopUserContainerTitle>
-            <h2>Informações</h2>
-            <span></span>
-       </TopUserContainerTitle>
-        {/**Componente de Informações */}
-        <CardUserInfo>
-        <ContainerInfoField>
-         <Label>Nome</Label>
-         <TextInfo>{userLogin?.username}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-         <Label>Email</Label>
-         <TextInfo>{userLogin?.email}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-        <Label>Telefone</Label>
-        <TextInfo>{userLogin?.phonePersonal}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-        <Label>Senha</Label>
-        <TextInfo>********</TextInfo>
-        </ContainerInfoField>
-        </CardUserInfo>
-
-      </CardUserContainer>    
+      <CardInfoComponent
+       width={29.25}
+       height={25.9}
+       username={userLogin.username}
+       email={userLogin.email}
+       telefone={userLogin.phonePersonal}
+       senha="*******"
+      />
        )}
      {/**Componente que chama
       *  a função  de excluir */}
@@ -412,11 +331,13 @@ style={{
   {(isOpenEdit && !isOpen) && (
 <>
      {/**Componente de edit que puxa um formulário de update */}
+     {/** Esse componente vai ficar aqui - só na madrugada do sábado que vem que eu arrumo */}
    <div
    style={{
     width:'29.25rem',
     height:'21rem',
     display:'flex',
+    marginLeft:'15%',
     flexDirection:'column',
     justifyContent:'center',
     alignContent:'center',
@@ -466,40 +387,20 @@ onClick={()=>{abrirUpdateFieldComponent({
 
 </CardUserContainer>   
   {/** Componente de Cancel Edit */}
-   <div
-  style={{
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'center',
-    justifyItems:'center',
-    width:'100%',
-    marginLeft:'7rem',
-    gap:'0.45rem'
-  }}
-  >
-    <h3
-    style={{
-        margin:0,
-        padding:0,
-        color:'rgba(242, 105, 33, 1)'
-    }}
-    >Clique no campo que deseja alterar</h3>
-    <h3
-    onClick={fecharEdit}
-      style={{
-        margin:0,
-        padding:0,
-        color:'rgba(242, 105, 33, 1)'
-    }}
-    >Cancelar Alteração</h3>
-  </div>
+   <CancelUpdate
+   closeEdit={fecharEdit}
+   />
    </div>
     
 </>
   )}
    {/**Update Component - isso daq é um componente
     * 1% do arquivo componentizado
+    * componentizar children ou não
+    * arrumar erro de lógica pela função open()
     */}
+
+    {/** componentizado */}
   {
     isOpen && (
       <>
@@ -513,11 +414,11 @@ onClick={()=>{abrirUpdateFieldComponent({
       children={(
       <>
       <ContainerInfoFieldExclude
-   style={{
-  display:'flex',
-  flexDirection:'column',
-  gap:'0.25rem',
-  height:'5rem'
+       style={{
+      display:'flex',
+      flexDirection:'column',
+      gap:'0.25rem',
+      height:'5rem'
      }}
        >
   {/** O onKeyPress está com dias contados

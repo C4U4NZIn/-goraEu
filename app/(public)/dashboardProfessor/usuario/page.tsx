@@ -40,6 +40,9 @@ import UpdateComponent from "./components/update";
 import { useModalProfessor } from "./modals/zustand/useProfessorModal";
 import AvatarTemplate from "../../usuario/avatar";
 import { convertBufferToImage } from "@/default";
+import CardInfoComponent from "../../components/global/info";
+import ImageContainerButton from "../../components/global/imageContainer";
+import CancelUpdate from "../../components/global/cancelUpdate";
 export  type updateFieldType = {
     nameField:string;
     widthContainer:number;
@@ -65,7 +68,7 @@ export default function Usuario(){
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     const {isOpen , open} = useModalProfessor();
     const username = userLogin?.username;
-    const image = convertBufferToImage(userLogin?.avatar);
+    const image = userLogin?.avatar;
     const {
       register,
       handleSubmit,
@@ -173,103 +176,30 @@ export default function Usuario(){
         {/** Alterar apenas a imagem para um avatar padrão da material UI
          * Depois fazer tela de update de imagem
          */}
-        <ContainerImageAndButtons>
-            <ContainerImage>
-            {
-                 (image === null) &&  username ? (
-                        <>
-                   <AvatarTemplate username={username}/>
-                        </>
-
-                    ):(
-                <>
-                     <Image
-                        priority
-                        alt=''
-                        src={Natalia}
-                        />
-                   
-                </>
-                    ) }
-
-            </ContainerImage>
-        {/** Botoes que vão abrir outros componentes*/}
-       <ContainerButtons>
-       {/** button delete profile */}
-
-        { (!isOpenDelete && !isOpenEdit)  && (
-        <ButtonComponent
-        $width={2.5}
-        $height={2.5}
-        $borderRadius={100}
-        $backgroundColor="rgba(242, 105, 33, 1)"
-        onClick={abrirDelete}
-        >
-        <Image
-        alt="imgDeleteProfile"
-        priority
-        src={Delete}
-        style={{
-            width:'1.5rem',
-            height:'1.5rem'
-        }}
-        />
-        </ButtonComponent>
-        )}
-
-        {/** button edit profile */}
-        {((!isOpenEdit && !isOpenDelete) || (!isOpenDelete)) && (
-        <ButtonComponent
-        $width={2.5}
-        $height={2.5}
-        $borderRadius={100}
-        $backgroundColor="rgba(242, 105, 33, 1)"
-         onClick={()=>{setIsOpenEdit(true)}}
-        >
-
-        <Image
-        alt="imgEditProfile"
-        priority
-        src={EditProfile}
-        style={{
-            width:'1.5rem',
-            height:'1.5rem'
-        }}
-        />
-        </ButtonComponent>
-         )}
-
-
-       </ContainerButtons>
-       </ContainerImageAndButtons>
+        <ImageContainerButton
+       username={userLogin.username}
+       imageDefault={Natalia}
+       imageProfile={image}
+       isOpenDelete={isOpenDelete}
+       isOpenEdit={isOpenEdit}
+       openEdit={abrirEdit}
+       openDelete={abrirDelete}
+       imageDelete={Delete}
+       imageEdit={EditProfile}
+       widthButton={2.5}
+       heightButton={2.5}
+       borderRadiusButton={100}
+      />
      {/** Componente de Card das informações */}
       {(!isOpenDelete === !isOpenEdit) && (
-      <CardUserContainer $width={29.25} $height={25.9}>
-        <TopUserContainerTitle>
-            <h2>Informações</h2>
-            <span></span>
-       </TopUserContainerTitle>
-        {/**Componente de Informações */}
-        <CardUserInfo>
-        <ContainerInfoField>
-         <Label>Nome</Label>
-         <TextInfo>{userLogin?.username}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-         <Label>Email</Label>
-         <TextInfo>{userLogin?.email}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-        <Label>Telefone</Label>
-        <TextInfo>{userLogin?.phonePersonal}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-        <Label>Senha</Label>
-        <TextInfo>********</TextInfo>
-        </ContainerInfoField>
-        </CardUserInfo>
-
-      </CardUserContainer>    
+      <CardInfoComponent
+      width={29.25}
+      height={25.9}
+      username={userLogin.username}
+      email={userLogin.email}
+      telefone={userLogin.phonePersonal}
+      senha="*******"
+      />
        )}
      {/**Componente que chama
       *  a função  de excluir */}
@@ -478,33 +408,9 @@ onClick={()=>{abrirUpdateFieldComponent({
 
 </CardUserContainer>   
   {/** Componente de Cancel Edit */}
-   <div
-  style={{
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'center',
-    justifyItems:'center',
-    width:'100%',
-    marginLeft:'7rem',
-    gap:'0.45rem'
-  }}
-  >
-    <h3
-    style={{
-        margin:0,
-        padding:0,
-        color:'rgba(242, 105, 33, 1)'
-    }}
-    >Clique no campo que deseja alterar</h3>
-    <h3
-    onClick={fecharEdit}
-      style={{
-        margin:0,
-        padding:0,
-        color:'rgba(242, 105, 33, 1)'
-    }}
-    >Cancelar Alteração</h3>
-  </div>
+    <CancelUpdate
+    closeEdit={fecharEdit}
+    />
    </div>
     
 </>

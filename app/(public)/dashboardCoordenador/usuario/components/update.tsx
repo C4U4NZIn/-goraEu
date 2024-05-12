@@ -108,7 +108,6 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
        //recebe a confirmação do toast de update
       const handleSubmitUserUpdateComponent = async (data:userFormTypeUpdate) =>{
         let fieldName = nameField.toString().toLowerCase();
-        // erro de tipagem
         let response;
 
         if(fieldName){
@@ -119,15 +118,13 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
           if(response?.status === 202){
             toast.success(response?.messageFromApi);
             console.log("resposta=>",response?.messageFromApi);
+          }else{
+            toast.error(response?.messageFromApi);
           }
          }
-         //dá reload pra ele atualizar com os novos dados do user
-         setTimeout(()=>{
-           router.push('/dashboardCoordenador/usuario');
+         setTimeout(()=>{    
            window.location.reload();
- 
-         },1000)
-       
+         },1250)
        }
     
       const handleSubmitPasswordComponent = async (data:userFormTypeUpdate) =>{

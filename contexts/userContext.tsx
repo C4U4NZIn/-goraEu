@@ -266,12 +266,12 @@ export type userContextType = {
       if(data){
       try {
 
-      if(data){
+    
       const response = await  api.post('/auth/login',{
             email:data.email,
             password:data.password
          });
-         const access_token = response.data.accessToken;
+        const access_token = response.data.accessToken;
         Cookies.set('agorafmm-web@token',access_token,{expires: 10*365*60*60});
         Cookies.set('role',response.data.role);
         return {
@@ -280,7 +280,7 @@ export type userContextType = {
             status:true
         }
          
-      }
+      
 
            
         
@@ -291,8 +291,7 @@ export type userContextType = {
 
         const title = isAppError ? error.message : 'Nenhum usuário do Ágora foi encontrado';
 
-
-         return {
+           return {
 
             access_token:'',
             message:title,
@@ -512,7 +511,7 @@ export type userContextType = {
        try {
            if(fieldUpdate){
                const updatedCoordenadorByPartialField = await api.post('/coordenador/updatePartial',{
-                   idAluno:userLogin?.id,
+                   idCoordenador:userLogin?.id,
                    fieldName:fieldName,
                    fieldUpdate:fieldUpdate
                });
@@ -530,7 +529,9 @@ export type userContextType = {
        }
      }
 
-
+     //tirar isso daqui
+     //vou para igreja e quando voltar
+     //vou arrumar os erros e fazer todo o front de aluno e professor 
      const getAllSalas = async (alunoId:string) =>{
         let salas
         if(alunoId){

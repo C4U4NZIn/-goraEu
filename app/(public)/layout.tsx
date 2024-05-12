@@ -1,6 +1,7 @@
 'use client';
 import { UserProviderFromProviders } from "@/providers";
-import { Inter } from 'next/font/google'
+import StyledComponentsRegistry from "@/lib/registry";
+
 
 export default function RootLayout({
   children,
@@ -11,9 +12,11 @@ export default function RootLayout({
   return (
       <UserProviderFromProviders>
     <html lang="pt-br">
+      <StyledComponentsRegistry>
       <body>
        {children}  
       </body>
+      </StyledComponentsRegistry>
     </html>
       </UserProviderFromProviders>
   )

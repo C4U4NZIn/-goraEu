@@ -34,7 +34,7 @@ export default function DashboardCoordenadorLayout({
    <UserProviderFromProviders>
     <html lang="pt-br">
       <body className={globalStyle.body}>
-      
+      {/** fazer componente aside fodão */}
       <aside className={styles.verticalSideBar}>
       
        <div className={styles.containerElipse}>

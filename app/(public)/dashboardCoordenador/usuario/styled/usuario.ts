@@ -5,16 +5,17 @@ export const ContainerPage = styled.div`
  width:100%;
  display: flex;
  flex-direction: column;
- margin-left: 12rem;
  margin-top: 0.5rem;
- gap:0rem;
- 
+ gap:0rem; 
 `
 export const ContainerImageAndButtons = styled.div`
     display: flex;
     flex-direction: column;
+    margin-top: 3rem;
     width: 45.26rem;
     height:15.6875rem;
+    align-self: center;
+
 `
 
 // 2.5 - w
@@ -24,7 +25,7 @@ export const ContainerImageAndButtons = styled.div`
 //29.25rem - w
 //25.9rem - h
 
-export const ButtonComponent = styled.button<{$width:number; $height:number;$borderRadius:number; $backgroundColor:string}>`
+export const ButtonComponent = styled.button<{$width?:number; $height?:number;$borderRadius?:number; $backgroundColor:string}>`
 width: ${props=>props.$width}rem;
 height: ${props=>props.$height}rem;
 border-radius: ${props=> props.$borderRadius}%;
@@ -36,23 +37,25 @@ align-items: center;
   background-color: transparent;
 }
 `
+
+//vai ser foda deixar isso aq responsivo
+//muda
 export const ContainerButtons = styled.div`
 width: 20%;
 height: 3.6rem;
 display: flex;
 flex-direction: row;
-align-items: center;
-gap:5rem;
-position: absolute;
+position: relative;
 align-self: center;
-z-index: 1;
-margin-top: 8rem;
-margin-left: 8rem;
+gap:6rem;
+z-index: 0;
+margin-top: 8.550rem;
+margin-left: -1.750rem;
 `
 export const CardUserContainer = styled.div<{$width:number , $height:number}>`
 width: ${props=> props.$width}rem;
 height: ${props=>props.$height}rem;
-margin-left: 7rem;
+margin-left: 26%;
 background-color: rgba(244, 244, 244, 1);
 border-radius: 10px 10px 10px 10px;
 display: flex;
@@ -62,7 +65,7 @@ gap:0;
 export const CardUserContainerExclude = styled.div<{$width:number , $height:number}>`
 width: ${props=> props.$width}rem;
 height: ${props=>props.$height}rem;
-margin-left: 7rem;
+margin-left: 26%;
 background-color: rgba(244, 244, 244, 1);
 border-radius: 10px 10px 10px 10px;
 display: flex;
@@ -152,15 +155,15 @@ span{
 
 `
 export const ContainerImage = styled.div`
- position:relative;
+ position:absolute;
  display: flex;
  justify-content: center;
  align-items: center;
- width: 23%;
+ width: 12.5%;
  align-self:center;
  height: 10.410625rem;
  background-color: rgba(252, 140, 40, 1);
- z-index: 0;
+ z-index: 1;
  border-radius: 50%;
  align-self: center ;
 

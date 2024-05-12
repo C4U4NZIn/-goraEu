@@ -14,7 +14,6 @@ export default function middleware(request:NextRequest){
         '/dashboardMain/desempenho':'aluno',
         '/dashboardMain/mural':'aluno',
         '/dashboardCoordenador/usuario':'coordenador',
-        '/dashboardCoordenador':'coordenador',
         '/dashboardProfessor':'professor',
         '/dashboardProfessor/usuario':'professor',
     }

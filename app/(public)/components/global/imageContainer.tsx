@@ -5,7 +5,7 @@ import {
   ContainerImage,
   ButtonComponent,
   ContainerButtons,
-} from '../../dashboardCoordenador/usuario/styled/usuario'
+} from '../global/styled/usuario'
 import AvatarTemplate from "../../usuario/avatar";
 export type ImageContainerButtonProps = {
     username?:string;
@@ -98,7 +98,7 @@ const ContainerImg = ({username , imageProfile , imageDefault}:ImageContainerBut
 
 {
 
-   (imageProfile !== null) &&  username ? (
+   (imageProfile === null) &&  username ? (
           <>
      <AvatarTemplate username={username}/>
           </>

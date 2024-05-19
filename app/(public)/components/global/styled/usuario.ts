@@ -1,4 +1,5 @@
-import {styled}  from 'styled-components'
+import styled from 'styled-components'
+
 
 export const ContainerPage = styled.div`
  height:100vh;
@@ -6,8 +7,7 @@ export const ContainerPage = styled.div`
  display: flex;
  flex-direction: column;
  margin-top: 0.5rem;
- gap:0rem;
- 
+ gap:0rem; 
 `
 export const ContainerImageAndButtons = styled.div`
     display: flex;
@@ -15,6 +15,8 @@ export const ContainerImageAndButtons = styled.div`
     margin-top: 3rem;
     width: 45.26rem;
     height:15.6875rem;
+    align-self: center;
+
 `
 
 // 2.5 - w
@@ -24,7 +26,7 @@ export const ContainerImageAndButtons = styled.div`
 //29.25rem - w
 //25.9rem - h
 
-export const ButtonComponent = styled.button<{$width:number; $height:number;$borderRadius:number; $backgroundColor:string}>`
+export const ButtonComponent = styled.button<{$width?:number; $height?:number;$borderRadius?:number; $backgroundColor:string}>`
 width: ${props=>props.$width}rem;
 height: ${props=>props.$height}rem;
 border-radius: ${props=> props.$borderRadius}%;
@@ -36,18 +38,20 @@ align-items: center;
   background-color: transparent;
 }
 `
+
+//vai ser foda deixar isso aq responsivo
+//muda
 export const ContainerButtons = styled.div`
 width: 20%;
 height: 3.6rem;
 display: flex;
 flex-direction: row;
-align-items: center;
-gap:5rem;
-position: absolute;
+position: relative;
 align-self: center;
-z-index: 1;
-margin-top: 8rem;
-margin-left: 8rem;
+gap:6rem;
+z-index: 0;
+margin-top: 8.550rem;
+margin-left: -1.750rem;
 `
 export const CardUserContainer = styled.div<{$width:number , $height:number}>`
 width: ${props=> props.$width}rem;
@@ -152,15 +156,15 @@ span{
 
 `
 export const ContainerImage = styled.div`
- position:relative;
+ position:absolute;
  display: flex;
  justify-content: center;
  align-items: center;
- width: 23%;
+ width: 12.5%;
  align-self:center;
  height: 10.410625rem;
  background-color: rgba(252, 140, 40, 1);
- z-index: 0;
+ z-index: 1;
  border-radius: 50%;
  align-self: center ;
 

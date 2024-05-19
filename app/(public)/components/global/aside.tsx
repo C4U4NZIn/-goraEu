@@ -1,22 +1,42 @@
 "use client";
-
-import AvatarTemplate from "./avatar";
-import LinkComponent from "./linking";
-
+import styled from "styled-components";
+import AsideAluno from "../aluno";
 
 
-//componente de avatar
-//componente que armazena outros componentes 
-//active link
-// fazer um toggle em width - quando o usuário apertar o botão
-//aumentar a largura e só deixar visivel as imagens
-//quando ele fechar diminuir a largura
-//props pra altura
+type AsideProps = {
+  role?:string;
+}
 
-const AsideLateral = () =>{
+const AsideContainerElements = styled.aside`
+
+display: flex;
+flex-direction: column;
+gap:2rem;
+`
+const ContainerImageChildren = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
+const H1 = styled.h1`
+  margin: 0;
+  padding: 0;
+`;
+
+
+const AsideLateral = ({
+   role
+}:AsideProps) =>{
+    
+ 
+
     return(
         <>
-        <h1>Aqui terá outros componentes</h1>
+       {
+        role === 'aluno' && (
+        <AsideAluno/>
+        )
+       }
         </>
     )
 }

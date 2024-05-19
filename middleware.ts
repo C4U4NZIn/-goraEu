@@ -1,7 +1,16 @@
+import { match } from "assert";
 import { NextResponse , NextRequest, URLPattern } from "next/server";
 
 
   
+function verifyUUID(data:{param:string}){
+  const {param} = data;
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  return uuidRegex.test(param);
+
+}
+
 export default function middleware(request:NextRequest){
     const token = request.cookies.get('agorafmm-web%40token');
     const role = request.cookies.get('role')?.value;
@@ -16,13 +25,16 @@ export default function middleware(request:NextRequest){
         '/dashboardCoordenador/usuario':'coordenador',
         '/dashboardProfessor':'professor',
         '/dashboardProfessor/usuario':'professor',
+        
     }
     const pattern = new URLPattern({pathname:currentPath});
     const isRoleValida =  privateRoutes[pattern.pathname] === role; 
-
+    const match = currentPath.match(/\/([^\/]+)$/);
+    const last_pathname = match ? match[1] : '';    
+    const param = last_pathname
+    const isDynamicRoute = verifyUUID({param});
   
-    
-   // se o usuário não tiver token
+    // se o usuário não tiver token
     if(!token){
         // e ele tiver na página de login
         if(currentPath === '/SignUp'){
@@ -53,6 +65,15 @@ export default function middleware(request:NextRequest){
     }
     
    }
+ 
+
+   if(token && (role === 'aluno')){
+     console.log("É aluno e está em uma dynamic route?=>",isDynamicRoute);
+    return NextResponse.next();
+    }
+
+
+ 
    //se ele tiver token
    if(token){
     // se ele não for para a página em que ele tem role válida
@@ -66,7 +87,7 @@ export default function middleware(request:NextRequest){
             return NextResponse.next();
           }
           // e ele for um aluno
-          if(role === 'aluno'){
+          if(role === 'aluno' && !isDynamicRoute){
             // então ele volta para seu dashboard
             const dashboardAlunoUrl = new URL('/dashboardMain/usuario' , request.url);
             return NextResponse.redirect(dashboardAlunoUrl)

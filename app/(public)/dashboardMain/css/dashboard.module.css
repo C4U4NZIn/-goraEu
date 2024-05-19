@@ -2,13 +2,15 @@
 .verticalSideBar{
     display:flex;
     flex-direction: column;
-    height: 100%;
-    width: 19.5625rem;
+    height: 100%;   
+    width:25%;
     background-image: url('../../dashboardMain/image/image\ 20menuVertical.svg');
     background-position: 0 0;   
     background-repeat: no-repeat;
     background-size: 100%;
     gap:2rem;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .containerTextImage{
     display: flex;
@@ -29,7 +31,7 @@
     width: 15rem;
     height: 16rem;
     margin-top: 2.0625rem;
-    margin-left:2.5rem;
+    align-self: center;
     border-radius: 55%;
     background-color: rgba(205, 224, 89, 1);
 }
@@ -64,8 +66,6 @@
  width: 50%;
  display: inline-block;
  color: rgba(255, 255, 255, 1);
- 
-    
 }
 
 .stylesSalas{

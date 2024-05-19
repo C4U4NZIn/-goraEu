@@ -25,8 +25,8 @@ import {
   InputUsuarioPage,
   TextError
   
-} from "../usuario/styled/usuario"
-import { ContainerImage } from "../usuario/styled/usuario";
+} from "../../components/global/styled/usuario"
+import { ContainerImage } from "../../components/global/styled/usuario";
 import OtpInput from 'react-otp-input'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -95,7 +95,7 @@ export default function Usuario(){
         setIsOpenDelete(true)
       }
      const abrirEdit = () =>{
-        setIsOpenEdit(false);
+        setIsOpenEdit(true);
       }
       const deleteUser = () =>{
         console.log('usuário deletado=>' , userLogin?.username);
@@ -170,7 +170,7 @@ export default function Usuario(){
      <ContainerPage>
         {/**Componente de imagem e botões*/}
         <ImageContainerButton
-       username={userLogin.username}
+       username={username}
        imageDefault={Natalia}
        imageProfile={image}
        isOpenDelete={isOpenDelete}
@@ -191,7 +191,7 @@ export default function Usuario(){
         username={userLogin.username}
         email={userLogin.email}
         telefone={userLogin.phonePersonal}
-        senha="*******"
+        senha="******"
         />
        )}
      {/**Componente que chama
@@ -298,11 +298,13 @@ style={{
 <ContainerButtons
 style={{
   position:'unset',
-  width:'100%',
+  width:'80%',
   marginTop:'-2rem',
   padding:0,
-  gap:'1rem',
-  zIndex:0
+  gap:'2rem',
+  zIndex:0,
+  marginLeft:'5%'
+
 }}
 >
   <ButtonComponent
@@ -347,12 +349,17 @@ style={{
   {(isOpenEdit && !isOpen) && (
 <>
      {/**Componente de edit que puxa um formulário de update */}
+   
+   {/** fazer um componente geral disso 
+    * para evitar essa situação
+    */}
    <div
    style={{
     width:'29.25rem',
     height:'21rem',
     display:'flex',
     flexDirection:'column',
+    marginLeft:'15%',
     justifyContent:'center',
     alignContent:'center',
     gap:'0.5rem'

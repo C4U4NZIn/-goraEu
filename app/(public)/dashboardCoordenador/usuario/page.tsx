@@ -23,7 +23,7 @@ import {
   InputUsuarioPage,
   TextError
   
-} from "../usuario/styled/usuario"
+} from "../../components/global/styled/usuario"
 import { ContainerImage } from "../usuario/styled/usuario";
 import OtpInput from 'react-otp-input'
 import { zodResolver } from "@hookform/resolvers/zod";

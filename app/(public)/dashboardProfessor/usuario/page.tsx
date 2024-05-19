@@ -172,10 +172,6 @@ export default function Usuario(){
     return(
       
      <ContainerPage>
-        {/**Componente de imagem e botões*/}
-        {/** Alterar apenas a imagem para um avatar padrão da material UI
-         * Depois fazer tela de update de imagem
-         */}
         <ImageContainerButton
        username={userLogin.username}
        imageDefault={Natalia}

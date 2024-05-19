@@ -1,7 +1,7 @@
 .containerProfile{
     display: flex;
     flex-direction: row;
-    width: 45.26rem;
+    width: 83.875%;
     height:15.6875rem;
     background-color:rgba(253, 123, 35, 1);
     border-radius: 15px 15px 15px 15px;
@@ -9,12 +9,27 @@
     gap:2rem;
 }
 .containerPrincipal{
+    margin-top: 2.125rem;
     display: flex;
     flex-direction: column;
+    width: 80%;
+    height: 80%;
+    gap: 3rem;
+    align-items: center;   
+}
+.salasContainer{
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
     width: 100%;
-    height: 100%;
-    align-items: center;
-    gap:8rem;
+    height: 50%;
+    align-self: flex-end;
+}
+
+.salasContainer::-webkit-scrollbar{
+ width:0px;
 }
 .styles2Image{
     width: 9.6875rem;
@@ -46,23 +61,29 @@
 
 }
 .containerCardClass{
-    width: 45.26rem;
-    margin-top: 1.6875rem;
-    height: 25rem;
+    width: calc(38.33% - 1rem);
+    margin:3.5rem;
+    height: 24rem;
     align-items: center;
+    border-radius: 8px;
+    background-color: #fff;   
+    display: flex;
+    justify-content: center;
+    
+}
 
+.containerCardClass:hover{
+    box-shadow: 0 2px 4px rgba(0,0,0, 0.8);
 }
 .cardClass{
     width: 19.1875rem;
     background-color: rgba(255, 255, 255, 1);
-    height: 23.75rem;
-    border-radius: 20px 20px 20px 20px;
+    height: 24rem;
+    border-radius: .5rem;
     margin-top: 0.5rem;
-    margin-left: 11.5rem;
     position: relative;
-    border: 1px solid black;
-    box-shadow:  1px 1px;
-    
+    border: .0625rem solid #dadce0;
+    cursor: pointer;
 }
 .cardTop{
     width: 100%;
@@ -70,7 +91,7 @@
     position: absolute;
     z-index: 0;
     height: 40%;
-    border-radius: 20px 20px 0 0;
+    border-radius: .5rem .5rem 0 0;
 }
 .titleImageContainer{
     display: flex;

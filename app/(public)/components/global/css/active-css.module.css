@@ -1,0 +1,14 @@
+.activeLinkColor{
+    background-color: rgba(251, 252, 254, 1);
+    text-decoration: none;
+    color: black;
+    border-radius: 5px 5px;
+    width: 85%;
+}
+.defaultLinkColor{
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
+    width: 50%;
+    display: inline-block;
+    color: rgba(255, 255, 255, 1);
+   }

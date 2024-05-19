@@ -7,10 +7,12 @@ import jose from './images/image 36José.svg'
 import { useUserContext } from '@/contexts'
 import AvatarTemplate from '../../usuario/avatar';
 import { convertBufferToImage } from '@/default';
-import { useRouter } from 'next/navigation';
+import {useParams} from 'next/navigation'
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import api from '@/app/services/__api';
+
 export type dataAlunoClass = {
     DataClass:any[]
 }
@@ -23,17 +25,36 @@ export default function Salas(){
  
     const {userLogin , salas} = useUserContext();
     //const image = convertBufferToImage(userLogin?.avatar);
-
+    const [currentWidth,setCurrentWidth] = useState<number>(0);
+    const [currentHeight, setCurrentHeight] = useState<number>(0);
     
     const username = userLogin?.username;
     const image = convertBufferToImage(userLogin?.avatar);
-    const router = useRouter();
-    const goToClassById = () =>{
+    const Router = useRouter();
+    const params = useParams();
+
+
+    const goToProfessorClass = (classId:string) =>{
+         
+
+
+       return ()=>{
+           
+           Router.push(`/dashboardMain/salas/${classId}`)
+        
+       }
+
 
     }
     
+
+    useEffect(()=>{
+        setCurrentHeight(window.innerHeight);
+        setCurrentWidth(window.innerWidth);
+    },[])
     
-    console.log("todas as salas que o aluno está veinculado" ,salas);
+        console.log("Altura e largura atual da tela=>",currentHeight , currentWidth);
+        console.log("todas as salas que o aluno está veinculado" ,salas);
 
   
 
@@ -43,6 +64,8 @@ export default function Salas(){
 
         <> 
         <div className={styles.containerPrincipal}>
+       
+       {/** global container Profile */}
         <div className={styles.containerProfile}>
             
 
@@ -74,7 +97,9 @@ export default function Salas(){
         <div>
             <h1>Olá , {userLogin?.username}</h1>
             <h4>Bom dia de estudos<br />hoje, sei que você<br />consegue.</h4>
-        </div>
+    
+       
+       </div>
 
         
 
@@ -82,10 +107,17 @@ export default function Salas(){
         </div>
        {/** containerTemplate - styled components */}
 
-      
+      <div
+      className={styles.salasContainer} 
+      >
 
         {salas.map((salas)=>(
-        <div className={styles.containerCardClass} key={salas.salaId}>
+        <div 
+        className={styles.containerCardClass} 
+        key={salas.salaId}
+        onClick={goToProfessorClass(salas.salaId)}
+        
+        >
 
             <div className={styles.cardClass}>
                 <div className={styles.cardTop}>
@@ -93,7 +125,8 @@ export default function Salas(){
                 </div>
 
                 <div className={styles.titleImageContainer}>
-                 <h2>{salas.salaName}</h2>
+                 <h2
+                 >{salas.salaName}</h2>
 
                 
                     <Image
@@ -126,6 +159,7 @@ export default function Salas(){
         </div>
            
         ))}
+      </div>
 
 
 

@@ -64,7 +64,15 @@ export default function Usuario(){
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     const {isOpen , open , close} = useModalAluno();
-    const username = userLogin?.username;
+    
+    let username = userLogin?.username;
+    
+
+    
+
+
+
+
     const image = userLogin?.avatar;
     const {
       register,

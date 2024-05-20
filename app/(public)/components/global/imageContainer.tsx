@@ -100,7 +100,11 @@ const ContainerImg = ({username , imageProfile , imageDefault}:ImageContainerBut
 
    (imageProfile === null) &&  username ? (
           <>
-     <AvatarTemplate username={username}/>
+     <AvatarTemplate 
+     username={username}
+     heightImg={150}
+     widthImg={150}
+     />
           </>
 
       ):(

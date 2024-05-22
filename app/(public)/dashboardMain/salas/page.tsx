@@ -18,17 +18,19 @@ import netuno from '../../components/global/images/image 53netuno.svg'
 import terra from '../../components/global/images/image 56terra.svg'
 import astronauta from '../../components/global/images/astronauta (1) 1.svg'
 import { useClassColor } from './zustand/classContext';
+import ContainerProfile from '../../components/global/profile';
+
 export type dataAlunoClass = {
     DataClass:any[]
 }
 export default function Salas(){
  
     const arrImg:any = {
-    'biologia':{img:terra , bgColor:'#93C75F'},
-    'fisica':{img:marte , bgColor:'#FD7B23'},
-    'quimica':{img:saturno , bgColor:'#FBD468'},
-    'matematica':{img:netuno , bgColor:'#90D7F6'},
-    'gramatica':{img:venus , bgColor:' #FFB028'}     
+    'biologia':{img:terra , bgColor:'#93C75F' , namePlanet:'Terra'},
+    'fisica':{img:marte , bgColor:'#FD7B23' , namePlanet:'Marte'},
+    'quimica':{img:saturno , bgColor:'#FBD468', namePlanet:'Saturno'},
+    'matematica':{img:netuno , bgColor:'#90D7F6', namePlanet:'Netuno'},
+    'gramatica':{img:venus , bgColor:' #FFB028' , namePlanet:'Vênus'}     
     }
  
    //função para dados experimentais
@@ -69,17 +71,31 @@ export default function Salas(){
 
  
     let avatarUsername:any
-    
+
     avatarUsername = splitUsername(username);
     
-    const goToProfessorClass = (classId:string , salaName?:string) =>{ 
+    const goToProfessorClass = ({
+        classId,
+        salaName,
+        profName,
+    }:{
+        classId:string;
+        salaName?:string;
+        profName?:string;
+    }) =>{ 
       
-
-
+     let avatarProfessorUsername = splitUsername(profName);
+      
        return ()=>{
 
            if(salaName && arrImg[removeAccToStr(salaName)]){
-             setColor(arrImg[removeAccToStr(salaName)].bgColor);
+             setColor({
+                bgClassColor:arrImg[removeAccToStr(salaName)].bgColor,
+                profName:profName,
+                avatarProfessorUsername:avatarProfessorUsername,
+                imgPlanet:arrImg[removeAccToStr(salaName)].img,
+                namePlanet:arrImg[removeAccToStr(salaName)].namePlanet
+             });
           }
            
           Router.push(`/dashboardMain/salas/${classId}`)
@@ -116,50 +132,13 @@ export default function Salas(){
         <> 
         <div className={styles.containerPrincipal}>
        
-       {/** global container Profile */}
-        <div className={styles.containerProfile}>
-            
+      <ContainerProfile
+      username={username}
+      role='aluno'
+      avatarUsername={avatarUsername}
+      bgColor='rgba(253, 123, 35, 1)'
 
-        <div className={styles.containerImageText}>
-
-            <div className={styles.containerImage}>
-                {
-                    avatarUsername ? (
-                        <>
-                   <AvatarTemplate 
-                   username={avatarUsername}
-                   heightImg={150}
-                   widthImg={150}
-                   />
-                        </>
-
-                    ):(
-                <>
-                     <Image
-                        priority
-                        alt=''
-                        src={Natalia}
-                        className={styles.styles2Image}
-                        />
-                   
-                </>
-                    ) }
-            </div>
-
-
-        </div>
-
-        <div>
-            <h1>Olá , {userLogin?.username}</h1>
-            <h4>Bom dia de estudos<br />hoje, sei que você<br />consegue.</h4>
-    
-       
-       </div>
-
-        
-
-
-        </div>
+      />
        {/** containerTemplate - styled components */}
 
       <div
@@ -171,7 +150,11 @@ export default function Salas(){
         <div 
         className={styles.containerCardClass} 
         key={salas.salaId}
-        onClick={goToProfessorClass(salas.salaId , salas.salaName)}
+        onClick={goToProfessorClass({
+            classId:salas.salaId,
+            salaName:salas.salaName,
+            profName:salas.professorName
+        })}
         >
 
             <div className={styles.cardClass}>

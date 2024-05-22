@@ -19,7 +19,12 @@ export const CardClass = styled.div`
 
 `
 export const CardTop = styled.div`
-
+    width: 100%;
+    background-color: rgba(144, 215, 246, 1);
+    position: absolute;
+    z-index: 0;
+    height: 40%;
+    border-radius: 20px 20px 0 0;
 `
 export const ContainerTitleImage = styled.div`
 

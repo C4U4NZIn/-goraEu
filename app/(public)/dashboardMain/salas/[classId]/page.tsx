@@ -2,49 +2,67 @@
 import { useUserContext } from '@/contexts';
 import {useParams} from 'next/navigation'
 import { useClassColor } from '../zustand/classContext';
+import {
+  ContainerPrincipal
+} from '../../../components/global/styled/profile'
+import ContainerProfile from '@/app/(public)/components/global/profile';
+import Bar from '@/app/(public)/components/global/bar';
+
 const ProfessorClass = () =>{
   
     const {salas} = useUserContext();
     const param = useParams();
-    
+    const { userLogin } = useUserContext();
+
+
     let profClass = salas.filter((sala)=> sala.salaId === param.classId)[0];
-    const {bgClassColor} = useClassColor();
+    const {
+        bgClassColor,
+        profName,
+        imgPlanet,
+        namePlanet,
+        avatarProfessorUsername
+    
+    } = useClassColor();
 
 
    // console.log("current Class=>" , currentProfessorClass);
 
-    console.log("String=>", param);
-    console.log("Existe sala?=>",salas);
-    console.log("Existe a sala atual?=>", profClass);
-
-    console.log("Cor da sala da turma=>", bgClassColor);
-
+ 
 
     return(
         <>
-        <div
-        style={{
-            display:'flex',
-            flexDirection:'column'
-        }}
-        >
-        <h1>Detallhes da sala para o aluno:</h1>
-        <ul>{
-            profClass ? (
-             <>
-             <li>{profClass.professorName}</li>
-             <li>{profClass.salaName}</li>
-             <li>{profClass.salaId}</li>
-             </>
+        <ContainerPrincipal>
+       {
+        (profClass && bgClassColor !== '') ? (
 
-            ):(
-                <>
-                <h1>Loading...</h1>
-                </>
-            )
-            }
-            </ul>
-        </div>
+          <>
+          <ContainerProfile
+          username={userLogin?.username}
+          profName={profName}
+          role='professor aluno'
+          avatarUsername={avatarProfessorUsername}
+          bgColor={bgClassColor}
+          namePlanet={namePlanet}
+          imgPlanet={imgPlanet}
+          />
+          <Bar
+          numberBar={2}
+          isMuralActive={true}
+          isTaskActive={false}
+          bgColor={bgClassColor}
+          />
+          
+          </>
+        ):(
+            <>
+            <h1>Loading...</h1>
+            </>
+        )
+       }
+
+
+        </ContainerPrincipal>
         </>
     )
 }

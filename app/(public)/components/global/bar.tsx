@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
  Text
 } from '../global/styled/profile'
-
+import { useBarStore } from '../../dashboardMain/salas/zustand/use-bar';
 
 export const ContainerBar = styled.div<{
     $bgColor?:string;
@@ -28,6 +28,7 @@ export const SectionBar = styled.div<{
     $isTaskActive?:boolean;
     $isStudentActive?:boolean;
 }>`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,23 +46,43 @@ export const SectionBar = styled.div<{
 
 const Bar = ({
     numberBar,
-    isMuralActive,
-    isTaskActive,
-    isStudentActive,
     bgColor
 }:{
     numberBar:number;
-    isMuralActive?:boolean;
-    isTaskActive?:boolean;
-    isStudentActive?:boolean;
     bgColor?:string;
 
 }) =>{
-
      const words_bar = ['Mural' , 'Atividades' , 'Alunos'];
+     const {
+      openIsMuralState,
+      openIsStudentState,
+      openIsTaskState,
+      closeIsMuralState,
+      closeIsTaskState,
+      closeIsStudentState,
+      isMuralActive,
+      isTaskActive,
+      isStudentActive
+     } = useBarStore();
 
+    
 
-    return(
+    const setTaskState = () =>{
+      closeIsMuralState();
+      openIsTaskState();
+    }
+    const setMuralState = () => {
+      openIsMuralState();
+      closeIsTaskState();
+      closeIsStudentState();
+    }
+    const setStudentState = () => {
+       openIsStudentState();
+       closeIsMuralState();
+       closeIsStudentState();
+    }
+    
+     return(
         <>
         <ContainerBar 
         $bgColor={bgColor}
@@ -73,6 +94,7 @@ const Bar = ({
                 numberBar === 2 && (
               <>
                    <SectionBar
+                   onClick={setMuralState}
                    $isMuralActive={isMuralActive}
                    $bgColor={bgColor}
                    $height={100}
@@ -98,6 +120,7 @@ const Bar = ({
                     $height={100}
                     $width={50}
                     $isTaskActive={isTaskActive}
+                    onClick={setTaskState}
                     >
                     <Text
                     $isActive={isTaskActive}

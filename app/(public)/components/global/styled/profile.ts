@@ -9,7 +9,7 @@ export const ContainerPrincipal = styled.div`
     width: 80%;
     height: 80%;
     gap: 3rem;
-    align-items: center;   
+    align-items: center;  
 `
 export const ContainerText = styled.div<{
     $role?:string;

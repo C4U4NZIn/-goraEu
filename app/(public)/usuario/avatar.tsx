@@ -8,10 +8,11 @@ export type AvatarProps = {
     username:string;
     heightImg?:number;
     widthImg?:number;
+    fontSize?:string;
 }
 
 
-const AvatarTemplate = ({username , heightImg , widthImg}:AvatarProps) =>{
+const AvatarTemplate = ({username , heightImg , widthImg , fontSize}:AvatarProps) =>{
 
     function hashingColorsToAvatar(username:string){
        let i;
@@ -40,7 +41,7 @@ const AvatarTemplate = ({username , heightImg , widthImg}:AvatarProps) =>{
             backgroundColor:hashingColorsToAvatar(username),
             width:widthImg,
             height:heightImg,
-            fontSize:'50px'
+            fontSize: fontSize === undefined ? '50px' : fontSize+'px'
            
           },
           children:`${username.split("")[0][0]}${username.split("")[1][0]}`

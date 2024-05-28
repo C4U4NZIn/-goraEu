@@ -1,5 +1,8 @@
 "use client";
 import Image from "next/image";
+import lapis_editor from '../images_activities/editar 3.svg'
+import lixeira_excluder from '../images_activities/lixeira (1) 3.svg'
+import pracheta_activity from '../images_activities/prancheta 1.svg'
 import AvatarTemplate from '../../app/(public)/usuario/avatar'
 import {
    ContainerContent,
@@ -11,13 +14,31 @@ import { Text } from "@/app/(public)/components/global/styled/profile";
 
 
 
+type ISimuladoProps = {
+    expiresAt?:string;
+    hourExpiresAt?:string;
+    titleSimulado?:string;
+}
+
+type ITaskProps = {
+    expiresAt?:string;
+    hourExpiresAt?:string;
+    titleTask?:string;
+}
+
+
+//type: pode ser um simulado , mensagem ou atividade
 type IPostProps = {
     professorName?:string;
     createdAt:string;
     professorImg?:string;
-    message:string;
+    message?:string;
     type:string;
+    visible_for?:string;
     postImg?:string;
+    content?:string;
+    task?:ITaskProps;
+    simulado?:ISimuladoProps;
 }
 
 
@@ -27,7 +48,11 @@ const Post = (data:IPostProps)=>{
         professorName,
         createdAt ,
         message,
-        professorImg
+        professorImg ,
+        visible_for,
+        task,
+        simulado,
+        type
     } = data;
    let nameProf
     if(!professorName){return <></>}
@@ -64,11 +89,13 @@ const Post = (data:IPostProps)=>{
         </ContainerAvatarTitles>
 
 
+     {
+        type === 'message' && (
         <ContainerMessage>
         <div
         className="containerText"
         >
-          <Text
+       <Text
           $fontSize={16}
           $fontWeight={400}
           >
@@ -76,6 +103,43 @@ const Post = (data:IPostProps)=>{
           </Text>
         </div>
         </ContainerMessage>
+        )
+     }
+     {
+     (type === 'task' && visible_for === 'aluno') && (
+      <>
+      <h1>task</h1>
+      <ul>
+        <li>{task?.titleTask}</li>
+        <li>{task?.expiresAt}</li>
+        <li>{task?.hourExpiresAt}</li>
+      </ul>
+      </>
+     )
+    }
+     {
+         (type === 'simulado' && visible_for === 'aluno') && (
+          <>
+
+        <ul>
+        <li>{simulado?.titleSimulado}</li>
+        <li>{simulado?.expiresAt}</li>
+        <li>{simulado?.hourExpiresAt}</li>
+      </ul>
+          </>
+            )
+     }
+         {
+         (type === 'task' && visible_for === 'professor') && (
+            <h1>editar , excluir - task</h1>
+         )
+         }
+        {
+         (type === 'simulado' && visible_for === 'professor') && (
+             <h1>editar , excluir - simulado</h1>
+            )
+        }
+    
 
         </ContainerContent>
         </>

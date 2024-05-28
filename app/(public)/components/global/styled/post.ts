@@ -7,7 +7,6 @@ width: 80%;
 display:flex;
 flex-direction: column;
 align-items: center;
-justify-content: center;
 background-color:#F8F8F8;
 box-shadow: 0 0 5px black;    
 gap: 1rem;

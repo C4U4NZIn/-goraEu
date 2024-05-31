@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+
 export const ContainerContent = styled.div`
 
 height: 100%;
@@ -11,6 +12,45 @@ background-color:#F8F8F8;
 box-shadow: 0 0 5px black;    
 gap: 1rem;
 
+.container-task-preview , .container-simulate-preview{
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  gap: 0.125rem;
+}
+
+
+.container-task-preview::-webkit-scrollbar{
+  width: 0px;
+}
+.container-simulate-preview::-webkit-scrollbar{
+ width: 0px;
+}
+
+.container-simulate-preview , .container-task-preview{
+  display :flex;
+  flex-direction: row;
+  width: 90%;
+  height: fit-content;
+  padding-bottom: 10px;
+  gap: 1.75rem;
+}
+
+.container-description{
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ width:auto;
+ height: fit-content;
+ gap: 0.5rem;
+}
+.limit-date-description{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: auto;
+    gap: 1.750rem;
+}
 
 
 `
@@ -31,9 +71,8 @@ export const ContainerAvatarTitles = styled.div`
      position: absolute;
      left: 15px;
      right: 15px;
-     border-bottom: solid 1px;
-     
-
+     border-bottom: solid 0.125px;
+    
 }
 
 

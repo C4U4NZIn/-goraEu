@@ -6,7 +6,7 @@ export const ContainerPrincipal = styled.div`
     margin-top: 2.125rem;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 75%;
     height: 80%;
     gap: 3rem;
     align-items: center;  

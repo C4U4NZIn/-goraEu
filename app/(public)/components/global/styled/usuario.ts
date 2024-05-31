@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const ContainerPage = styled.div`
  height:100vh;
- width:100%;
+ width:75%;
  display: flex;
  flex-direction: column;
  margin-top: 0.5rem;

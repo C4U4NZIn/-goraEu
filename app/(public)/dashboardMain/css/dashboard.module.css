@@ -2,7 +2,7 @@
 .verticalSideBar{
     display:flex;
     flex-direction: column;
-    height: 100%;   
+    height: 104.85%;   
     width:25%;
     background-image: url('../../dashboardMain/image/image\ 20menuVertical.svg');
     background-position: 0 0;   

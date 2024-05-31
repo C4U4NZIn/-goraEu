@@ -28,21 +28,21 @@ const Activities = (
      <div
      className="container-sections"
      >
-
-        <div
-        className="simulado-section"
-        >
       <Text
         $fontSize={45}
         $fontWeight={700}
         style={{
             color:`${bgColor}`,
+            alignSelf:'self-start',
             marginLeft:'3em'
         }}
         >
             Simulados
         </Text>
-      </div>
+
+        <div
+        className="simulado-section"
+        >
       {
         professorSimulados?.map((professorSimulado)=>(
             <Post
@@ -55,9 +55,7 @@ const Activities = (
             />
         ))
       }
-      <div
-      className="task-section"
-      >
+      </div>
       <Text
         $fontSize={45}
         $fontWeight={700}
@@ -65,6 +63,7 @@ const Activities = (
             color:`${bgColor}`,
             margin:0,
             padding:0,
+            alignSelf:'flex-start',
             marginLeft:'3em'
             
         }}
@@ -72,7 +71,9 @@ const Activities = (
         >
             Atividades
         </Text>
-      </div>
+      <div
+      className="task-section"
+      >
       {
         professorTasks?.map((professorTask)=>(
             <Post
@@ -85,6 +86,7 @@ const Activities = (
             />
         ))
       }
+      </div>
      </div>
 
 
@@ -103,7 +105,7 @@ width: 100%;
 padding-top: calc(12% + 1rem);
 //background-color: ${props => props.$bgColorDiv};
 .simulado-section{
-
+ 
 }
 .task-section{
   
@@ -113,12 +115,14 @@ padding-top: calc(12% + 1rem);
 .simulado-section , .task-section {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 4rem;
     overflow: auto;
-    height: 18rem;
+    height: 10rem;
     width: 100%;
-    
-    flex-grow: 1;
+    padding-bottom: 0.1rem;
+    padding-top: 0.1rem;
+   
     
 
 }
@@ -137,7 +141,7 @@ padding-top: calc(12% + 1rem);
     align-items: center;
     width: auto;
     flex-direction: column;
-    gap: 2rem;
+    gap: 4rem;
     overflow: auto;
     padding-bottom: calc(2% + 1rem);
 }

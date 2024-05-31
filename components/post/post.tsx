@@ -11,7 +11,7 @@ import {
    Titles
 } from '../../app/(public)/components/global/styled/post'
 import { Text } from "@/app/(public)/components/global/styled/profile";
-
+import { useClassColor } from "@/app/(public)/dashboardMain/salas/zustand/classContext";
 
 
 type ISimuladoProps = {
@@ -54,6 +54,7 @@ const Post = (data:IPostProps)=>{
         simulado,
         type
     } = data;
+    const { bgClassColor } = useClassColor();
    let nameProf
     if(!professorName){return <></>}
    
@@ -108,24 +109,127 @@ const Post = (data:IPostProps)=>{
      {
      (type === 'task' && visible_for === 'aluno') && (
       <>
-      <h1>task</h1>
-      <ul>
-        <li>{task?.titleTask}</li>
-        <li>{task?.expiresAt}</li>
-        <li>{task?.hourExpiresAt}</li>
-      </ul>
+
+<div
+        className="container-task-preview"
+        >
+           
+                <div
+                style={{
+                    width:'45px',
+                    height:'45px',
+                    display:'flex',
+                    backgroundColor:`${bgClassColor}`,
+                    opacity:'0.6',
+                    borderRadius:'100%'
+                }}
+                >
+            <Image
+            priority
+            alt="prancheta"
+            src={pracheta_activity}
+            width={35}
+            height={35}
+            style={{
+                color:`${bgClassColor}`,
+                alignSelf:'center',
+                padding:'8.5px'
+            }}
+            />
+                </div>
+            <div
+            className="container-description"
+            >
+            <Text
+            $fontSize={20}
+            $fontWeight={700}
+            >{task?.titleTask}</Text>
+            <div
+            className="limit-date-description"
+            >
+            <Text
+            $fontSize={16}
+            $fontWeight={400}
+            style={{
+                color:'#525252'
+            }}
+            >Entrega: {task?.expiresAt}</Text>
+            
+            <Text
+            $fontSize={16}
+            $fontWeight={400}
+            style={{
+                color:'#525252'
+            }}
+            >{task?.hourExpiresAt}</Text>
+            </div>
+            </div>
+           
+          </div>
       </>
      )
     }
      {
          (type === 'simulado' && visible_for === 'aluno') && (
           <>
+        {/** div container text e vapo vapo */}  
 
-        <ul>
-        <li>{simulado?.titleSimulado}</li>
-        <li>{simulado?.expiresAt}</li>
-        <li>{simulado?.hourExpiresAt}</li>
-      </ul>
+          <div
+        className="container-simulate-preview"
+        >
+           
+                <div
+                style={{
+                    width:'45px',
+                    height:'45px',
+                    display:'flex',
+                    backgroundColor:`${bgClassColor}`,
+                    opacity:'0.6',
+                    borderRadius:'100%'
+                }}
+                >
+            <Image
+            priority
+            alt="prancheta"
+            src={pracheta_activity}
+            width={35}
+            height={35}
+            style={{
+                color:`${bgClassColor}`,
+                alignSelf:'center',
+                padding:'8.5px'
+            }}
+            />
+                </div>
+            <div
+            className="container-description"
+            >
+            <Text
+            $fontSize={20}
+            $fontWeight={700}
+            >{simulado?.titleSimulado}</Text>
+            <div
+            className="limit-date-description"
+            >
+            <Text
+            $fontSize={16}
+            $fontWeight={400}
+            style={{
+                color:'#525252'
+            }}
+            >Entrega: {simulado?.expiresAt}</Text>
+
+            <Text
+            $fontSize={16}
+            $fontWeight={400}
+            style={{
+                color:'#525252'
+            }}
+            >{simulado?.hourExpiresAt}</Text>
+            </div>
+            </div>
+           
+          </div>
           </>
             )
      }

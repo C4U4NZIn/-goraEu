@@ -40,8 +40,10 @@ export default function DashboardMainLayout({
     <html 
     lang="pt-br"
     style={{
-      width:'70rem',
-      height:'47.144rem'
+      width:'80rem',
+      height:'47.144rem',
+      margin:0,
+      padding:0
     }}
     >
       <body className={globalStyle.body}>
@@ -52,12 +54,9 @@ export default function DashboardMainLayout({
     />
         
    
-   
-
-
-       <>
+       
       {children}  
-       </>
+      
        <Toaster richColors position='top-center'/>
     
  

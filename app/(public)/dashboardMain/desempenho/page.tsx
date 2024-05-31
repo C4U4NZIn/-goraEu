@@ -1,7 +1,12 @@
-export default function Desempenho(){
+"use client";
+import Desempenho from "@/components/desempenho/desempenho";
+
+export default function DesempenhoPage(){
     return(
-        <div>
-            <h1>Desempenho</h1>
-        </div>
+     <>
+     
+     <Desempenho/>
+    
+     </>
     )
 }

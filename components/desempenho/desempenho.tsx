@@ -26,20 +26,20 @@ export default function Desempenho(){
                     {
                         id:'1',
                         id_aluno:'aluno1',
-                        number_questions: 120,
-                        correct_answers:66,
+                        number_questions: 20,
+                        correct_answers:15,
                     },
                     {  
                         id:'2',
                         id_aluno:'aluno1',
-                        number_questions: 120,
-                        correct_answers:66,
+                        number_questions:20,
+                        correct_answers:15,
                     },
                     {
                         id:'3',
                         id_aluno:'aluno1',
-                        number_questions: 120,
-                        correct_answers:66,
+                        number_questions:20,
+                        correct_answers:15,
                     }
                 ],
                 "matemática":[
@@ -67,60 +67,60 @@ export default function Desempenho(){
                         {
                             id:'1',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'2',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'3',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         }
                     ],
                     "física":[
                         {
                             id:'1',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'2',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'3',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         }
                     ],
                     "biologia":[
                         {
                             id:'1',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:14,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'2',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:14,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'3',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:14,
+                            number_questions: 10,
+                            correct_answers:8,
                         }
                     ]
                 }
@@ -174,60 +174,60 @@ export default function Desempenho(){
                         {
                             id:'1',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:20,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'2',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:20,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'3',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:14,
+                            number_questions: 10,
+                            correct_answers:8,
                         }
                     ],
                     "física":[
                         {
                             id:'1',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'2',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'3',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         }
                     ],
                     "biologia":[
                         {
                             id:'1',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'2',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         },
                         {
                             id:'3',
                             id_aluno:'aluno1',
-                            number_questions: 20,
-                            correct_answers:15,
+                            number_questions: 10,
+                            correct_answers:8,
                         }
                     ]       
                 },
@@ -245,10 +245,15 @@ export default function Desempenho(){
                 },
                 "naturais":{
                     total_questions:'180',
-                    total_correct_answers:'179'
+                    total_correct_answers:'144'
                 }
             }
         }
+    ];
+
+    const Semestres:any[] = [
+        YearStudentPerformance[0],
+        YearStudentPerformance[1]
     ];
     
 
@@ -258,24 +263,45 @@ export default function Desempenho(){
        >
         
       <NavBarPage/>
+
+
       <MiddleAreaDetails
       role='aluno'
       statics={YearStudentPerformance[2].statics}
       />
-      <GraficBarTemplate/>
+    
+    <div
+    className='containerGraficBar'
+    >
+      <GraficBarTemplate
+      semestres={Semestres}
+      />
 
-        </ContainerDesempenhoPage> 
+    </div>
+
+
+       </ContainerDesempenhoPage> 
         </>
     )
 }
 
 const ContainerDesempenhoPage = styled.div`
- 
-
+    margin-top: 1.75rem;
     display: flex;
     flex-direction: column;
     width: 75%;
     height: 104.85%;
     gap: 2rem;  
     align-items: center;
+    .containerGraficBar{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 35rem;
+        overflow: auto;
+        padding-bottom: calc(10% - 5rem);
+    }
+    .containerGraficBar::-webkit-scrollbar{
+        width: 0px;
+    }
 `

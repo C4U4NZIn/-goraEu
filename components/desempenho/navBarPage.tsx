@@ -35,6 +35,7 @@ const ContainerButtonsSubjects =  styled.div<ActiveButtonsState>`
     border: #F0F0FA;
     border-radius: 25px;
     width: 9rem;
+    box-shadow: 3px 2px 4px rgba(0 , 0 , 0 , 0.4);
 }
 
 .activeTextButton{
@@ -42,6 +43,7 @@ const ContainerButtonsSubjects =  styled.div<ActiveButtonsState>`
 }
 .activeButtonSubject{
     background-color:#006792;
+    box-shadow: 0px 0px 0px;
 }
 
 `
@@ -127,7 +129,9 @@ const ContainerSubjectsComponent = () =>{
 
 
 const NavBarPage = () =>{
-    return (
+    
+    
+    return(
         <>
         <div
         style={{
@@ -144,5 +148,6 @@ const NavBarPage = () =>{
         </div>
         </>
     )
+    
 }
 export default NavBarPage;

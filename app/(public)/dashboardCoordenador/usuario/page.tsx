@@ -67,7 +67,13 @@ export default function Usuario(){
       register,
       handleSubmit,
       watch,
-      formState:{errors},
+      formState:{
+        errors,
+        isSubmitting
+      
+      },
+      reset,
+      resetField
       
     } = useForm({
       resolver: zodResolver(userFormSchemaPassword),
@@ -100,6 +106,7 @@ export default function Usuario(){
       const abrirUpdateFieldComponent = (data:updateFieldType) =>{
         setPropsUpdateComponent(data);
         setIsOpenUpdateField(true);
+        //essa função open é problema pois está mandando o email em tudo
         open();
         resendEmailToUser();
       }

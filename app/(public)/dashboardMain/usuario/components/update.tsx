@@ -171,7 +171,7 @@ const UpdateComponent = ({ otpCode ,nameField , widthContainer , heightContainer
         setTimeout(()=>{
           router.push('/dashboardMain/usuario');
           window.location.reload();
-
+          
         },1000)
        
       

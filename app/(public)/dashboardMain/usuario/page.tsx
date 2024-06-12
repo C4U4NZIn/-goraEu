@@ -1,4 +1,5 @@
 'use client';
+import LocalSeeIcon from '@mui/icons-material/LocalSee';
 import { useUserContext, userContext } from "@/contexts";
 import { userContextType } from "@/contexts";
 import React, { useEffect , useState } from "react";
@@ -52,7 +53,10 @@ export  type updateFieldType = {
   import CardInfoComponent from "../../components/global/info";
   import ImageContainerButton from "../../components/global/imageContainer";
   import CancelUpdate from "../../components/global/cancelUpdate";
-export default function Usuario(){
+  import {useModal} from '../../../../components/modals/zustand/useModalContext'
+
+
+  export default function Usuario(){
     // realizar posteriormente o processo de componentização
     //todos os componentes serão componentizados- redundancia
     //por enquanto não vou componentizar nada 
@@ -64,15 +68,8 @@ export default function Usuario(){
     const [isOpenUpdateField , setIsOpenUpdateField] = useState<Boolean>(false);
     const [propsUpdateComponent , setPropsUpdateComponent] = useState<updateFieldType>({} as updateFieldType);
     const {isOpen , open , close} = useModalAluno();
-    
+    const {onOpenModal} = useModal();
     let username = userLogin?.username;
-    
-
-    
-
-
-
-
     const image = userLogin?.avatar;
     const {
       register,
@@ -101,6 +98,7 @@ export default function Usuario(){
          console.log(response?.message);
          console.log(response?.status);
         setIsOpenDelete(true)
+        onOpenModal('uploadImage');
       }
      const abrirEdit = () =>{
         setIsOpenEdit(true);
@@ -156,7 +154,6 @@ export default function Usuario(){
 
         return isValidOtp
       }
-      
       if(!userLogin){
         return ""
       }
@@ -203,7 +200,12 @@ export default function Usuario(){
         />
        )}
      {/**Componente que chama
-      *  a função  de excluir */}
+      *  a função  de excluir 
+      * //substituir isso daqui por um modal 
+      * que dentro dele tem um componente de upload de imagem , então 
+      * vou fazer o modal logo
+      * 
+      * */}
      {isOpenDelete && (
       <>
       {/**Componente de Exclude */}

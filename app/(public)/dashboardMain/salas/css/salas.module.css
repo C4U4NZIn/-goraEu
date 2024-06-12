@@ -73,19 +73,18 @@
     justify-content: center;
     
 }
-
-.containerCardClass:hover{
-    box-shadow: 0 2px 4px rgba(0,0,0, 0.8);
-}
 .cardClass{
     width: 19.1875rem;
     background-color: rgba(255, 255, 255, 1);
     height: 24rem;
-    border-radius: .5rem;
+    border-radius: 1rem;
     margin-top: 0.5rem;
     position: relative;
     border: .0625rem solid #dadce0;
     cursor: pointer;
+}
+.cardClass:hover{
+       box-shadow: 0 2px 4px rgba(0,0,0, 0.8);
 }
 .cardTop{
     width: 100%;
@@ -93,29 +92,35 @@
     position: absolute;
     z-index: 0;
     height: 40%;
-    border-radius: .5rem .5rem 0 0;
+    border-radius: 1rem 1rem 0 0;
 }
 .titleImageContainer{
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid black;
     margin: 0;
     padding: 0;
     width: 100%;
     height: 22.75%;
     position: relative;
     z-index: 2;
-    justify-content: space-between;
-    
-    
-
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+}
+.titleImageContainer::after{
+    content: " ";
+    bottom: 0;
+    position: absolute;
+    border-bottom: 1px solid black;
+    left: 15px;
+    right: 15px;
 }
 .stylesImage{
   width: 4.125rem;
   height: 4.125rem;
 }
 .dimensionImage{
-    width: 5.6875rem;
+    width:4rem;
     height: 5.6875rem;
     border-radius: 46px ;
     z-index: 2;
@@ -124,7 +129,10 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    margin-top:5px;
+    gap:1.8rem;
     z-index: 3;
 
 }

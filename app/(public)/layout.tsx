@@ -4,6 +4,12 @@ import StyledComponentsRegistry from "@/lib/registry";
 import {
  GlobalStyles
 } from '../../app/(public)/components/global/styled/global'
+import {Tinos } from "next/font/google";
+
+const tinos = Tinos({
+  weight:['400','700'],
+  subsets:['latin']
+})
 
 export default function RootLayout({
   children,
@@ -13,7 +19,10 @@ export default function RootLayout({
   
   return (
       <UserProviderFromProviders>
-    <html lang="pt-br">
+    <html 
+    lang="pt-br"
+    className={tinos.className}
+    >
       <StyledComponentsRegistry>
         
       <body>

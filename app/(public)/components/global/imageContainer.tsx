@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import LocalSeeIcon from '@mui/icons-material/LocalSee';
 import { 
   ContainerImageAndButtons,
   ContainerImage,
@@ -51,10 +52,8 @@ const ButtonContainer = ({
         $backgroundColor="rgba(242, 105, 33, 1)"
         onClick={openDelete}
         >
-        <Image
-        alt="imgDeleteProfile"
-        priority
-        src={imageDelete}
+        
+        <LocalSeeIcon
         style={{
             width:'1.5rem',
             height:'1.5rem'

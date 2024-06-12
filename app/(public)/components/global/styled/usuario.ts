@@ -37,6 +37,7 @@ align-items: center;
 &:disabled{
   background-color: transparent;
 }
+border: none;
 `
 
 //vai ser foda deixar isso aq responsivo
@@ -156,6 +157,7 @@ span{
 
 `
 export const ContainerImage = styled.div`
+ z-index: -1;
  position:absolute;
  display: flex;
  justify-content: center;
@@ -164,7 +166,6 @@ export const ContainerImage = styled.div`
  align-self:center;
  height: 10.410625rem;
  background-color: rgba(252, 140, 40, 1);
- z-index: 1;
  border-radius: 50%;
  align-self: center ;
 

@@ -1,5 +1,5 @@
 "use client";
-import { Inter } from 'next/font/google'
+import {Poppins, Tinos } from 'next/font/google'
 import globalStyle from './css/global.module.css'
 import styles from './css/dashboard.module.css'
 import Image from "next/image";
@@ -14,13 +14,12 @@ import { UserProviderFromProviders } from '@/providers';
 import { Toaster } from 'sonner';
 import backgroundAside from '../dashboardMain/image/image 20menuVertical.svg'
 import AsideLateral from '../components/global/aside';
+import { ModalProvider } from '@/providers/providerModal';
 
-const inter = Inter(
-  {
-     subsets: ['latin']
-   },
-
-)
+const tinos = Tinos({
+  weight:['400'],
+  subsets:['latin']
+})
 
 
 
@@ -35,9 +34,9 @@ export default function DashboardMainLayout({
 
   return (
    <UserProviderFromProviders>
-
     
-    <html 
+    <html
+    className={tinos.className}
     lang="pt-br"
     style={{
       width:'80rem',
@@ -46,7 +45,11 @@ export default function DashboardMainLayout({
       padding:0
     }}
     >
-      <body className={globalStyle.body}>
+      <body className={globalStyle.body}
+      style={{
+        position:'relative'
+      }}
+      >
       
   
     <AsideLateral
@@ -58,10 +61,9 @@ export default function DashboardMainLayout({
       {children}  
       
        <Toaster richColors position='top-center'/>
-    
- 
-
       </body>
+      
+    <ModalProvider/>
     </html>
 
 

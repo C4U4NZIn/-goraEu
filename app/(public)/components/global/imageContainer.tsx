@@ -8,6 +8,7 @@ import {
   ContainerButtons,
 } from '../global/styled/usuario'
 import AvatarTemplate from "../../usuario/avatar";
+import { useImageState } from "@/functions/user/zustand/useImageContext";
 export type ImageContainerButtonProps = {
     username?:string;
     imageProfile:string;
@@ -18,7 +19,7 @@ export type ImageContainerButtonProps = {
 export type ButtonContainerProps = {
     imageEdit:string;
     imageDelete:string;
-    openDelete():void;
+    openModal():void;
     openEdit():void;
     isOpenDelete:Boolean;
     isOpenEdit:Boolean;
@@ -29,7 +30,7 @@ export type ButtonContainerProps = {
 }
 export type ImgContainerButtonProps = ImageContainerButtonProps & ButtonContainerProps;
 const ButtonContainer = ({
-    openDelete ,
+    openModal ,
     isOpenDelete , 
     isOpenEdit , 
     imageEdit , 
@@ -50,7 +51,7 @@ const ButtonContainer = ({
         $height={heightButton}
         $borderRadius={borderRadiusButton}
         $backgroundColor="rgba(242, 105, 33, 1)"
-        onClick={openDelete}
+        onClick={openModal}
         >
         
         <LocalSeeIcon
@@ -91,31 +92,39 @@ const ButtonContainer = ({
     )
 }
 const ContainerImg = ({username , imageProfile , imageDefault}:ImageContainerButtonProps) =>{
+   const {stringBase64 , fileEvent} = useImageState();
+   
+    let usernameImg = '' 
+    if(username){
+        usernameImg = usernameImg;
+    }
+
+    
     return(
         <>
      <ContainerImage>
 
-{
-
-   (imageProfile === null) &&  username ? (
-          <>
-     <AvatarTemplate 
-     username={username.split('')[0][0] + username.split(' ')[1][0] }
-     heightImg={150}
-     widthImg={150}
-     />
-          </>
-
-      ):(
-  <>
+     {
+   fileEvent !== '' && username ? (
        <Image
-          priority
-          alt=''
-          src={imageDefault}
-          />
-     
-  </>
-      ) }
+       style={{
+        borderRadius:'50%'
+       }}
+       alt="imagem"
+          src={`data:image/png;base64,${fileEvent}`}
+          width={150}
+          height={150}    
+       />
+   ) : username ? (
+       <AvatarTemplate 
+          username={(username.split(' ')[0][0] || '') + (username.split(' ')[1] ? username.split(' ')[1][0] : '')}
+          heightImg={150}
+          widthImg={150}
+       />
+   ) : null
+}
+
+
 
      </ContainerImage>
         </>
@@ -126,7 +135,7 @@ const ImageContainerButton = ({
     username ,
     imageProfile , 
     imageDefault , 
-    openDelete , 
+    openModal , 
     openEdit , 
     isOpenDelete , 
     isOpenEdit,
@@ -146,7 +155,7 @@ const ImageContainerButton = ({
          />
         {/** Botoes que vão abrir outros componentes*/}
         <ButtonContainer
-        openDelete={openDelete}
+        openModal={openModal}
         openEdit={openEdit}
         isOpenDelete={isOpenDelete}
         isOpenEdit={isOpenEdit}

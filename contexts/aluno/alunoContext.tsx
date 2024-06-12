@@ -8,7 +8,6 @@ import { convertBufferToImage } from "@/default";
 import { useHandleImageBase64 , handleBase64} from "@/functions/user/useHandleUser";
 import { useModal } from "@/components/modals/zustand/useModalContext";
 import { useImageState } from "@/functions/user/zustand/useImageContext";
-import { Message } from "@mui/icons-material";
 import { useUserContext } from "../userContext";
 type messageFromApi = {
   status:number;
@@ -25,7 +24,7 @@ export type alunoContextType  = {
 const alunoContext = createContext({} as alunoContextType);
 
 const AlunoProvider = ({children}:{children:React.ReactNode}) => {
-   const [avatarBase64 , setBase64] = useState<string | null>(''); 
+   const [avatarBase64 , setBase64] = useState<any>(''); 
    const {stringBase64 , onSetBase64} = useImageState();
    const {userLogin , role} = useUserContext();
    const data:any = {
@@ -35,13 +34,15 @@ const AlunoProvider = ({children}:{children:React.ReactNode}) => {
    }
    // retornar isso daqui `data:image/png;base64,${stringBase64}` pra colocar no avatar do usuario
    const responseAvatar = async () =>{
+    {/** */}
     console.log(stringBase64);
      const AvatarBuffer = await  handleBase64(data)
-     const base64Image = convertBufferToImage(AvatarBuffer?.avatar);
-     console.log("Era pra ter algo=>" , base64Image);
-     
+     console.log(AvatarBuffer?.data.response.avatar.data);
+     const base64Image = convertBufferToImage(AvatarBuffer?.data.response.avatar.data);
+     console.log("Avatar=>" , AvatarBuffer);
+     console.log("Logo após de converter=>" , base64Image);
+     onSetBase64(base64Image);
      setBase64(base64Image);
-     onSetBase64(stringBase64)
      if(base64Image){
        return{
         status:202,
@@ -55,9 +56,10 @@ const AlunoProvider = ({children}:{children:React.ReactNode}) => {
       }
      }
    }
-   useEffect(()=>{
-   responseAvatar(); 
-  },[])
+   /** 
+    * useEffect(()=>{
+     responseAvatar(); 
+      },[]) */
 
   const values = {avatarBase64 , responseAvatar}
   return(

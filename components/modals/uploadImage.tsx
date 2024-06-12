@@ -14,6 +14,7 @@ import { useImageState } from "@/functions/user/zustand/useImageContext";
 import { useAlunoContext } from "@/contexts/aluno";
 import { useUserContext } from "@/contexts";
 import api from "@/app/services/__api";
+import { useImageStateComponent } from "./zustand/use-state-image";
 
 type IUploadProps = {
     children?:React.ReactNode;
@@ -21,21 +22,41 @@ type IUploadProps = {
 
 
 export const UploadImageModal = ({children}:IUploadProps) =>{
-   
+    let result
+    const { userLogin } = useUserContext();
     const {isOpenModal , type , onCloseModal} = useModal();
     const [isLoading , setIsLoading] = useState(false);
     const [imagePreview , setImagePreview ] = useState<any>('');
-    const { onSetBase64 , onSetFileEvent , onResetBase64 , onResetFileEvent , stringBase64 , fileEvent} = useImageState();
+    const { onClose } = useImageStateComponent();
+    const 
+    { 
+        onSetBase64 ,
+        onSetFileEvent , 
+        onResetBase64 , 
+        onResetFileEvent , 
+        stringBase64 , 
+        fileEvent
+    } = useImageState();
     const { responseAvatar } = useAlunoContext();
     const isOpenUpload = isOpenModal && type === 'uploadImage';
     const resetValues = () =>{
         onResetBase64();
-        onResetFileEvent();
     }
-   const handleClose = () =>{
+   const handleClose:any = () =>{
     onCloseModal();
+    onClose();
     resetValues();
    }
+   function arrayBufferToBase64(buffer:ArrayBuffer) {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+}
+
    const onSetChangeStatesReader = (evt?:any) =>{
     evt.preventDefault();
     let file = evt?.target.files[0];
@@ -48,34 +69,47 @@ export const UploadImageModal = ({children}:IUploadProps) =>{
    }
    const handleUploadAvatar = async (e:any) =>{
       e.preventDefault();
-      console.log("evento=>" , e.target.files);
-      let result
-      /**
-       * 
-      */
     if(stringBase64 === ''){
        toast.error("Selecione uma foto de perfil");
     }else{
-        setIsLoading(true)
+        setIsLoading(true)    
 
-        //simulação retorno api - tempo
-        
-        const responseAvatarFromApi = await responseAvatar();
-           if(responseAvatarFromApi.status === 202){
-           toast.success(responseAvatarFromApi.message);
-            setTimeout(()=>{
-            handleClose();
-            setIsLoading(false);
-           } , 500)
-           }else{
-            toast.error(responseAvatarFromApi.message);
-            setTimeout(()=>{
-            resetValues();
-            setIsLoading(false);
-           } , 500)
-           }
-        /**
+        result = await api.post('/aluno/update-avatar' , {
+            avatar:stringBase64,
+            alunoId:userLogin?.id,
+        });
+    let resultBase64FromApi = arrayBufferToBase64(result.data.response.avatar.data);
+
+
+    if(result.data.status === 202){
+        onSetBase64(resultBase64FromApi);
+        onSetFileEvent(resultBase64FromApi);
+        setTimeout(()=>{
+         setIsLoading(false)
+         handleClose();
+        }, 800)
+    }
+
+     console.log("resultado from api=>" , result);
+     console.log("base64 input=>", stringBase64);
+     console.log("base64FromApi =>" , resultBase64FromApi);
+     console.log("São iguais?=>" , stringBase64 === resultBase64FromApi);
+     /**
          if(res){
+             const responseAvatarFromApi = await responseAvatar();
+                if(responseAvatarFromApi.status === 202){
+                toast.success(responseAvatarFromApi.message);
+                 setTimeout(()=>{
+                 handleClose();
+                 setIsLoading(false);
+                } , 500)
+                }else{
+                 toast.error(responseAvatarFromApi.message);
+                 setTimeout(()=>{
+                 resetValues();
+                 setIsLoading(false);
+                } , 500)
+                }
            toast.success("Imagem de perfil alterada com sucesso!");
            resetValues();
            onCloseModal();
@@ -113,15 +147,6 @@ const getBase64FromFiles = (readerEvent:any) =>{
    const base64String = arrayBufferToBase64(binaryArrayBufferFiles);
    onSetBase64(base64String);
 
-}
-function arrayBufferToBase64(buffer:ArrayBuffer) {
-    let binary = '';
-    let bytes = new Uint8Array(buffer);
-    let len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
 }
 
 

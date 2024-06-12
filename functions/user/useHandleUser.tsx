@@ -41,10 +41,7 @@ export const useHandleImageBase64 = () =>{
   }
     
      if(result){
-       return {
-        avatar:result.avatar,
-        message:result.message
-       }
+       return result
      }
    
       }

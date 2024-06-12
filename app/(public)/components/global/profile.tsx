@@ -13,6 +13,7 @@ import {
    ContainerImgTextPlanet,
    ContainerText
 }  from '../../components/global/styled/profile'
+import { useImageState } from '@/functions/user/zustand/useImageContext';
 
 
 const ContainerProfile = ({
@@ -48,9 +49,13 @@ const ContainerProfile = ({
   if(username){
    alunoUsername = username.split(' ')[0] + ' ' + username.split(' ')[1];
   }
-
+     //mudar esse fileEvent pra algo relacionado a img
+    const {fileEvent} = useImageState();
     const imgProfile = convertBufferToImage(imgAvatar);
     const currentRole = role?.split(' ')[0];
+    
+
+
 
 return(
     <>
@@ -61,22 +66,75 @@ return(
         <ContainerImage
         $bgColor={bgColor}
         >
-          {
-            avatarUsername ? (
-          <AvatarTemplate
+         {/** fazer com que cada um tenha um fileEvent */} 
+{
+  currentRole === 'aluno' ? (
+    avatarUsername && fileEvent === '' ? (
+      <AvatarTemplate
+        username={avatarUsername}
+        heightImg={150}
+        widthImg={150}
+      />
+    ) : (
+      <Image
+        priority
+        alt='profile'
+        src={`data:image/png;base64,${fileEvent}`}
+        height={150}
+        width={150}
+        style={{
+          borderRadius:'50%'
+        }}
+      />
+    )
+  ) : null
+}
+
+   {
+    currentRole === 'professor' ? (
+      avatarUsername && fileEvent !== '' ? (
+        <AvatarTemplate
           username={avatarUsername}
           heightImg={150}
           widthImg={150}
-          />
-            ) : (
-          <Image
+        />
+      ) : (
+        <Image
           priority
-          alt='ProfileImg'
-          src={natalia}
+          alt='profile'
+          src={`data:image/png;base64,${fileEvent}`}
+          height={150}
+          width={150}
+          style={{
+            borderRadius:'50%'
+          }}
+        />
+      )
+    ) : null
+   }
 
-          />
-            )
-          }
+   {
+    currentRole === 'coordenador' ? (
+      avatarUsername && fileEvent !== '' ? (
+        <AvatarTemplate
+          username={avatarUsername}
+          heightImg={150}
+          widthImg={150}
+        />
+      ) : (
+        <Image
+          priority
+          alt='profile'
+          src={`data:image/png;base64,${fileEvent}`}
+          height={150}
+          width={150}
+          style={{
+            borderRadius:'50%'
+          }}
+        />
+      )
+    ) : null
+   }
         </ContainerImage>
         {
           (currentRole === 'aluno' && alunoUsername) && (

@@ -11,7 +11,9 @@ import { readFile } from "fs";
 import { toast } from "sonner";
 import { useImage } from "@chakra-ui/react";
 import { useImageState } from "@/functions/user/zustand/useImageContext";
-
+import { useAlunoContext } from "@/contexts/aluno";
+import { useUserContext } from "@/contexts";
+import api from "@/app/services/__api";
 
 type IUploadProps = {
     children?:React.ReactNode;
@@ -23,9 +25,8 @@ export const UploadImageModal = ({children}:IUploadProps) =>{
     const {isOpenModal , type , onCloseModal} = useModal();
     const [isLoading , setIsLoading] = useState(false);
     const [imagePreview , setImagePreview ] = useState<any>('');
-    const [base64Image , setBase64Image] = useState<string>('');
     const { onSetBase64 , onSetFileEvent , onResetBase64 , onResetFileEvent , stringBase64 , fileEvent} = useImageState();
-    const [file , setFile] = useState('');
+    const { responseAvatar } = useAlunoContext();
     const isOpenUpload = isOpenModal && type === 'uploadImage';
     const resetValues = () =>{
         onResetBase64();
@@ -41,27 +42,40 @@ export const UploadImageModal = ({children}:IUploadProps) =>{
     if(file){
        const reader = new FileReader();
        reader.onload = getBase64FromFiles;
-       reader.readAsBinaryString(file);
+       reader.readAsArrayBuffer(file);
     }
     evt.target.value = null;
    }
-   const handleUploadAvatar =  (e:any) =>{
+   const handleUploadAvatar = async (e:any) =>{
       e.preventDefault();
       console.log("evento=>" , e.target.files);
+      let result
       /**
        * 
       */
-
+    if(stringBase64 === ''){
+       toast.error("Selecione uma foto de perfil");
+    }else{
         setIsLoading(true)
+
         //simulação retorno api - tempo
-        let res
-      setTimeout(()=>{
-          res = true
-          setIsLoading(false)
-      },2000);  
-  
-      /**
-       if(res){
+        
+        const responseAvatarFromApi = await responseAvatar();
+           if(responseAvatarFromApi.status === 202){
+           toast.success(responseAvatarFromApi.message);
+            setTimeout(()=>{
+            handleClose();
+            setIsLoading(false);
+           } , 500)
+           }else{
+            toast.error(responseAvatarFromApi.message);
+            setTimeout(()=>{
+            resetValues();
+            setIsLoading(false);
+           } , 500)
+           }
+        /**
+         if(res){
            toast.success("Imagem de perfil alterada com sucesso!");
            resetValues();
            onCloseModal();
@@ -74,32 +88,43 @@ export const UploadImageModal = ({children}:IUploadProps) =>{
     
     }
 
-   const uploadAvatarToComponent = (e:any) =>{
-    e.preventDefault();
-    console.log(e?.target.files[0]);
-    let file = e.target.files[0];
-    const reader = new FileReader();
-    //setar o que foi adicionado pelas outras funções 
-    if(file !== undefined && reader !== undefined){
-      //adicionar aos states   
-      reader.onloadend = () =>{
-       setImagePreview(file.result);
-       onSetFileEvent(file);
-      }
-         reader.readAsDataURL(file);
-    }
+}
 
-
-
+const uploadAvatarToComponent = (e:any) =>{
+ e.preventDefault();
+ console.log(e?.target.files[0]);
+ let file = e.target.files[0];
+ const reader = new FileReader();
+ //setar o que foi adicionado pelas outras funções 
+ if(file !== undefined && reader !== undefined){
+   //adicionar aos states   
+   reader.onloadend = () =>{
+    setImagePreview(file.result);
+    onSetFileEvent(file);
    }
-    const getBase64FromFiles = (readerEvent:any) =>{
-       let binaryStringFromFiles = readerEvent.target.result;
-       onSetBase64(btoa(binaryStringFromFiles));
-    }
+      reader.readAsDataURL(file);
+ }
 
-   useEffect(()=>{
-    console.log("isThereSomethingHere?=>" , base64Image);
-   });
+
+
+}
+const getBase64FromFiles = (readerEvent:any) =>{
+   let binaryArrayBufferFiles = readerEvent.target.result;
+   const base64String = arrayBufferToBase64(binaryArrayBufferFiles);
+   onSetBase64(base64String);
+
+}
+function arrayBufferToBase64(buffer:ArrayBuffer) {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+}
+
+
 
 
     return(
@@ -207,7 +232,7 @@ export const UploadImageModal = ({children}:IUploadProps) =>{
              <Image
              className="profile-image"
              alt="image-profile"
-             src={`data:image/png;base64,${stringBase64}`}
+             src={`data:image/png;base64,${stringBase64}` }
              width={100}
              height={100}
              style={{
@@ -265,7 +290,10 @@ export const UploadImageModal = ({children}:IUploadProps) =>{
                <>
                 <button
                 className="button-modal-image"
-                onClick={resetValues}
+                onClick={(e)=> {
+                    e.preventDefault();
+                    resetValues();
+                }}
                 >
                 <Text 
                 $fontSize={18} 

@@ -5,7 +5,7 @@ import { persist } from 'zustand/middleware'
 type descriptionType = "base64" | "fileEvent";
 
  interface IImageProps  {
-    stringBase64:any;
+    stringBase64:any;   
     fileEvent:any;
     onSetBase64:(base64:any)=>void;
     onResetBase64:()=>void;
@@ -16,10 +16,10 @@ type descriptionType = "base64" | "fileEvent";
 export const useImageState = create<IImageProps>()(persist(
     (set)=>(
         {
-            stringBase64:'',
+            stringBase64:'', // valor padrão como um ArrayBuffer vazio
             fileEvent:'',
             onSetBase64:(base64:any) => set({stringBase64:base64}),
-            onResetBase64:()=> set({stringBase64:''}),
+            onResetBase64:()=> set({stringBase64:''}), // reset para um ArrayBuffer vazio
             onResetFileEvent:()=> set({fileEvent:''}),
             onSetFileEvent:(fileEvent:any)=> set({fileEvent:fileEvent})
         }

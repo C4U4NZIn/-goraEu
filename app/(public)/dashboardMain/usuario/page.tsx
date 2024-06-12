@@ -54,7 +54,7 @@ export  type updateFieldType = {
   import ImageContainerButton from "../../components/global/imageContainer";
   import CancelUpdate from "../../components/global/cancelUpdate";
   import {useModal} from '../../../../components/modals/zustand/useModalContext'
-
+  import { useAlunoContext } from '@/contexts/aluno';
 
   export default function Usuario(){
     // realizar posteriormente o processo de componentização
@@ -71,6 +71,7 @@ export  type updateFieldType = {
     const {onOpenModal} = useModal();
     let username = userLogin?.username;
     const image = userLogin?.avatar;
+    const {avatarBase64} = useAlunoContext();
     const {
       register,
       handleSubmit,
@@ -177,7 +178,7 @@ export  type updateFieldType = {
         <ImageContainerButton
        username={username}
        imageDefault={Natalia}
-       imageProfile={image}
+       imageProfile={avatarBase64}
        isOpenDelete={isOpenDelete}
        isOpenEdit={isOpenEdit}
        openEdit={abrirEdit}

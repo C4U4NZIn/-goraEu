@@ -15,7 +15,7 @@ import { Toaster } from 'sonner';
 import backgroundAside from '../dashboardMain/image/image 20menuVertical.svg'
 import AsideLateral from '../components/global/aside';
 import { ModalProvider } from '@/providers/providerModal';
-
+import { AlunoProvider } from '@/contexts/aluno';
 const tinos = Tinos({
   weight:['400'],
   subsets:['latin']
@@ -34,7 +34,7 @@ export default function DashboardMainLayout({
 
   return (
    <UserProviderFromProviders>
-    
+    <AlunoProvider>
     <html
     className={tinos.className}
     lang="pt-br"
@@ -65,6 +65,7 @@ export default function DashboardMainLayout({
       
     <ModalProvider/>
     </html>
+    </AlunoProvider>
 
 
    </UserProviderFromProviders>

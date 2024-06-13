@@ -1,4 +1,5 @@
 "use client";
+import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
 import Image from "next/image";
 import lapis_editor from '../images_activities/editar 3.svg'
 import lixeira_excluder from '../images_activities/lixeira (1) 3.svg'
@@ -91,7 +92,7 @@ const Post = (data:IPostProps)=>{
 
 
      {
-        type === 'message' && (
+        (type === 'message' &&  visible_for === "aluno") && (
         <ContainerMessage>
         <div
         className="containerText"
@@ -107,10 +108,50 @@ const Post = (data:IPostProps)=>{
         )
      }
      {
+        (type === 'message' &&  visible_for === "professor") && (
+        <ContainerMessage>
+        <div
+        className="containerText"
+        >
+       <Text
+          $fontSize={16}
+          $fontWeight={400}
+          >
+            {message}
+          </Text>
+        </div>
+        <div
+        className="containerButtonActions"
+        >
+        <button
+        className="buttonAction editAction"
+        >
+        <Image
+        alt=""
+        width={25}
+        height={25}
+        src={lapis_editor}
+        />
+        </button>
+        <button
+        className="buttonAction deleteAction"
+        >
+        <Image
+        alt=""
+        width={25}
+        height={25}
+        src={lixeira_excluder}
+        />
+        </button>
+        </div>
+        </ContainerMessage>
+        )
+     }
+     {
      (type === 'task' && visible_for === 'aluno') && (
       <>
 
-<div
+          <div
         className="container-task-preview"
         >
            
@@ -235,15 +276,171 @@ const Post = (data:IPostProps)=>{
      }
          {
          (type === 'task' && visible_for === 'professor') && (
-            <h1>editar , excluir - task</h1>
+            <div
+            className="container-simulate-preview"
+            >
+               
+                    <div
+                    style={{
+                        width:'45px',
+                        height:'45px',
+                        display:'flex',
+                        backgroundColor:`${bgClassColor}`,
+                        opacity:'0.6',
+                        borderRadius:'100%'
+                    }}
+                    >
+                <Image
+                priority
+                alt="prancheta"
+                src={pracheta_activity}
+                width={35}
+                height={35}
+                style={{
+                    color:`${bgClassColor}`,
+                    alignSelf:'center',
+                    padding:'8.5px'
+                }}
+                />
+                    </div>
+                <div
+                className="container-description"
+                >
+                <Text
+                $fontSize={20}
+                $fontWeight={700}
+                >{task?.titleTask}</Text>
+                <div
+                className="limit-date-description"
+                >
+                <Text
+                $fontSize={16}
+                $fontWeight={400}
+                style={{
+                    color:'#525252'
+                }}
+                >Entrega: {task?.expiresAt}</Text>
+    
+                <Text
+                $fontSize={16}
+                $fontWeight={400}
+                style={{
+                    color:'#525252'
+                }}
+                >{task?.hourExpiresAt}</Text>
+                </div>
+                </div>
+                <div
+        className="containerButtonActions"
+        >
+        <button
+        className="buttonAction editAction"
+        >
+        <Image
+        alt=""
+        width={25}
+        height={25}
+        src={lapis_editor}
+        />
+        </button>
+        <button
+        className="buttonAction deleteAction"
+        >
+        <Image
+        alt=""
+        width={25}
+        height={25}
+        src={lixeira_excluder}
+        />
+        </button>
+               </div>
+              </div>
          )
          }
         {
          (type === 'simulado' && visible_for === 'professor') && (
-             <h1>editar , excluir - simulado</h1>
+            <div
+            className="container-simulate-preview"
+            >
+               
+                    <div
+                    style={{
+                        width:'45px',
+                        height:'45px',
+                        display:'flex',
+                        backgroundColor:`${bgClassColor}`,
+                        opacity:'0.6',
+                        borderRadius:'100%'
+                    }}
+                    >
+                <Image
+                priority
+                alt="prancheta"
+                src={pracheta_activity}
+                width={35}
+                height={35}
+                style={{
+                    color:`${bgClassColor}`,
+                    alignSelf:'center',
+                    padding:'8.5px'
+                }}
+                />
+                    </div>
+                <div
+                className="container-description style-end"
+            
+            >
+                <Text
+                $fontSize={20}
+                $fontWeight={700}
+                >{simulado?.titleSimulado}</Text>
+                <div
+                className="limit-date-description"
+                >
+                <Text
+                $fontSize={16}
+                $fontWeight={400}
+                style={{
+                    color:'#525252'
+                }}
+                >Entrega: {simulado?.expiresAt}</Text>
+    
+                <Text
+                $fontSize={16}
+                $fontWeight={400}
+                style={{
+                    color:'#525252'
+                }}
+                >{simulado?.hourExpiresAt}</Text>
+                </div>
+                </div>
+                <div
+        className="containerButtonActions style-end"
+        >
+        <button
+        className="buttonAction editAction"
+        >
+        <Image
+        alt=""
+        width={25}
+        height={25}
+        src={lapis_editor}
+        />
+        </button>
+        <button
+        className="buttonAction deleteAction"
+        >
+        <Image
+        alt=""
+        width={25}
+        height={25}
+        src={lixeira_excluder}
+        />
+        </button>
+               </div>
+              </div>
             )
         }
-    
 
         </ContainerContent>
         </>

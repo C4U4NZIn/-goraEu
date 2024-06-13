@@ -113,7 +113,7 @@ export default function Mural(){
                      createdAt={post.createdAt}
                      message={post.message}
                      type={post.type}
-                    
+                     visible_for="aluno"
                     />
                 ))
                }

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const ContainerContent = styled.div`
 
 height: 100%;
-width: 80%;
+width: 90%;
 display:flex;
 flex-direction: column;
 align-items: center;
@@ -52,6 +52,37 @@ gap: 1rem;
     gap: 1.750rem;
 }
 
+.containerButtonActions{
+  display: flex;
+  flex-direction: row;
+  width: 3rem;
+  height: 2rem;
+  gap: 1rem;
+  align-self: flex-end;
+}
+.containerButtonActions::-webkit-scrollbar{
+ width: 0px;
+}
+.buttonAction{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border-radius: 60%;
+ background-color: #fff;
+ border: none;
+}
+.editAction{
+
+}
+.deleteAction{
+
+}
+
+.style-end{
+  display: flex;
+  align-self: flex-end;
+}
+
 
 `
 export const ContainerAvatarTitles = styled.div`
@@ -87,17 +118,18 @@ export const ContainerMessage = styled.div`
 margin: 0;
 padding: 0;
 display: flex;
-flex-direction: column;
+flex-direction: row;
 overflow: auto;
 width:90%;
-height: 60%;
+height: 90%;
+gap: 1rem;
 
 
 .containerText{
     display: flex;
     flex-direction: column;
-    width:100%;
-    height: 100%;
+    width:80%;
+    height: 10rem;
     overflow: auto;
 }
 .containerText::-webkit-scrollbar{

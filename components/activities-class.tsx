@@ -12,20 +12,24 @@ type IActivitiesProps = {
     professorTasks?: any[];
     professorSimulados?: any[];
     visible_for?:string;
+    role?:string;
 }
 
 const Activities = (
     {
     bgColor , 
     professorSimulados , 
-    professorTasks
+    professorTasks,
+    role
 }:IActivitiesProps) =>{
     return(
       <>
       <ContainerActivities
       $bgColorDiv={bgColor}
       >
-     <div
+        {
+            role === 'aluno' && (
+        <div
      className="container-sections"
      >
       <Text
@@ -87,8 +91,76 @@ const Activities = (
         ))
       }
       </div>
-     </div>
-
+       </div>
+            )
+        }
+       {
+        role === 'professor' && (
+            <div
+            className="container-sections"
+            >
+             <Text
+               $fontSize={45}
+               $fontWeight={700}
+               style={{
+                   color:`${bgColor}`,
+                   alignSelf:'self-start',
+                   marginLeft:'3em'
+               }}
+               >
+                   Simulados
+               </Text>
+       
+               <div
+               className="simulado-section"
+               >
+             {
+               professorSimulados?.map((professorSimulado)=>(
+                   <Post
+                   professorImg={professorSimulado.professorImg}
+                   professorName={professorSimulado.professorName}
+                   createdAt={professorSimulado.createdAt}
+                   simulado={professorSimulado}
+                   type="simulado"
+                   visible_for="professor"
+                   />
+               ))
+             }
+             </div>
+             <Text
+               $fontSize={45}
+               $fontWeight={700}
+               style={{
+                   color:`${bgColor}`,
+                   margin:0,
+                   padding:0,
+                   alignSelf:'flex-start',
+                   marginLeft:'3em'
+                   
+               }}
+       
+               >
+                   Atividades
+               </Text>
+             <div
+             className="task-section"
+             >
+             {
+               professorTasks?.map((professorTask)=>(
+                   <Post
+                   professorImg={professorTask.professorImg}
+                   professorName={professorTask.professorName}
+                   createdAt={professorTask.createdAt}
+                   task={professorTask}
+                   type="task"
+                   visible_for="professor"
+                   />
+               ))
+             }
+             </div>
+              </div>
+        )
+       }
 
       </ContainerActivities>
       

@@ -206,6 +206,7 @@ const ProfessorClass = () =>{
                  message={post.message}
                  type={post.type}
                  postImg={post.postImg}
+                 visible_for='aluno'
                 />
               ))
             ) : (
@@ -214,6 +215,7 @@ const ProfessorClass = () =>{
               bgColor={bgClassColor}
               professorSimulados={professorSimulados}
               professorTasks={professorTasks}
+              role='aluno'
               />
             )
           }

@@ -16,8 +16,12 @@ export const ContainerBar3 = styled.div<{
 display: flex;
 flex-direction: row;
 height: 3.125rem;
-width: ${props => props.$isStudentActive ? '25rem' : '20rem'}; /* Ajusta a largura do ContainerBar */
-border-radius: 7px;
+width: 40rem;
+justify-content: center;
+//align-items: center;
+
+//width: ${props => props.$isStudentActive ? '25rem' : '20rem'}; /* Ajusta a largura do ContainerBar */
+border-radius: 20px;
 ${props=> props.$bgColor && `border: 1px solid ${props.$bgColor}`}; 
 gap: 1rem;
 `
@@ -27,6 +31,7 @@ export const SectionBar3 = styled.div<{
   $height?:number;
   $width?:number;
   $isMuralActive?:boolean;
+  $isMuralActiveTwo?:boolean;
   $isTaskActive?:boolean;
   $isStudentActive?:boolean;
 }>`
@@ -37,14 +42,16 @@ justify-content: center;
 align-items: center;
 height: ${props => props.$height};
 width: calc(33% - 1rem); /* Define a largura de cada seção para ser um terço da largura total */
-${props => props.$isMuralActive && `background-color: ${props.$bgColor}`}
-${props => props.$isMuralActive && 'border-radius:0 20px 20px 0'};
+${props => props.$isMuralActiveTwo && `background-color:${props.$bgColor};`}
+${props => props.$isMuralActiveTwo && 'border-radius:20px 20px 20px 20px;'};
 ${props => props.$isTaskActive && `background-color: ${props.$bgColor}`};
-${props => props.$isTaskActive && 'border-radius:20px 0 0 20px;'};
+${props => props.$isTaskActive && 'border-radius:20px 20px 20px 20px;'};
+${props => props.$isStudentActive && `background-color: ${props.$bgColor}`};
+${props => props.$isStudentActive && 'border-radius:20px 20px 20px 20px;'};
+${props => props.$isStudentActive && 'padding-left:2rem;'};
+${props => props.$isMuralActiveTwo && 'padding-right:2rem;'};
+${props => props.$isTaskActive && 'padding-left:-2rem;'};
 `
-
-
-
 export const ContainerBar = styled.div<{
     $bgColor?:string;
     $isMuralActive?:boolean;
@@ -107,10 +114,11 @@ const Bar = ({
       isStudentActive
      } = useBarStore();
 
-    
+  
 
     const setTaskState = () =>{
       closeIsMuralState();
+      closeIsStudentState();
       openIsTaskState();
     }
     const setMuralState = () => {
@@ -187,30 +195,27 @@ const Bar = ({
         )
        }
 
-
-
-
-
         {
           numberBar === 3 && (
           
             <>
-            <ContainerBar3>
+            <ContainerBar3
+            $bgColor={bgColor}
+            >
             <SectionBar3
             onClick={setMuralState}
-            $isMuralActive={isMuralActive}
+            $isMuralActiveTwo={isMuralActive}
             $bgColor={bgColor}
             $height={100}
             $width={33}
             >
                   <Text
-                   $isActive={isMuralActive}
                    $fontWeight={700}
-                   $fontSize={isMuralActive ? 16 : 10}
+                   $fontSize={isMuralActive ? 24 : 18}
                   >
                 {
-                   words_bar[0] && isMuralActive ? (
-                    words_bar[0].toUpperCase()
+                   words_bar[0]  ? (
+                    words_bar[0].toLowerCase()
                    ) : (
                     words_bar[0]
                    )
@@ -225,13 +230,13 @@ const Bar = ({
                    $width={33}
                    >
                    <Text
-                   $isActive={isTaskActive}
+                   
                    $fontWeight={700}
-                   $fontSize={isTaskActive ? 16 : 10}
+                   $fontSize={isTaskActive ? 24 : 18}
                    >
                  {
-                   words_bar[1] && isTaskActive ? (
-                    words_bar[1].toUpperCase()
+                   words_bar[1] ? (
+                    words_bar[1].toLowerCase()
                    ) : (
                     words_bar[1]
                    )
@@ -246,13 +251,12 @@ const Bar = ({
                    $width={33}
                    >
                    <Text
-                   $isActive={isStudentActive}
                    $fontWeight={700}
-                   $fontSize={isStudentActive ? 16 : 10}
+                   $fontSize={isStudentActive ? 24 : 18}
                    >
                   {
-                   words_bar[2] && isStudentActive ? (
-                    words_bar[2].toUpperCase()
+                   words_bar[2]  ? (
+                    words_bar[2].toLowerCase()
                    ) : (
                     words_bar[2]
                    )

@@ -4,6 +4,46 @@ import {
  Text
 } from '../global/styled/profile'
 import { useBarStore } from '../../dashboardMain/salas/zustand/use-bar';
+import { number } from 'zod';
+
+
+export const ContainerBar3 = styled.div<{
+  $bgColor?:string;
+  $isMuralActive?:boolean;
+  $isTaskActive?:boolean;
+  $isStudentActive?:boolean;
+}>`
+display: flex;
+flex-direction: row;
+height: 3.125rem;
+width: ${props => props.$isStudentActive ? '25rem' : '20rem'}; /* Ajusta a largura do ContainerBar */
+border-radius: 7px;
+${props=> props.$bgColor && `border: 1px solid ${props.$bgColor}`}; 
+gap: 1rem;
+`
+
+export const SectionBar3 = styled.div<{
+  $bgColor?:string;
+  $height?:number;
+  $width?:number;
+  $isMuralActive?:boolean;
+  $isTaskActive?:boolean;
+  $isStudentActive?:boolean;
+}>`
+cursor: pointer;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: ${props => props.$height};
+width: calc(33% - 1rem); /* Define a largura de cada seção para ser um terço da largura total */
+${props => props.$isMuralActive && `background-color: ${props.$bgColor}`}
+${props => props.$isMuralActive && 'border-radius:0 20px 20px 0'};
+${props => props.$isTaskActive && `background-color: ${props.$bgColor}`};
+${props => props.$isTaskActive && 'border-radius:20px 0 0 20px;'};
+`
+
+
 
 export const ContainerBar = styled.div<{
     $bgColor?:string;
@@ -14,11 +54,13 @@ export const ContainerBar = styled.div<{
 display: flex;
 flex-direction: row;
 height: 3.125rem;
-width: 15.625rem;
+width: ${props => props.$isStudentActive ? '23.4375rem' : '15.625rem'};
 border-radius: 7px;
 ${props=> props.$bgColor && `border: 1px solid ${props.$bgColor}`}; 
 ${props => props.$isTaskActive && 'gap: 1rem;'};
 ${props => props.$isTaskActive && 'width:20rem;'};
+${props => props.$isStudentActive && 'gap: 1.5rem;'};
+${props => props.$isStudentActive && 'width:23.4375rem;'};
 `
 export const SectionBar = styled.div<{
     $bgColor?:string;
@@ -79,20 +121,22 @@ const Bar = ({
     const setStudentState = () => {
        openIsStudentState();
        closeIsMuralState();
-       closeIsStudentState();
+       closeIsTaskState();
     }
     
      return(
         <>
+
+       {
+        numberBar === 2 && (
+    
         <ContainerBar 
         $bgColor={bgColor}
         $isMuralActive={isMuralActive}
         $isTaskActive={isTaskActive}
         $isStudentActive={isStudentActive}
         >
-             {
-                numberBar === 2 && (
-              <>
+         <>
                    <SectionBar
                    onClick={setMuralState}
                    $isMuralActive={isMuralActive}
@@ -136,79 +180,89 @@ const Bar = ({
                    }
                     </Text>
                     </SectionBar>
-              </>
-                )
-             }
-            {
-                numberBar === 3 && (
-              <>
-              
-             <SectionBar
-             $isMuralActive={isMuralActive}
-             $bgColor={bgColor}
-             $height={100}
-             $width={33}
-             >
-                   <Text
-                    $isActive={isMuralActive}
-                    $fontWeight={700}
-                    $fontSize={isMuralActive ? 28 : 24}
-                   >
-                 {
-                    words_bar[0] && isMuralActive ? (
-                     words_bar[0].toUpperCase()
-                    ) : (
-                     words_bar[0]
-                    )
-                   }
-                   </Text>
-                    </SectionBar>
-                    <SectionBar
-                    $isTaskActive={isTaskActive}
-                    $bgColor={bgColor}
-                    $height={100}
-                    $width={33}
-                    >
-                    <Text
-                    $isActive={isTaskActive}
-                    $fontWeight={700}
-                    $fontSize={isTaskActive ? 28 : 24}
-                    >
-                  {
-                    words_bar[1] && isTaskActive ? (
-                     words_bar[1].toUpperCase()
-                    ) : (
-                     words_bar[1]
-                    )
-                   }
-                    </Text>
-                    </SectionBar>
-                    <SectionBar
-                    $isStudentActive={isStudentActive}
-                    $bgColor={bgColor}
-                    $height={100}
-                    $width={33}
-                    >
-                    <Text
-                    $isActive={isStudentActive}
-                    $fontWeight={700}
-                    $fontSize={isStudentActive ? 28 : 24}
-                    >
-                   {
-                    words_bar[2] && isStudentActive ? (
-                     words_bar[2].toUpperCase()
-                    ) : (
-                     words_bar[2]
-                    )
-                   }
-                    </Text>
-                    </SectionBar>
-              </>
-                )
-            }
- 
+         </>        
+          
 
         </ContainerBar>
+        )
+       }
+
+
+
+
+
+        {
+          numberBar === 3 && (
+          
+            <>
+            <ContainerBar3>
+            <SectionBar3
+            onClick={setMuralState}
+            $isMuralActive={isMuralActive}
+            $bgColor={bgColor}
+            $height={100}
+            $width={33}
+            >
+                  <Text
+                   $isActive={isMuralActive}
+                   $fontWeight={700}
+                   $fontSize={isMuralActive ? 16 : 10}
+                  >
+                {
+                   words_bar[0] && isMuralActive ? (
+                    words_bar[0].toUpperCase()
+                   ) : (
+                    words_bar[0]
+                   )
+                  }
+                  </Text>
+                   </SectionBar3>
+                   <SectionBar3
+                   onClick={setTaskState}
+                   $isTaskActive={isTaskActive}
+                   $bgColor={bgColor}
+                   $height={100}
+                   $width={33}
+                   >
+                   <Text
+                   $isActive={isTaskActive}
+                   $fontWeight={700}
+                   $fontSize={isTaskActive ? 16 : 10}
+                   >
+                 {
+                   words_bar[1] && isTaskActive ? (
+                    words_bar[1].toUpperCase()
+                   ) : (
+                    words_bar[1]
+                   )
+                  }
+                   </Text>
+                   </SectionBar3>
+                   <SectionBar3
+                   onClick={setStudentState}
+                   $isStudentActive={isStudentActive}
+                   $bgColor={bgColor}
+                   $height={100}
+                   $width={33}
+                   >
+                   <Text
+                   $isActive={isStudentActive}
+                   $fontWeight={700}
+                   $fontSize={isStudentActive ? 16 : 10}
+                   >
+                  {
+                   words_bar[2] && isStudentActive ? (
+                    words_bar[2].toUpperCase()
+                   ) : (
+                    words_bar[2]
+                   )
+                  }
+                   </Text>
+                   </SectionBar3>
+            </ContainerBar3>
+             </>
+          )
+        }
         </>
     )
 }

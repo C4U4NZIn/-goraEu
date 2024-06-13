@@ -1,7 +1,7 @@
 "use client";
-import { Inter } from 'next/font/google'
-import globalStyle from '../dashboardMain/css/global.module.css'
-import styles from '../dashboardMain/css/dashboard.module.css'
+import { Inter, Tinos } from 'next/font/google'
+import globalStyle from './css/global.module.css'
+import styles from './css/dashboard-professor.module.css'
 import Image from "next/image";
 import fogueteAgora2 from '../dashboardMain/image/WhatsApp Image 2024-03-11 at 20.05 1fogueteAgora2.svg'
 import { ActiveLink } from "../dashboardMain/components/active-link";
@@ -10,10 +10,14 @@ import desempenho from '../dashboardMain/image/diagrama 1.svg'
 import usuario from '../dashboardMain/image/do-utilizador (2) 1.svg'
 import salas from '../dashboardMain/image/casa 1.svg'
 import stylesChildren from '../dashboardMain/css/children.module.css'
+import simulado from '../dashboardMain/image/lista-de-embalagem 1.svg'
 import { UserProviderFromProviders } from '@/providers';
 import { Toaster } from 'sonner';
 
-const inter = Inter({ subsets: ['latin'] })
+const tinos = Tinos({ 
+  weight:['400','700'],  
+  subsets: ['latin'] 
+})
 
 
 
@@ -28,7 +32,16 @@ export default function DashboardProfessorLayout({
 
   return (
    <UserProviderFromProviders>
-    <html lang="pt-br">
+    <html 
+    lang="pt-br"
+    className={tinos.className}
+    style={{
+      width:'80rem',
+      height:'47.144rem',
+      margin:0,
+      padding:0
+    }}
+    >
       <body className={globalStyle.body}>
       
       <aside className={styles.verticalSideBar}>
@@ -59,7 +72,7 @@ export default function DashboardProfessorLayout({
         src={salas}
         className={styles.stylesSalas}
         />
-           <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
+           <ActiveLink href="/dashboardProfessor/salas"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -77,7 +90,7 @@ export default function DashboardProfessorLayout({
         src={desempenho}
         className={styles.stylesDesempenho}
         />
-           <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Desempenho</h1></ActiveLink>
+           <ActiveLink href="/dashboardProfessor/desempenho"><h1 className={styles.stylesH1}>Desempenho</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -86,24 +99,25 @@ export default function DashboardProfessorLayout({
         src={mural}
         className={styles.stylesMural}
         />
-      <ActiveLink href="/dashboardProfessor"><h1 className={styles.stylesH1}>Mural</h1></ActiveLink>
+      <ActiveLink href="/dashboardProfessor/mural"><h1 className={styles.stylesH1}>Mural</h1></ActiveLink>
+       </div>
+       <div className={styles.containerLink}>
+        <Image
+        priority
+        alt=""
+        src={simulado}
+        className={styles.stylesMural}
+        />
+      <ActiveLink href="/dashboardProfessor/simulado"><h1 className={styles.stylesH1}>Simulado</h1></ActiveLink>
        </div>
 
-
-     
-    
         </div>
 
       </aside>
-   
-   
-
-    <div className={stylesChildren.containerChildrens}>
-      <>
+      
       {children}  
-       </>
        <Toaster richColors position='top-center'/>
-    </div>
+    
  
 
       </body>

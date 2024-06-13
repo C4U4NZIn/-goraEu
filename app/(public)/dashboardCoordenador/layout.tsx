@@ -1,7 +1,7 @@
 "use client";
-import { Inter } from 'next/font/google'
-import globalStyle from '../dashboardMain/css/global.module.css'
-import styles from '../dashboardMain/css/dashboard.module.css'
+import { Tinos } from 'next/font/google'
+import globalStyle from './css/global.module.css'
+import styles from './css/dashboard-coordenador.module.css'
 import Image from "next/image";
 import fogueteAgora2 from '../dashboardMain/image/WhatsApp Image 2024-03-11 at 20.05 1fogueteAgora2.svg'
 import { ActiveLink } from "../dashboardMain/components/active-link";
@@ -9,13 +9,15 @@ import mural from '../dashboardMain/image/web-chat (1) 1.svg'
 import desempenho from '../dashboardMain/image/diagrama 1.svg'
 import usuario from '../dashboardMain/image/do-utilizador (2) 1.svg'
 import salas from '../dashboardMain/image/casa 1.svg'
+import professores  from '../dashboardMain/image/professor-no-quadro 1.svg'
+import alunos from '../dashboardMain/image/usuario-graduado 1.svg'
 import stylesChildren from '../dashboardMain/css/children.module.css'
 import { UserProviderFromProviders } from '@/providers';
 import { Toaster } from 'sonner';
 
-const inter = Inter({ subsets: ['latin'] })
-
-
+const tinos = Tinos({ 
+  weight:['400','700'],
+  subsets: ['latin'] })
 
 
 export default function DashboardCoordenadorLayout({
@@ -32,7 +34,14 @@ export default function DashboardCoordenadorLayout({
   */}
   return (
    <UserProviderFromProviders>
-    <html lang="pt-br">
+    <html 
+    lang="pt-br"
+    className={tinos.className}
+    style={{
+      height:'47.144rem',
+      width:'80rem'
+    }}
+    >
       <body className={globalStyle.body}>
       {/** fazer componente aside fodão */}
       <aside className={styles.verticalSideBar}>
@@ -63,7 +72,7 @@ export default function DashboardCoordenadorLayout({
         src={salas}
         className={styles.stylesSalas}
         />
-           <ActiveLink href="/dashboardCoordenador"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
+           <ActiveLink href="/dashboardCoordenador/salas"><h1 className={styles.stylesH1}>Salas</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -81,7 +90,7 @@ export default function DashboardCoordenadorLayout({
         src={desempenho}
         className={styles.stylesDesempenho}
         />
-           <ActiveLink href="/dashboardCoordenador"><h1 className={styles.stylesH1}>Desempenho</h1></ActiveLink>
+           <ActiveLink href="/dashboardCoordenador/professores"><h1 className={styles.stylesH1}>Professores</h1></ActiveLink>
        </div>
        <div className={styles.containerLink}>
         <Image
@@ -90,7 +99,7 @@ export default function DashboardCoordenadorLayout({
         src={mural}
         className={styles.stylesMural}
         />
-      <ActiveLink href="/dashboardCoordenador"><h1 className={styles.stylesH1}>Mural</h1></ActiveLink>
+      <ActiveLink href="/dashboardCoordenador/alunos"><h1 className={styles.stylesH1}>Alunos</h1></ActiveLink>
        </div>
 
 

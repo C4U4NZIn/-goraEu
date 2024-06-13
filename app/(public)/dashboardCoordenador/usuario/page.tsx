@@ -166,7 +166,7 @@ export default function Usuario(){
        isOpenDelete={isOpenDelete}
        isOpenEdit={isOpenEdit}
        openEdit={abrirEdit}
-       openDelete={abrirDelete}
+       openModal={abrirDelete}
        imageDelete={Delete}
        imageEdit={EditProfile}
        widthButton={2.5}

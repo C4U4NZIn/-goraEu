@@ -36,7 +36,12 @@ export default function middleware(request:NextRequest){
     const param = last_pathname
     const isDynamicRoute = verifyUUID({param});
 
+    console.log("current role=>" , role);
+    console.log("è uma rota válida?=>" , isRoleValida);
+    console.log("Current route=>",pattern.pathname);
+
     // se o usuário não tiver token
+    //impede de ele entrar sem ter o token
     if(!token){
         // e ele tiver na página de login
         if(currentPath === '/SignUp'){
@@ -48,6 +53,7 @@ export default function middleware(request:NextRequest){
     }
 
     //se o usuário tiver o token
+    //redireciona ele com base no token e role
     if(token){
         // e ele estiver na página de login
         if(currentPath === '/SignUp'){
@@ -56,7 +62,7 @@ export default function middleware(request:NextRequest){
                 // é redirecionado para seu dashboard
                 const dashboardAlunoUrl = new URL('/dashboardMain/usuario' , request.url);
                 return NextResponse.redirect(dashboardAlunoUrl)
-            }else if(role === 'coordenador') {
+            }else if(role === 'Coordenador') {
                 // se o usuário for coordenador
                 const dashboardCoordenadorUrl = new URL('/dashboardCoordenador/usuario', request.url);
                 return NextResponse.redirect(dashboardCoordenadorUrl);
@@ -68,62 +74,50 @@ export default function middleware(request:NextRequest){
         }
     }
 
+    if(token && (role === 'aluno') && isDynamicRoute){
+        console.log("É aluno e está em uma dynamic route?=>",isDynamicRoute);
+       return NextResponse.next();
+       }
+       if(token && (role === 'professor') && isDynamicRoute){
+        console.log("É professor e está em uma dynamic route?=>",isDynamicRoute);
+       return NextResponse.next();
+       }
+    
+    //rotas dinâmicas em uuid - verificação 
 
-    if(token && (role === 'aluno')){
-      console.log("É aluno e está em uma dynamic route?=>",isDynamicRoute);
-     return NextResponse.next();
-     }
-     if(token && (role === 'professor')){
-      console.log("É professor e está em uma dynamic route?=>",isDynamicRoute);
-     return NextResponse.next();
-     }
 
     // se o usuário tiver token e for aluno
-    if(token && (role === 'aluno')){
-        // se a rota não pertencer ao aluno
-        if(!isRoleValida){
-            // redireciona para o dashboard do aluno
-            const dashboardAlunoUrl = new URL('/dashboardMain/usuario' , request.url);
-            return NextResponse.redirect(dashboardAlunoUrl)
-        }
-        
-    if(isDynamicRoute){
-      return NextResponse.next();
-    }
-        // se a rota pertencer ao aluno
-        else{
-            return NextResponse.next();
-        }
-    }
-    if(token && (role === 'professor')){
-      if(!isRoleValida){
-        // redireciona para o dashboard do aluno
-        const dashboardProfessorUrl = new URL('/dashboardProfessor/usuario' , request.url);
-        return NextResponse.redirect(dashboardProfessorUrl)
-    }
-    
-if(isDynamicRoute){
-  return NextResponse.next();
-}
-    // se a rota pertencer ao aluno
-    else{
-        return NextResponse.next();
-    }
-    }
-
-
-    // se o usuário tiver token e a rota não pertencer à sua função
-    if(token && !isRoleValida && role){
-        // redireciona para o dashboard correspondente à sua função
-        const dashboardRole = new URL(`/dashboard${role.charAt(0).toUpperCase() + role.slice(1)}/usuario`,request.url);
+ 
+// se o usuário tiver token e a rota não pertencer à sua função
+if(token){
+    // redireciona para o dashboard correspondente à sua função
+  if(!isRoleValida){
+    if(role === 'professor'){
+        const dashboardRole = new URL(`/dashboardProfessor/usuario`,request.url);
+        return NextResponse.redirect(dashboardRole); 
+    }else if(role === 'Coordenador'){
+        const dashboardRole = new URL(`/dashboardCoordenador/usuario`,request.url);
+        return NextResponse.redirect(dashboardRole);
+    }else if(role === 'aluno'){
+        const dashboardRole = new URL('/dashboardMain/usuario',request.url);
         return NextResponse.redirect(dashboardRole);
     }
+  }else{
+    if((role === 'aluno') && isDynamicRoute){
+        console.log("É aluno e está em uma dynamic route?=>",isDynamicRoute);
+       return NextResponse.next();
+       }
+       if((role === 'professor') && isDynamicRoute){
+        console.log("É professor e está em uma dynamic route?=>",isDynamicRoute);
+       return NextResponse.next();
+       }
+  }
+    
+}
 
-    // se o usuário tiver token e a rota pertencer à sua função
-    if(token && isRoleValida){
-        return NextResponse.next();
-    }
 
+
+ 
 }
 
 export const config = {

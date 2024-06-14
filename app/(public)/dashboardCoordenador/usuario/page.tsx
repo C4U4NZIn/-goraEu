@@ -54,7 +54,7 @@ export default function Usuario(){
     //todos os componentes serão componentizados- redundancia
     //por enquanto não vou componentizar nada 
     //mas vou deixar comentado onde devem estar os componentes
-    const {userLogin , sendEmailToUser , verifyCode} = useUserContext();
+    const {userLogin , jwtToken , sendEmailToUser , verifyCode} = useUserContext();
     const [isOpenDelete , setIsOpenDelete] = useState<Boolean>(false);
     const [isOpenEdit , setIsOpenEdit] = useState<Boolean>(false);
     const [otp , setOtp] = useState<string>('');
@@ -154,6 +154,9 @@ export default function Usuario(){
       const isActivePasswordField = watch('password') && !errors.password;
       const isVoidOtpField = otp !== '';
       console.log(otp);
+
+
+
 // quando tiver tempo componentizo isso tudo
     return(
       

@@ -87,7 +87,7 @@ export default function DashboardCoordenadorLayout({
         <Image
         priority
         alt=""
-        src={desempenho}
+        src={professores}
         className={styles.stylesDesempenho}
         />
            <ActiveLink href="/dashboardCoordenador/professores"><h1 className={styles.stylesH1}>Professores</h1></ActiveLink>
@@ -96,7 +96,7 @@ export default function DashboardCoordenadorLayout({
         <Image
         priority
         alt=""
-        src={mural}
+        src={alunos}
         className={styles.stylesMural}
         />
       <ActiveLink href="/dashboardCoordenador/alunos"><h1 className={styles.stylesH1}>Alunos</h1></ActiveLink>

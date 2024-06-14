@@ -180,6 +180,8 @@ export type userContextType = {
     //tem no backend - mas preguiça pra consumir...
    
 
+
+
     //passar email to api
     //acessar 
     const sendEmailToUser = async (data:sendEmailToUserType) =>{
@@ -279,10 +281,6 @@ export type userContextType = {
             message:'Autenticado com Sucesso!',
             status:true
         }
-         
-      
-
-           
         
        } catch (error) {
 
@@ -329,7 +327,7 @@ export type userContextType = {
             const newUser = {...responseFromGetDataUser.data.user} 
             console.log(newUser);
             switch(newUser.role){
-               case 'coordenador':
+               case 'Coordenador':
                 setUserLogin({
                     id:newUser.id,
                     avatar:newUser.avatar,
@@ -549,7 +547,6 @@ export type userContextType = {
         console.log(salas);
     }
 
-    
     useEffect(() => {
         atualizarDataUser();
     },[]);

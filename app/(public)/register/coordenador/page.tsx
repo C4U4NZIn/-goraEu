@@ -45,7 +45,7 @@ export default function ProfileCoordenador(){
     },[])
     
    const [step, setStep] = useState(0);
-   const transformProps = -step*50.75 + 50.75;
+   const transformProps = -step*30 + 30;
    const { createUser , jwtToken } = useUserContext();
    const router = useRouter();
    const {
@@ -60,22 +60,15 @@ export default function ProfileCoordenador(){
       defaultValues: 
       {
         email:'',  
+        email_profissional:'',
         password:'',
         confirmPassword:'',
         username:'',
-
-        complemento:'',
+        name_instituicao:'',
         cep:'',
-        logradouro:'',
-        numberHouse:'',
-        bairro:'',
-        estado:'',
-        cidade:'',
-        country:'',
-        telefone:'',
-        telefonePersonal:'',
-        emailInstitucional:'',
-        
+        telefone1:'',
+        telefone2:'',
+        endereco:''
         
       },
       mode:'onChange'
@@ -109,22 +102,15 @@ export default function ProfileCoordenador(){
         const values = {
             username:data.username,
             email:data.email,
-            emailInstitutional:data.emailInstitucional,
+            email_profissional:data.email_profissional,
             password:data.password,
-            phoneInstitutional:data.telefone,
-            phonePersonal:data.telefonePersonal,
+            telefone1:data.telefone1,
+            telefone2:data.telefone2,
             role:role,
             avatar:'',
-            address:{
-                cep:data.cep,
-                numberHouse:data.numberHouse,
-                bairro:data.bairro,
-                estado:data.estado,
-                cidade:data.cidade,
-                country:data.country,
-                logradouro:data.logradouro,
-                complemento:data.complemento,
-            },
+            name_instituicao:data.name_instituicao,
+            cep:data.cep,
+            endereco:data.endereco
         }
      const response = await createUser(values);
       if(response?.status){
@@ -141,14 +127,14 @@ export default function ProfileCoordenador(){
         <form
     onSubmit={handleSubmit(handleFormSubmit)}
     style={{
-      width:'50.25rem', 
-      height:`${step === 1 ? '35rem':'60rem'}`, 
+      width:'30rem', 
+      height:'40rem', 
       display:"flex", 
       flexDirection:'column',
       alignItems:'center',
-      borderRadius:'10px',
+      borderRadius:'15px',
       overflow:'hidden',
-      marginLeft:'200px',
+      marginLeft:'0px',
       marginTop:'20px',
       backgroundColor:'#fff',
       gap:'1rem'
@@ -164,126 +150,154 @@ export default function ProfileCoordenador(){
      >
      <ContainerTitleLine>
      <H1>Cadastro</H1>
-     <Span></Span>
-     <Line></Line>
      </ContainerTitleLine>
    <CustomizedStepperIcon
-   currentStep={step}
+   currentStep={step + 1}
    />
      </ContainerTitleStepper>
  
        <ContainerSteps
      $transformProps={transformProps}
      >
-        {/**Pessoal */}
-     <DefaultContainer style={{
-        height:'600px'
-     }}>
-        
-     {/** Email */}
-      <ContainerInputTitle>
- 
-       <H3>Email</H3>
-      <Input
-       {...register('email')}
-       type= 'email'
-       placeholder='' 
-      />
-      {
-        errors.email && (
-         <TextError>{errors.email.message}</TextError>
-       )
-      }
-      </ContainerInputTitle>
-     {/**Email Institucional */}
-      <ContainerInputTitle>
- 
- <H3>Email Institucional</H3>
+            {/* Nome e nome_instituicao cep  step1*/}
+            <DefaultContainer>
+
+       
+{/** Nome */}
+<ContainerInputTitle>
+
+<H3>Nome</H3>
+<Input  
+{...register('username')}
+type= 'text'
+placeholder='' />
+
+{
+ errors.username && (
+  <TextError>{errors.username.message}</TextError>
+)
+}
+</ContainerInputTitle>
+{/** nome instituicao */}
+<ContainerInputTitle>
+
+<H3>Nome da instituição</H3>
+<Input  
+{...register('name_instituicao')}
+type= 'text'
+placeholder='' />
+
+{
+errors.name_instituicao && (
+<TextError>{errors.name_instituicao.message}</TextError>
+)
+}
+</ContainerInputTitle>
+
+{/** cep */}       
+<ContainerInputTitle>
+
+<H3>Cep</H3>
 <Input
- {...register('emailInstitucional')}
- type="email"
- placeholder='' 
+{...register('cep')}
+type= 'text'
+placeholder='' 
+
 />
 {
-  errors.emailInstitucional && (
-   <TextError>{errors.emailInstitucional.message}</TextError>
- )
+errors.cep && (
+<TextError>{errors.cep.message}</TextError>
+)
 }
-      </ContainerInputTitle>
-      {/**Telefone */}
-      <ContainerInputTitle>
+</ContainerInputTitle>
+
+
+<Button onClick={handleNextStep} 
+style={{
+ color:"#fff",
+ border:'none'
+}}
+>
+proximo
+</Button>
+
+            </DefaultContainer>
+    {/** telefones e endereco step2 */}
+             <DefaultContainer>
+           {/**Telefone 1 */}
+           <ContainerInputTitle>
  
- <H3>Telefone</H3>
+ <H3>Telefone 1</H3>
 <Input
- {...register('telefone')}
+ {...register('telefone1')}
  type= 'tel'
  placeholder='' 
 />
 {
-  errors.telefone && (
-   <TextError>{errors.telefone.message}</TextError>
+  errors.telefone1 && (
+   <TextError>{errors.telefone1.message}</TextError>
  )
 }
-      </ContainerInputTitle>
-       {/** Telefone Pessoal */}
+          </ContainerInputTitle>
+       {/** Telefone 2 */}
       <ContainerInputTitle>
  
- <H3>Telefone Pessoal</H3>
+ <H3>Telefone 2</H3>
 <Input
- {...register('telefonePersonal')}
+ {...register('telefone2')}
  type= 'tel'
  placeholder='(92) 99999-9999' 
 />
 {
-  errors.telefonePersonal && (
-   <TextError>{errors.telefonePersonal.message}</TextError>
+  errors.telefone2 && (
+   <TextError>{errors.telefone2.message}</TextError>
  )
 }
       </ContainerInputTitle>
-      {/** País */}
-      <ContainerInputTitle>
+        {/* endereço */}
+     <ContainerInputTitle>
  
- <H3>País</H3>
-<Input
- {...register('country')}
- type= 'text'
- placeholder='' 
-/>
-{
-  errors.country && (
-   <TextError>{errors.country.message}</TextError>
- )
-}
-      </ContainerInputTitle>
-     {/** Estado */}
-      <ContainerInputTitle>
- 
- <H3>Estado</H3>
-<Input
- {...register('estado')}
- type= 'text'
- placeholder='' 
-/>
-{
-  errors.estado && (
-   <TextError>{errors.estado.message}</TextError>
- )
-}
-      </ContainerInputTitle>
- 
-     <Button onClick={handleNextStep} disabled={!email}
-     style={{
-        color:"#fff"
-     }}
-     >
-       proximo
-     </Button>
-       
-    
-     </DefaultContainer>
+ <H3>Endereço</H3>
+  <Input
+  {...register('endereco')}
+  type= 'text'
+  placeholder='' 
 
-     {/** Senha e cep*/}
-     <DefaultContainer>
+/>
+  {
+  errors.endereco && (
+   <TextError>{errors.endereco.message}</TextError>
+ )
+}
+     </ContainerInputTitle>
+
+     <ContainerButtons>
+    
+    <Button onClick={handlePreviousStep}
+    style={{
+       color:"#fff",
+       border:'none'
+    }}
+    >
+        anterior
+      </Button>
+  
+   <Button onClick={handleNextStep}
+   style={{
+       color:"#fff",
+       border:'none'
+   }}
+   >
+      proximo
+    </Button>
+
+    </ContainerButtons>
+
+
+             </DefaultContainer>
+
+            {/** senha step3 */}
+            <DefaultContainer>
  
   
  
@@ -321,28 +335,13 @@ export default function ProfileCoordenador(){
       </ContainerInputTitle>
    
      
-      <ContainerInputTitle>
- 
-       <H3>Cep</H3>
-        <Input
-        {...register('cep')}
-        type= 'text'
-        placeholder='' 
-      
-      />
-        {
-        errors.cep && (
-         <TextError>{errors.cep.message}</TextError>
-       )
-      }
-      </ContainerInputTitle>
-   
- 
-     <ContainerButtons>
+
+            <ContainerButtons>
     
      <Button onClick={handlePreviousStep}
      style={{
-        color:"#fff"
+        color:"#fff",
+        border:'none'
      }}
      >
          anterior
@@ -350,156 +349,105 @@ export default function ProfileCoordenador(){
    
     <Button onClick={handleNextStep} disabled={!isValidFieldStep2}
     style={{
-        color:"#fff"
+        color:"#fff",
+        border:'none'
     }}
     >
        proximo
      </Button>
  
-     </ContainerButtons>
+            </ContainerButtons>
        
-     </DefaultContainer>
-
-      {/**Nome e endereço */}
-      <DefaultContainer>
-       
-       {/** Nome */}
-       <ContainerInputTitle>
- 
-       <H3>Nome</H3>
-     <Input  
-     {...register('username')}
-      type= 'text'
-      placeholder='' />
- 
-     {
-        errors.username && (
-         <TextError>{errors.username.message}</TextError>
-       )
-      }
-       </ContainerInputTitle>
-    
-     {/** Number House */}
+            </DefaultContainer>
+             {/**step 4 */}
+             <DefaultContainer>
+        
+     {/** Email */}
       <ContainerInputTitle>
  
-     <H3>Número da Casa</H3>
-     <Input 
-     {...register('numberHouse')}
-      type= 'text'
-      placeholder='' 
+       <H3>Email</H3>
+      <Input
+       {...register('email')}
+       type= 'email'
+       placeholder='' 
       />
- 
- {
-        errors.numberHouse && (
-         <TextError>{errors.numberHouse.message}</TextError>
+      {
+        errors.email && (
+         <TextError>{errors.email.message}</TextError>
        )
       }
       </ContainerInputTitle>
-
-    {/**Bairro */}
+     {/**Email Institucional */}
       <ContainerInputTitle>
  
- <H3>Bairro</H3>
- <Input 
- {...register('bairro')}
-  type= 'text'
-  placeholder='' 
-  />
-
+ <H3>Email Institucional</H3>
+<Input
+ {...register('email_profissional')}
+ type="email"
+ placeholder='' 
+/>
 {
-    errors.bairro && (
-     <TextError>{errors.bairro.message}</TextError>
-   )
-  }
+  errors.email_profissional && (
+   <TextError>{errors.email_profissional.message}</TextError>
+ )
+}
       </ContainerInputTitle>
 
-       {/**Logradouro */}
-      <ContainerInputTitle>
- 
- <H3>Logradouro</H3>
- <Input 
- {...register('logradouro')}
-  type= 'text'
-  placeholder='' 
-  />
-
-{
-    errors.logradouro && (
-     <TextError>{errors.logradouro.message}</TextError>
-   )
-  }
-      </ContainerInputTitle>
-
-    {/** Complemento */}
-    <ContainerInputTitle>
- 
- <H3>Complemento</H3>
- <Input 
- {...register('complemento')}
-  type= 'text'
-  placeholder='' 
-  />
-
-{
-    errors.complemento && (
-     <TextError>{errors.complemento.message}</TextError>
-   )
-  }
-     </ContainerInputTitle>
-
-    {/** Cidade */}
-     <ContainerInputTitle>
- 
- <H3>Cidade</H3>
- <Input 
- {...register('cidade')}
-  type= 'text'
-  placeholder='' 
-  />
-
-{
-    errors.cidade && (
-     <TextError>{errors.cidade.message}</TextError>
-   )
-  }
-     </ContainerInputTitle>
-
-
-
- 
- 
-         <ContainerButtons>
+       
+     <ContainerButtons>
        <Button onClick={handlePreviousStep}
        style={{
-        color:'#fff'
+        color:'#fff',
+        border:'none'
        }}
        >
          anterior
        </Button>
       
-       <Button type="submit" 
+       <Button 
+       type="submit" 
+       disabled={!email}
        style={{
-        color:"#fff"
+        color:"#fff",
+        border:'none'
        }}
        >
           Criar Conta
          </Button>
- 
          </ContainerButtons>
-   
-       </DefaultContainer>
+    
+            </DefaultContainer>      
+
+
        </ContainerSteps>
- 
+    <div
+    style={{
+      display:'flex',
+      width:'100%',
+      height:'3rem',
+      alignItems:'center',
+      justifyContent:'center'
+    }}
+    >
+    {/** componentizar isso */}
      <Link href='/SignUp' 
      style={{
-        display:'inline-block',
-        color:'blue',
-        textDecoration:'none'
-     }}
+        display:'flex',
+        color:'#217097',
+        textDecoration:'none',
+       fontWeight:'700',
+       fontSize:'19px',
+       alignSelf:'center',
+       justifySelf:'center',
+       marginTop:'-3rem'
+      }}
      
      >
         Já tenho Login
         </Link>
+
+    </div>
+
 
  
      

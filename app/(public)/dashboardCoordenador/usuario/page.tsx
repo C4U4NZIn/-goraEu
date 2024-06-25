@@ -184,7 +184,7 @@ export default function Usuario(){
        height={25.9}
        username={userLogin.username}
        email={userLogin.email}
-       telefone={userLogin.phonePersonal}
+       telefone={userLogin.username}
        senha="*******"
       />
        )}
@@ -380,7 +380,7 @@ onClick={()=>{abrirUpdateFieldComponent({
 })}}
 >
 <Label>Telefone</Label>
-<TextInfo>{userLogin?.phonePersonal}</TextInfo>
+<TextInfo>{userLogin.username}</TextInfo>
 </ContainerInfoField>
 <ContainerInfoField
 onClick={()=>{abrirUpdateFieldComponent({

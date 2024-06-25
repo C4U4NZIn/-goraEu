@@ -1,15 +1,13 @@
 import * as zod from 'zod';
 
 export const userFormSchema = zod.object({
-  
-
     email: zod
     .string()
     .email()
     .refine(email=>/^[\w.+\-]+@gmail\.com$/.test(email),{
      message:"O email deve ser um endereço gmail válido"
     }),
-    emailInstitucional:zod
+    email_profissional:zod
     .string()
     .email()
     .refine(email=>/^[\w.+\-]+@fmm\.org.br$/.test(email),{
@@ -27,51 +25,26 @@ export const userFormSchema = zod.object({
       .min(8)
       .regex(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,"Deve conter pelo menos um caractere em caixa alta, um em caixa baixa e um caractere numérico."
       ),
-      telefone:
+      telefone1:
       zod
       .string(),
-      telefonePersonal:
+      telefone2:
       zod
       .string(),
-    
         username: zod
        .string()
        .min(8, 'Informe seu nome completo'),
+       name_instituicao:zod
+       .string()
+       .min(3, "Informe o nome da instituição"),
        cep:zod
        .string()
        .min(3, 'Informe um cep válido')
        .optional(),
-       numberHouse:zod
+       endereco:zod  
        .string()
-       .min(3, 'Informe um número de casa válido')
+       .min(3, 'Informe um endereço válido')
        .optional(),
-       bairro:zod
-       .string()
-       .min(3, 'Informe um bairro válido')
-       .optional(),
-       estado:zod
-       .string()
-       .min(3, 'Informe um estado válido')
-       .optional(),
-       cidade:zod
-       .string()
-       .min(3, 'Informe uma cidade válido')
-       .optional(),
-       country:zod
-       .string()
-       .min(3, 'Informe um país válido')
-       .optional(),
-       logradouro:zod
-       .string()
-       .min(3, 'Informe um logradouro válido')
-       .optional(),
-       complemento:zod
-       .string()
-       .min(3, 'Informe um complemento válido')
-       .optional()
- 
- 
- 
  }).refine((data)=> data.password === data.confirmPassword , {
   message:"Digite sua senha corretamente",
   path:['confirmPassword']

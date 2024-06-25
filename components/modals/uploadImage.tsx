@@ -90,11 +90,9 @@ export const UploadImageModal = ({children}:IUploadProps) =>{
         }, 800)
     }
 
-     console.log("resultado from api=>" , result);
-     console.log("base64 input=>", stringBase64);
-     console.log("base64FromApi =>" , resultBase64FromApi);
-     console.log("São iguais?=>" , stringBase64 === resultBase64FromApi);
-     /**
+    
+    console.log("Veio da api depois de arrayBufferToBase64=>" , resultBase64FromApi);
+    /**
          if(res){
              const responseAvatarFromApi = await responseAvatar();
                 if(responseAvatarFromApi.status === 202){
@@ -377,20 +375,7 @@ flex-direction: center;
     background-color:#fff;
     border-radius:15px;
     background-size: 55% , 80%;
-    animation: effectShow 1s cubic-bezier(.1,.82,.25,1);
-
-
-   @keyframes effectShow {
-    0%{
-      transform: scale(0.5);
-      opacity: 0;
-    }
-  
-    100%{
-    transform: scale(8);
-    opacity: 1;
-    }
-   }
+   
 
 }
 .spinner-container{

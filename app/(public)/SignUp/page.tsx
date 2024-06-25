@@ -16,7 +16,7 @@ import {
   DefaultContainer
 } from '../register/styled/coordenador';
 
-
+//adicionar talvez um spinner 
 export default function SignUp(){
    const { authLogin , role } = useUserContext();
 
@@ -138,10 +138,17 @@ className={styles.agoraContainerButtonForm}
 
 
 <button type="submit" 
-
+ style={{
+  border:'none'
+ }}
 className={styles.agoraButtonCad}>
 <p 
 className={styles.agoraColorLetterForm}
+style={{
+  fontSize:'22px',
+  fontWeight:'700'
+}}
+
 >
 Logar
 </p>

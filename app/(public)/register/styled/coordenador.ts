@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const ContainerSteps = styled.div<{$transformProps:number}>`
 display: flex;
 flex-direction: row;
-height: 600px;
-width: 150.75rem;
-
+height: 500px;
+width: 150rem;
+margin-top: 30px;
 border-radius: 10px;
 justify-content: stretch;
 transform: translateX(${props=>props.$transformProps}rem);
@@ -17,12 +17,12 @@ flex-direction: column;
 align-items: center;
 justify-content: space-evenly;
 height: 300px;
-width: 50.75rem;
+width: 30rem;
 
 border-radius: 10px;
 `
 export const Button = styled.button`
-width: 11.25rem;
+width: 10.25rem;
 height: 2.2rem;
 border-radius: 10px;
 background-color: rgba(242, 105, 33, 1);
@@ -71,6 +71,8 @@ background-color: blue;
 export const H1 = styled.h1`
 margin:0;
 padding: 0;
+border-bottom: 1px solid #217097;
+margin-top: 10px;
 color:black;
 
 `
@@ -90,7 +92,7 @@ width: 60%;
 min-height: 5.625rem;
 `
 export const Input = styled.input`
-height: 1.8125rem;
+height: 1.5rem;
 width:100%;
 margin:0;
 padding-left: 10px;

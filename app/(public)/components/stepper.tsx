@@ -2,6 +2,7 @@ import { Step, Stepper , StepLabel } from "@mui/material";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LockIcon from '@mui/icons-material/Lock';
 import CheckIcon from '@mui/icons-material/Check';
+import PhoneIcon from '@mui/icons-material/Phone';
 import { StepIconProps } from "@mui/material";
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { styled } from '@mui/material/styles';
@@ -65,8 +66,9 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     const icons:{[index:string]:React.ReactElement} = {
 
     1: <PersonOutlineIcon/>,
-    2: <LockIcon/>,
-    3: <CheckIcon/>
+    2:<PhoneIcon/>,
+    3: <LockIcon/>,
+    4: <CheckIcon/>
 
     }
 
@@ -82,7 +84,7 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
 
 export default function CustomizedStepperIcon({currentStep}:{currentStep:number}){
     
-    const steps = ['','','']
+    const steps = ['','','','']
 
   return(
 

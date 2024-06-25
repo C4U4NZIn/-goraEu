@@ -42,6 +42,8 @@ type IPostProps = {
     simulado?:ISimuladoProps;
 }
 
+// só puxar as funções pra abrir o modal
+//isso daq tá muito confuso e muito estranho
 
 const Post = (data:IPostProps)=>{
   

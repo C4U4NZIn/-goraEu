@@ -14,44 +14,30 @@ import { useEffect } from "react";
 type userType = {
     username:string;
     email:string;
-    emailInstitutional:string;
+    email_profissional:string;
+    name_instituicao:string;
     password:string;
     avatar:string;
-    phonePersonal:string;
-    phoneInstitutional?:string;
+    telefone1:string;
+    telefone2?:string;
     role:string;
-    address?:{
-        cep:string | undefined;
-        numberHouse:string|undefined;
-        bairro:string|undefined;
-        estado:string|undefined;
-        cidade:string|undefined;
-        country:string|undefined;
-        logradouro:string|undefined;
-        complemento:string|undefined;
-    }
+    cep:string | undefined;
+    endereco:string | undefined;
+
+    
 }
 type userLoginType = professorLoginType | alunoLoginType | coordenadorLoginType;
 type professorLoginType = {
     id:string;
     email:string;
     emailInstitutional:string;
-    phonePersonal:string;
-    phoneInstitutional:string;
+    telefone1:string;
+    telefone2:string;
     avatar:any|undefined;
     username:string;
     role:string;
     password:string;
-    address:{
-        cep:string | undefined;
-        numberHouse:string|undefined;
-        bairro:string|undefined;
-        estado:string|undefined;
-        cidade:string|undefined;
-        country:string|undefined;
-        logradouro:string|undefined;
-        complemento:string|undefined;
-    }
+    
 }
 type alunoLoginType = {
     id:string;
@@ -63,44 +49,21 @@ type alunoLoginType = {
     username:string;
     role:string;
     password:string;
-    address:{
-        cep:string | undefined;
-        numberHouse:string|undefined;
-        bairro:string|undefined;
-        estado:string|undefined;
-        cidade:string|undefined;
-        country:string|undefined;
-        logradouro:string|undefined;
-        complemento:string|undefined;
-    }
-    filiacao:{
-        id:string;
-        telefone1:string;
-        telefone2:string;
-        tipo_Relacionamento:string;
-        username:string;
-    }
+
 }
 type coordenadorLoginType = {
     id:string;
     email:string;
-    emailInstitutional:string;
-    phonePersonal:string;
-    phoneInstitutional:string;
+    email_profissional:string;
+    telefone1:string;
+    telefone2:string;
     avatar:any|undefined;
     username:string;
     role:string;
     password:string;
-    address:{
-        cep:string | undefined;
-        numberHouse:string|undefined;
-        bairro:string|undefined;
-        estado:string|undefined;
-        cidade:string|undefined;
-        country:string|undefined;
-        logradouro:string|undefined;
-        complemento:string|undefined;
-    }
+    cep:string;
+    name_instituicao:string;
+    endereco:string;
 }
 type loginType = {
     email:string;
@@ -201,7 +164,7 @@ export type userContextType = {
             }
         }
        } catch (error) {
-        
+        console.log(`erro: ${error}`)
        }
     }
     //passar id e o currentCode
@@ -332,21 +295,19 @@ export type userContextType = {
                     id:newUser.id,
                     avatar:newUser.avatar,
                     email:newUser.email,
-                    emailInstitutional:newUser.emailInstitutional,
-                    phonePersonal:newUser.phonePersonal,
-                    phoneInstitutional:newUser.phoneInstitutional,
+                    email_profissional:newUser.email_profissional,
+                    telefone1:newUser.telefone1,
+                    telefone2:newUser.telefone2,
                     username:newUser.username,
                     role:newUser.role,
                     password:newUser.password,
-                    address:{
-                       cep:newUser.address.cep,
-                       numberHouse:newUser.address.numberHouse,
-                       bairro:newUser.address.bairro,
-                       estado:newUser.address.estado,
-                       cidade:newUser.address.cidade,
-                       country:newUser.address.country,
-                       logradouro:newUser.address.logradouro,
-                complemento:newUser.address.complemento }   } )   
+                    cep:newUser.cep,
+                    endereco:newUser.endereco,
+                    name_instituicao:newUser.name_instituicao
+                    
+                } 
+            
+            )   
                 setRole(newUser.role);
                 break;
                case 'professor':
@@ -359,17 +320,8 @@ export type userContextType = {
                     phoneInstitutional:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
-                    password:newUser.password,
-                    address:{
-                       cep:newUser.address.cep,
-                       numberHouse:newUser.address.numberHouse,
-                       bairro:newUser.address.bairro,
-                       estado:newUser.address.estado,
-                       cidade:newUser.address.cidade,
-                       country:newUser.address.country,
-                       logradouro:newUser.address.logradouro,
-                      complemento:newUser.address.complemento }, 
-                  } )   
+                    password:newUser.password
+                })   
                 setRole(newUser.role)
                 break;
                case 'aluno':
@@ -383,22 +335,6 @@ export type userContextType = {
                     username:newUser.username,
                     role:newUser.role,
                     password:newUser.password,
-                    address:{
-                       cep:newUser.address.cep,
-                       numberHouse:newUser.address.numberHouse,
-                       bairro:newUser.address.bairro,
-                       estado:newUser.address.estado,
-                       cidade:newUser.address.cidade,
-                       country:newUser.address.country,
-                       logradouro:newUser.address.logradouro,
-                      complemento:newUser.address.complemento }, 
-                    filiacao:{
-                        id:newUser.filiacao.id,
-                        telefone1:newUser.filiacao.telefone1,
-                        telefone2:newUser.filiacao.telefone2,
-                        tipo_Relacionamento:newUser.filiacao.tipo_Relacionamento,
-                        username:newUser.filiacao.username,
-                    }
             } )   
                 setRole(newUser.role)
                 getAllSalas(newUser.id);
@@ -526,10 +462,7 @@ export type userContextType = {
            
        }
      }
-
-     //tirar isso daqui
-     //vou para igreja e quando voltar
-     //vou arrumar os erros e fazer todo o front de aluno e professor 
+ 
      const getAllSalas = async (alunoId:string) =>{
         let salas
         if(alunoId){

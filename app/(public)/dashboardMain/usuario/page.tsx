@@ -195,8 +195,8 @@ import { useImageState } from '@/functions/user/zustand/useImageContext';
         height={25.9}
         username={userLogin.username}
         email={userLogin.email}
-        telefone={userLogin.phonePersonal}
         senha="******"
+        role='aluno'
         />
        )}
      {/**Componente que chama
@@ -253,7 +253,7 @@ onClick={()=>{abrirUpdateFieldComponent({
 })}}
 >
 <Label>Telefone</Label>
-<TextInfo>{userLogin?.phonePersonal}</TextInfo>
+<TextInfo>{userLogin.username}</TextInfo>
 </ContainerInfoField>
 <ContainerInfoField
 onClick={()=>{abrirUpdateFieldComponent({

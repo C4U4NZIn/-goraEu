@@ -14,6 +14,7 @@ import alunos from '../dashboardMain/image/usuario-graduado 1.svg'
 import stylesChildren from '../dashboardMain/css/children.module.css'
 import { UserProviderFromProviders } from '@/providers';
 import { Toaster } from 'sonner';
+import { CoordenadorProvider } from '@/contexts/coordenador';
 
 const tinos = Tinos({ 
   weight:['400','700'],
@@ -34,7 +35,9 @@ export default function DashboardCoordenadorLayout({
   */}
   return (
    <UserProviderFromProviders>
+   
     <html 
+
     lang="pt-br"
     className={tinos.className}
     style={{
@@ -43,7 +46,6 @@ export default function DashboardCoordenadorLayout({
     }}
     >
       <body className={globalStyle.body}>
-      {/** fazer componente aside fodão */}
       <aside className={styles.verticalSideBar}>
       
        <div className={styles.containerElipse}>
@@ -113,7 +115,10 @@ export default function DashboardCoordenadorLayout({
 
     <div className={stylesChildren.containerChildrens}>
       <>
+      <CoordenadorProvider>
       {children}  
+      </CoordenadorProvider>
+
       </>
       <Toaster richColors position='top-center'/>
     </div>
@@ -121,8 +126,7 @@ export default function DashboardCoordenadorLayout({
 
       </body>
     </html>
-
-
+   
    </UserProviderFromProviders>
 
   )

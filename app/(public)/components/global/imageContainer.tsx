@@ -117,7 +117,7 @@ const ContainerImg = ({username , imageProfile , imageDefault}:ImageContainerBut
        />
    ) : username ? (
        <AvatarTemplate 
-          username={(username.split(' ')[0][0] || '') + (username.split(' ')[1] ? username.split(' ')[1][0] : '')}
+          username={(username.split(' ')[0][0] || '')}
           heightImg={150}
           widthImg={150}
        />

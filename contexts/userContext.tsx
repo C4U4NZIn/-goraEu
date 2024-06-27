@@ -30,7 +30,7 @@ type userLoginType = professorLoginType | alunoLoginType | coordenadorLoginType;
 type professorLoginType = {
     id:string;
     email:string;
-    emailInstitutional:string;
+    email_profissional:string;
     telefone1:string;
     telefone2:string;
     avatar:any|undefined;
@@ -42,9 +42,6 @@ type professorLoginType = {
 type alunoLoginType = {
     id:string;
     email:string;
-    emailInstitutional:string;
-    phonePersonal:string;
-    phoneInstitutional:string;
     avatar:any | undefined;
     username:string;
     role:string;
@@ -315,9 +312,8 @@ export type userContextType = {
                     id:newUser.id,
                     avatar:newUser.avatar,
                     email:newUser.email,
-                    emailInstitutional:newUser.emailInstitutional,
-                    phonePersonal:newUser.telefone1,
-                    phoneInstitutional:newUser.phoneInstitutional,
+                    telefone1:newUser.telefone1,
+                    telefone2:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
                     password:newUser.password
@@ -329,9 +325,6 @@ export type userContextType = {
                     id:newUser.id,
                     avatar:newUser.avatar,
                     email:newUser.email,
-                    emailInstitutional:newUser.emailInstitutional,
-                    phonePersonal:newUser.telefone,
-                    phoneInstitutional:newUser.phoneInstitutional,
                     username:newUser.username,
                     role:newUser.role,
                     password:newUser.password,
@@ -466,7 +459,7 @@ export type userContextType = {
      const getAllSalas = async (alunoId:string) =>{
         let salas
         if(alunoId){
-            const AllSalasHavingAluno = await api.post('/coordenador/getAllSalas',{
+            const AllSalasHavingAluno = await api.post('/aluno/getAllSalas',{
                alunoId:alunoId
             })
             console.log(AllSalasHavingAluno);

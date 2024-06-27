@@ -18,12 +18,14 @@ export type CardInfoType = {
     email?:string | undefined;
     telefone?:string | undefined;
     senha?:string | undefined;
-
+    role?:string;
+    name_instituicao?:string;
+    
 }
 
 
 
-const CardInfoComponent = ({width , height , username ,email , telefone , senha }:CardInfoType) =>{
+const CardInfoComponent = ({name_instituicao , role , width , height , username ,email , telefone , senha }:CardInfoType) =>{
     
     return(
         <>
@@ -33,24 +35,68 @@ const CardInfoComponent = ({width , height , username ,email , telefone , senha 
             <span></span>
        </TopUserContainerTitle>
         {/**Componente de Informações */}
-        <CardUserInfo>
-        <ContainerInfoField>
-         <Label>Nome</Label>
-         <TextInfo>{username}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-         <Label>Email</Label>
-         <TextInfo>{email}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-        <Label>Telefone</Label>
-        <TextInfo>{telefone}</TextInfo>
-        </ContainerInfoField>
-        <ContainerInfoField>
-        <Label>Senha</Label>
-        <TextInfo>{senha}</TextInfo>
-        </ContainerInfoField>
-        </CardUserInfo>
+        {
+          role === 'aluno' && (
+            <CardUserInfo>
+            <ContainerInfoField>
+             <Label>Nome</Label>
+             <TextInfo>{username}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+             <Label>Email</Label>
+             <TextInfo>{email}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+            <Label>Telefone</Label>
+            <TextInfo>{telefone}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+            <Label>Senha</Label>
+            <TextInfo>{senha}</TextInfo>
+            </ContainerInfoField>
+            </CardUserInfo>
+          )
+        }
+        {
+          role === 'professor' && (
+            <CardUserInfo>
+            <ContainerInfoField>
+             <Label>Nome</Label>
+             <TextInfo>{username}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+             <Label>Email</Label>
+             <TextInfo>{email}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+            <Label>Telefone</Label>
+            <TextInfo>{telefone}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+            <Label>Senha</Label>
+            <TextInfo>{senha}</TextInfo>
+            </ContainerInfoField>
+            </CardUserInfo>
+          )
+        }
+        {
+          role === 'coordenador' && (
+            <CardUserInfo>
+            <ContainerInfoField>
+             <Label>Nome</Label>
+             <TextInfo>{username}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+             <Label>Email</Label>
+             <TextInfo>{email}</TextInfo>
+            </ContainerInfoField>
+            <ContainerInfoField>
+            <Label>Instituição</Label>
+            <TextInfo>{name_instituicao}</TextInfo>
+            </ContainerInfoField>
+            </CardUserInfo>
+          )
+        }
 
       </CardUserContainer>    
        

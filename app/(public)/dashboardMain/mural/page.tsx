@@ -99,9 +99,9 @@ export default function Mural(){
          className="ContainerOverallPosts"
          >
             {
-                AllPostsFromAllSalas.length < 0 ? (
+                AllPostsFromAllSalas.length <= 0 ? (
                  <>
-                 <h1>Loading...</h1>
+                 <h1>Não existe posts ou não existem salas...</h1>
                  </>
                 ) : (
                <>

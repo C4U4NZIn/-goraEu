@@ -1,0 +1,85 @@
+.alunoContainerPage{
+    height: 108.8%;
+    width: 58rem;
+    display: flex;
+    flex-direction: column;
+}
+.alunoContainerPage::-webkit-scrollbar{
+   height: 0px;
+   width: 0px;
+}
+.containerStudents{
+    width: 80%;
+    height: 65vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border: 1px solid #fff;                                                                                     
+    opacity: 0.5;
+    border-radius: 15px;
+    margin-top: 3rem;
+    overflow: auto;
+    align-self: center;
+
+}
+.studentCardContainer{
+    height:60%;
+    width: calc(33% - 1rem);
+    background-color:#217097;
+    opacity: 0.8;
+    border-radius: 12px;
+    border:2px solid #F26921;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+
+}
+.containerStudents::-webkit-scrollbar{
+    width: 0px;
+}
+.isActive{
+    background-color: #F26921;
+}
+.containerTextClass{
+    display: flex;
+    height:6rem;
+    width: 8rem;
+    flex-direction: column;
+    margin: 0;
+    align-self: self-end;
+    margin-right: 70%;
+    
+}
+.textNotifyUser{
+    margin:0px;
+    font-size: 2.75rem;
+    font-weight: 700;
+    color:#EC641D;
+    margin-bottom: -0.5rem;
+    border-left: 6px solid #EC641D;
+    padding-left: 0.5rem;
+}
+
+.section{
+    height: 50%;
+    width: 63rem;
+    border-bottom: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.sectionBottom{
+    overflow: auto;
+}
+
+.section-bottom::-webkit-scrollbar{
+    height: 0px;
+    width: 0px;
+}
+.containerTopText{
+    display: flex;
+    height: 30%;
+    width: 100%;
+    justify-content:center;
+}

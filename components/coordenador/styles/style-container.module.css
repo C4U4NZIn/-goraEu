@@ -1,0 +1,68 @@
+.containerInputImage{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height:70%;
+    border-radius: 15px;
+    align-self: flex-end;
+    
+
+}
+.stylesProfessor{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12rem;
+    height: 30%;
+    align-self:self-end;
+    
+}   
+.inputLabelContainer{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 60%;
+    background-color: #F9F9F9;
+    border-radius: 25px;
+   align-items: center;
+   justify-content:center;
+
+}
+.containerInput{
+    width: 70%;
+   display: flex;
+   flex-direction: column;
+}
+.styleSearchInput{
+    background-image: url('../images/image\ 96lupa.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-origin: content-box;
+    background-size:1.5rem 1.5rem;
+    padding-left: 4rem;
+   height: 2.125rem;
+   width: 70%;
+   border: none;
+   border-radius: 9px;
+   box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.2);
+   background-color: #FBFBFB;
+   text-indent: 5rem;
+   color: #BEBEBE;
+   font-size: 16px;
+   font-weight: 700;
+}
+.styleSearchInput::placeholder{
+    color: #BEBEBE;
+    font-weight: 700;
+}   
+.titleSearchStudent{
+    font-size:1.9rem;
+    font-weight:700;
+    color:#006792;
+    border-bottom:1px solid #006792;
+    padding-bottom: -4px;
+}
+

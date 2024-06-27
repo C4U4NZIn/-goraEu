@@ -44,7 +44,7 @@ const AvatarTemplate = ({username , heightImg , widthImg , fontSize}:AvatarProps
             fontSize: fontSize === undefined ? '50px' : fontSize+'px'
            
           },
-          children:`${username.split("")[0][0]}${username.split("")[1][0]}`
+          children:`${username.split("")[0][0]}`
          }
 
      }

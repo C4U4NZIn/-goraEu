@@ -7,14 +7,18 @@ import { useEffect } from "react";
 import { useUserContext } from "../userContext";
 import { 
     getAllSalasFromTurmaByCoordenadorId,
-    getAllStudentsFromTurma
+    getAllStudentsFromTurma ,
+    getAllTeachers ,
+    getAllTurmas
   
 } from "@/functions/coordenador/coordenadorFunction";
 
 export type coordenadorContextType = {
 
   studentsFromTurmas:any[];
-
+  turmas:any[];
+  teachers:any[];
+  salas:any[];
 }
 
 
@@ -26,7 +30,10 @@ const CoordenadorProvider = ({children}:{children:React.ReactNode}) =>{
    
     const {userLogin} = useUserContext();
     const [studentsFromTurmas , setStudentsFromTurmas] = useState([] as any);
-
+    const [teachers , setTeachers] = useState([] as any);
+    const [turmas , setTurmas] = useState([] as any);
+    //salas em cada turma , ent é só renderizar um map com uma condição
+    const [salas , setSalas] = useState([] as any);
      const getStudents = async () => {
         const studentsByCoordenadorId = await getAllStudentsFromTurma(userLogin?.id);
          //qualquer coisa só tirar o object.values da função
@@ -35,6 +42,40 @@ const CoordenadorProvider = ({children}:{children:React.ReactNode}) =>{
              setStudentsFromTurmas(Object.values(studentsByCoordenadorId.alunosInsideTurma));
          }
      }
+
+    const getTeachers = async () =>{
+        const teachers = await getAllTeachers();
+
+        if(teachers){
+           setTeachers(Object.values(teachers.teachers));
+        }
+    }
+
+    const getTurmasByCoordenadorId = async () =>{
+        let turmas
+
+        if(userLogin?.id){
+            turmas = await getAllTurmas(userLogin?.id);
+            if(turmas){
+                setTurmas(Object.values(turmas.turmas));
+
+            }
+        }
+    }
+    const getSalasByCoordenadorId = async () =>{
+       let salas
+
+      if(userLogin?.id){
+        salas = await getAllSalasFromTurmaByCoordenadorId(userLogin.id);
+        if(salas){
+            setSalas(Object.values(salas.salas));  
+        }
+    
+      }
+
+    
+    }
+
       //executar apenas se userLogin.id n for undefined- ou seja- n estiver atualizando
      useEffect(()=>{
         if(userLogin?.id){
@@ -42,8 +83,23 @@ const CoordenadorProvider = ({children}:{children:React.ReactNode}) =>{
         }
      },[userLogin?.id]);
 
+    useEffect(()=>{
+        getTeachers();
+    },[]);
 
-    const values = {studentsFromTurmas}
+    useEffect(()=>{
+        if(userLogin?.id){
+            getTurmasByCoordenadorId();
+        }
+    },[userLogin?.id])
+    useEffect(()=>{
+        if(userLogin?.id){
+            getSalasByCoordenadorId();
+        }
+    },[userLogin?.id])
+
+
+    const values = {studentsFromTurmas , teachers , turmas , salas}
 
 
     return(

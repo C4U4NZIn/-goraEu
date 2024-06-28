@@ -2,10 +2,10 @@ import {styled}  from 'styled-components'
 
 export const ContainerPage = styled.div`
  height:100vh;
- width:100%;
+ width:75%;
  display: flex;
  flex-direction: column;
- margin-left: 12rem;
+ margin: 0;
  margin-top: 0.5rem;
  gap:0rem;
  
@@ -13,17 +13,9 @@ export const ContainerPage = styled.div`
 export const ContainerImageAndButtons = styled.div`
     display: flex;
     flex-direction: column;
-    width: 45.26rem;
+    width: 25.26rem;
     height:15.6875rem;
 `
-
-// 2.5 - w
-// 2.5 - w
-// rgba(242, 105, 33, 1)
-//100% - borderR
-//29.25rem - w
-//25.9rem - h
-
 export const ButtonComponent = styled.button<{$width:number; $height:number;$borderRadius:number; $backgroundColor:string}>`
 width: ${props=>props.$width}rem;
 height: ${props=>props.$height}rem;

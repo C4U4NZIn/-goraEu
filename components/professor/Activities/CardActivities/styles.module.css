@@ -1,0 +1,36 @@
+.container {
+	box-shadow: 1px 1px 10px 1px #000000;
+	background-color: white;
+	width: 33vw;
+	border-radius: 20px;
+	height: 35vw;
+}
+
+.header {
+	background-color: #CDE059;
+	border-top-left-radius: 20px;
+	padding: 0.5vw 1vw 2vw 1vw;
+	border-top-right-radius: 20px;
+}
+
+.text_title {
+	color: black;
+	font-size: 2.5vw;
+	padding: 0px 30% 10px 5%;
+	border-bottom: solid #000000 1px;	
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.container_activitys::-webkit-scrollbar {
+  display: none;
+}
+
+.container_activitys {
+	display: flex;
+	-ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: auto;
+	flex-direction: column;
+	height: 70%;
+	padding: 20px;
+}

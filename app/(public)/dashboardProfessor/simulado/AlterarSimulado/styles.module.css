@@ -1,0 +1,98 @@
+.container {
+	width: 75%;
+	min-height: 100vh;
+	background-color: #FBFCFE;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow: auto;
+}
+.container::-webkit-scrollbar{
+	width: 0px;
+	height: 0px;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	width: 80%;
+	align-items: center;
+	justify-content:space-between
+}
+
+.title {
+	color: #EC641D;
+	font-weight: bold;
+	font-size: 4vw;
+	max-lines: 1;
+	padding-left: 1vw;
+	border-left: #EC641D solid 5px;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.subtitle {
+	color: #EC641D;
+	font-weight: bold;
+	font-size: 4vw;
+	font-family: 'Times New Roman', Times, serif;
+	padding-left: 2%;
+}
+
+.container_informations {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.text_data {
+  color: black;
+  font-weight: normal;
+  font-size: 3vw;
+  font-family: 'Times New Roman', Times, serif;
+  padding-left: 2%;
+  overflow-x: scroll; 
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.button_edit {
+	background-color: #F2F8C9;
+	width: 4vw;
+	border: none;
+	height: 4vw;
+	margin-left: 1vw;
+	border-radius: 3vw;
+}
+
+.icon_edit {
+	width: 2.3vw;
+	height: 2.3vw;
+}
+
+.button_create {
+ 	align-self: flex-start;
+	margin: 5vw 0px 5vw 10%;
+
+	background-color: #F7A829;
+	border: none;
+	border-radius: 0.5vw;
+	padding: 0vw 2vw;
+}
+
+.label_button_create {
+	color: #4D4D4D;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 3vw;
+}
+
+.footer {
+	height: 10vw;
+}
+
+.container_questions {
+	display: flex;
+	flex-direction: column;
+	gap: 3vw;	
+	width: 75%;
+	margin-top: 7vw;
+}

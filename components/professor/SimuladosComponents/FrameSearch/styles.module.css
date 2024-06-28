@@ -1,0 +1,56 @@
+.container {
+	width: 100%;
+	padding-top: 2vw;
+}
+
+.container_body {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.image {
+	margin-top: -5vw;
+	margin-right: 5vw;
+	width: 25vw;
+	height: auto;	
+}
+
+.container_input {
+	box-shadow: 1px 1px 5px gray;
+	width: 100%;
+	border: none;
+	border-radius: 0.7vw;
+	background-color: #F2F2F2;
+	width: 100%;
+	padding: 0.5vw 1vw;
+	gap: 1vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.lupa {
+	width: 4vw;
+	height: auto;
+}
+
+.input {
+	flex: 1;
+	background-color: transparent;
+	border: none;
+	color: black;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 1.8vw;
+}
+
+
+.input::placeholder {
+	color: #EC641D;
+	font-weight: bold;
+}
+
+.input:focus {
+	outline: none; 
+}

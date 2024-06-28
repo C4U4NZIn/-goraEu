@@ -7,9 +7,10 @@ import { InputSearch } from './input';
 type ComponentProps = {
     role:string;
     setStudent?:(searchStudent?:string)=> void;
+    setTeacher?:(searchStudent?:string)=>void;
 }
 
-export const ContainerSearch = ({role , setStudent}:ComponentProps)=>{
+export const ContainerSearch = ({role , setStudent , setTeacher}:ComponentProps)=>{
     return(
         <>
         {
@@ -64,7 +65,7 @@ export const ContainerSearch = ({role , setStudent}:ComponentProps)=>{
              className={stylesContainerInput.titleSearchStudent}
              >PROCURAR PROFESSOR</p>
              <InputSearch
-            
+             onChangeTeacher={setTeacher}
              role='professor'
              />
              </div>   

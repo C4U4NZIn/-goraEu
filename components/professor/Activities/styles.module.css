@@ -1,0 +1,26 @@
+.container {
+	padding: 1vw 0.5vw 1.5vw 1vw;
+	gap: 1.5vw;
+	display: flex;
+	flex-direction: column;
+	border-bottom: solid 1px #7E7B7B;	
+}
+
+.text {
+	color: black;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 1.3vw;
+}
+
+.title {
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	font-size: 2vw;
+}
+
+.container_data_hour {
+	display: flex;
+	width: 40%;
+	flex-direction: row;
+	justify-content: space-between;
+}

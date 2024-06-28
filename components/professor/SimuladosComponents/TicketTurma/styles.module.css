@@ -1,0 +1,48 @@
+.container {
+	width: 100%;
+	background-color: #FEEDE5;
+	border-radius: 1vw;
+	box-shadow: 1px 1px 5px gray;
+	display: flex;
+	padding: 2vw 3vw;
+	flex-direction: row;
+	align-items: flex-start;
+	gap: 1vw;
+	justify-content: space-between;
+}
+
+.title {
+	color: #EC641D;
+	font-size: 3vw;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.checkbox {
+	width: 2vw;
+	height: 2vw;
+}
+
+.icon {
+	width: 4vw;
+	height: 4vw;
+}
+
+.container_turma_checkbox {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px solid black;
+	flex: 1;
+}
+
+.container_icon {
+	width: 5vw;
+	height: 5vw;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	border-radius: 3vw;
+	overflow: hidden;
+	background-color: #F8FFC9;
+}

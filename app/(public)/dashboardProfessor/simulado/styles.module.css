@@ -1,0 +1,24 @@
+.container{
+	width: 75%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: #FBFCFE;	
+	overflow: auto;
+}
+.container::-webkit-scrollbar{
+	width: 0px;
+	height: 0px;
+}
+
+.container_list {
+	display: flex;
+	width: 80%;
+	flex-direction: column;
+	gap: 4vw;
+}
+
+.footer {
+	height: 10vw;
+}

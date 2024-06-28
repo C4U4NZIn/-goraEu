@@ -1,0 +1,84 @@
+.container {
+	background-color: #FCFCFC;
+	border-radius: 1vw;
+	box-shadow: 1px 1px 5px gray;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	padding: 0px 2vw;
+	justify-content: space-evenly;
+	width: 100%;
+}
+
+.container_icon_left {
+	background-color: #F2F8C9;
+	width: 7vw;
+	margin: 2vw 0vw;
+	height: 7vw;
+	border-radius: 4vw;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container_buttons_right{
+	display: flex;
+	flex-direction: row;
+	gap: 1vw;	
+}
+
+.container_data {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	padding-left: 4vw;
+    margin: 0;
+
+}
+
+.icon_right {
+	 width: 2vw;
+ 	 height: 2vw;
+}
+
+.buttons_right {
+	background-color: #F2F8C9;
+	width: 3vw;
+	height: 3vw;
+	border-radius: 2vw;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+}
+
+.container_data_buttons {
+	display: flex;
+	align-items: flex-end;
+	height: 9vw;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.icon_left {
+	width: 5vw;
+	height: 4.5vw;
+}
+
+.name_simulado {
+	color: #3A2929;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 2vw;
+	border-bottom: #3A2929 1px solid;
+	margin-bottom: -0.5rem;
+}
+
+.text_number_questions {
+	color: #3A2929;
+	font-weight: normal;
+	margin-top:1.5vw;
+	font-size: 1.7vw;
+	font-family: 'Times New Roman', Times, serif;
+}

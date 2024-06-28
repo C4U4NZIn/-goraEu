@@ -1,0 +1,72 @@
+.container {
+	position: absolute;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+}
+
+.container_modal {
+	width: 60%;
+	box-shadow: 1px 1px 5px gray;
+	border-radius: 1vw;
+	height: 40vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	background-color: #FC9426;
+	width: 100%;
+	padding: 1vw 3vw;
+	font-size: 4vw;
+	color: #364043;
+	font-family: 'Times New Roman', Times, serif;
+	border-radius: 1vw 1vw 0px 0px;
+}
+
+.message {
+	color: #3A2929;
+	font-family: 'Times New Roman', Times, serif;
+	font-size:2vw;
+	width: 100%;
+}
+
+.container_body_text {
+	width: 70%;
+	height: 60%;
+	border-radius: 1vw;
+	background-color: #FCE8D4;
+	display: flex;
+	justify-content: space-around;
+	flex-direction: column;
+	align-items: center;
+}
+
+.container_buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 70%;
+}
+
+.container_body {
+	width: 100%;
+	flex: 1;
+	border-radius: 0px 0px 1vw 1vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+}
+
+.button {
+	background-color: #FC9426;
+	border-radius: 0.5vw;
+	border: none;
+	max-width: 50%;
+	padding: 0.5vw 2vw;
+}

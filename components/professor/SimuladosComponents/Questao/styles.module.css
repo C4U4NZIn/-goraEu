@@ -1,0 +1,102 @@
+.container {
+	width: 80%;
+	border-radius: 1vw;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-shadow: 1px 1px 5px gray;
+}
+
+.header {
+	width: 100%;
+	background-color: #F7A829;
+	padding: 0.5vw 3vw;
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+}
+
+.body {
+	padding: 2vw 0px;
+	width: 90%;
+}
+
+.number {
+	color: #4D4D4D;
+	font-size: 4vw;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.assunto {
+	font-size: 2.5vw;
+	color: #4D4D4D;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.enunciado {
+	color: #4D4D4D;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 2vw;
+	white-space: pre-line;
+	font-weight: bold;
+}
+
+.checkBox {
+	width: 3vw;
+	height: 3vw;
+	margin-right: 1vw;
+	background-color: #2196F3;
+	cursor: pointer;
+}
+
+.container_alternativas {
+	display: flex;
+	flex-direction: column;
+	gap: 2vw;
+	margin-top: 4vw;
+	margin-bottom: 4vw;
+}
+
+.letra_resposta {
+	color: #A0B806;
+	font-size: 2vw;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.container_letra {
+	width: 4vw;
+	background-color: #EFEFEF;
+	border-radius: 3vw;
+	height: 4vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.letra {
+	font-size: 2vw;
+	color: #D64900;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.label_resposta {
+	color: #A0B806;
+	font-size: 2vw;  
+	width: 90%;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.label {
+	font-family: 'Times New Roman', Times, serif;
+	color: #D64900;
+	width: 90%;
+	font-size: 2vw;
+}
+
+.container_alternativa {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 2vw
+}

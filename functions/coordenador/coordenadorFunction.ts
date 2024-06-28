@@ -43,7 +43,7 @@ export const getAllStudentsFromTurma = async (coordenadorId?:string) =>{
 }
 //feito aqui
 export const getAllSalasFromTurmaByCoordenadorId = async (coordenadorId?:string) =>{
-  let queryAlunos = `coordenador/getAllSalasInTurmaByCoordenadorId/${coordenadorId}`;
+  let queryAlunos = `/coordenador/getAllSalasInTurmaByCoordId/${coordenadorId}`;
 
      try {
 
@@ -61,18 +61,17 @@ export const getAllSalasFromTurmaByCoordenadorId = async (coordenadorId?:string)
 //feito aqui
 export const getAllTurmas = async (coordenadorId:string) =>{
 
-      
+      let queryTurmasByCoordenadorId = `/coordenador/getAllTurmasByCoordenadorId/${coordenadorId}`;    
+
+
       try {
         
-     const getAllTurmas = await api.post('/coordenador/findAllTurmas',{
-      idCoordenador:coordenadorId
-     })
+     const getAllTurmas = await api.get(queryTurmasByCoordenadorId);
 
 
-      if(getAllTurmas){
-        return getAllTurmas.data
-      }
-
+     if(getAllTurmas){
+       return getAllTurmas.data
+     }
 
       } catch (error) {
         console.log(`${error}`);
@@ -102,6 +101,8 @@ export const updateStudentByPartialField = () =>{
 
 }
 //passar o id da turma
+//feito aqui
+//feito aqui
 export const deleteTurmaById = async (turmaId:string)=>{
 
     
@@ -124,22 +125,117 @@ export const deleteTurmaById = async (turmaId:string)=>{
 
 }
 //passar o id da sala
-export const deleteSalaById = () =>{
+//feito aqui
+export const deleteSalaById = async (salaId:string) =>{
+
+    let queryDeleteSala = `/coordenador/sala/${salaId}`
+
+   try {
+    
+    const deletedSalaResponseFromApi = await api.delete(queryDeleteSala);
+
+    if(deletedSalaResponseFromApi){
+      return deletedSalaResponseFromApi.data
+    }
+   } catch (error) {
+    console.log(`${error}`);
+   }
 
 }
 //passar o id do aluno
-export const deleteStudentById = () =>{
+//feito aqui
+export const deleteStudentById = async (alunoId:string) =>{
+
+    let queryDeleteAlunoId = `/coordenador/student/${alunoId}`;
+    
+    try {
+    
+    const  deleteAlunoIdResponsedFromApi = await api.delete(queryDeleteAlunoId);
+
+    if(deleteAlunoIdResponsedFromApi){
+      return deleteAlunoIdResponsedFromApi.data
+    }
+
+
+
+
+   } catch (error) {
+    console.log(`${error}`);
+   }
 
 }
 //passar o id do professor
-export const deleteTeacherById = () =>{
+//feito aqui
+export const deleteTeacherById = async (teacherId:string) =>{
+
+    let queryDeleteTeacher = `/coordenador/teacher/${teacherId}`
+
+   try {
+    
+   const deletedTeacherByIdResponsedFromApi = await api.delete(queryDeleteTeacher);
+
+   if(deletedTeacherByIdResponsedFromApi){
+      return deletedTeacherByIdResponsedFromApi.data
+   }
+
+
+
+
+   } catch (error) {
+    console.log(`${error}`);
+   }
+
 
 }
-export const deleteStudentFromTurma = () =>{
+//feito aqui
+export const deleteStudentFromTurma = async (data:{alunoId:string , turmaId:string}) =>{
+
+     let {alunoId , turmaId} = data;
+
+
+      try {
+        
+      const deletedStudentFromTurmaResponsedFromApi = await api.delete('student-turma',{
+        data:{
+          alunoId:alunoId,
+          turmaId:turmaId
+        }
+      }); 
+
+     if(deletedStudentFromTurmaResponsedFromApi){
+        return deletedStudentFromTurmaResponsedFromApi.data
+     }
+
+
+
+      } catch (error) {
+        console.log(`${error}`);
+      }
 
 }
-export const deleteStudentFromSala = () =>{
+//feito aqui
+export const deleteStudentFromSala = async (data:{alunoId:string , salaId:string}) =>{
+  let {alunoId , salaId} = data;
 
+
+  try {
+    
+  const deletedStudentFromSalaResponsedFromApi = await api.delete('student-sala',{
+    data:{
+      alunoId:alunoId,
+      turmaId:salaId
+    }
+  }); 
+
+ if(deletedStudentFromSalaResponsedFromApi){
+    return deletedStudentFromSalaResponsedFromApi.data
+ }
+
+
+
+  } catch (error) {
+    console.log(`${error}`);
+  }
 }
 export const deleteManyStudentsByCoordenadorId = () =>{
 

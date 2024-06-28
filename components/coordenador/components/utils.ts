@@ -20,15 +20,3 @@ export type Student = {
 
 
 
-export const fetchStudents = async (search:string) =>{
-   await new Promise((resolve)=>setTimeout(resolve , 1000))
-  return studentsFromTurmas.filter((student:Student)=>
-   student.alunoName.toLowerCase().includes(search.toLocaleLowerCase())
-   ||
-   student.turmaName.toLowerCase().includes(search.toLocaleLowerCase())
-   ||
-   student.matricula.toLowerCase().includes(search.toLocaleLowerCase())
-) 
-
-
-}

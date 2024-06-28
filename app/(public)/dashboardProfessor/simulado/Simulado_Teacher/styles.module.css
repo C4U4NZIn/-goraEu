@@ -1,0 +1,19 @@
+.container{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: #FBFCFE;	
+}
+
+.container_list {
+	display: flex;
+	width: 80%;
+	flex-direction: column;
+	gap: 2vw;
+}
+
+.footer {
+	height: 10vw;
+}

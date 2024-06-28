@@ -9,36 +9,102 @@
    width: 0px;
 }
 .containerStudents{
-    width: 80%;
-    height: 65vh;
+    width: 90%;
+    height: 100vh;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 1rem;
-    border: 1px solid #fff;                                                                                     
-    opacity: 0.5;
+    border: 1px solid #fff;                                                                                    
     border-radius: 15px;
     margin-top: 3rem;
     overflow: auto;
     align-self: center;
 
 }
+.containerStudents::-webkit-scrollbar{
+    width: 0px;
+    height: 0px;
+}
+.containerStudentsTurma{
+    width: 90%;
+    display: flex;
+    height: 50vh;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border: 1px solid #fff;                                                                                    
+    border-radius: 15px;
+    margin-top: 3rem;
+    overflow: hidden;
+    align-self: center;
+    margin-top: 2rem;
+
+}
+
+.containerStudentsTurma::-webkit-scrollbar{
+   width: 0px;
+   height: 0px;
+}
+
+
 .studentCardContainer{
-    height:60%;
+    height:80%;
     width: calc(33% - 1rem);
-    background-color:#217097;
-    opacity: 0.8;
-    border-radius: 12px;
-    border:2px solid #F26921;
+    border-radius: 5px;
     margin-bottom: 1rem;
     margin-top: 1rem;
+    background-color:#F9F9F9;
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.5);
 
+}
+.containerAvatarStudent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid black;
+    height: 60%;
+    width: 100%;
+
+}
+.textInfo1 , .textInfo2{
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+}
+.textInfo1{
+    margin-bottom: 0.5rem;
+}
+.textInfo2{
+    margin-top:0;
+}
+.containerInfoActions{
+    display: flex;
+    width: 100%;
+    height:6rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+}
+.stylesImageAction{
+    width: 2rem;
+    height: 2rem;
+}
+.containerTurmas{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    background-color: #EC641D;
+    overflow: auto;
 }
 .containerStudents::-webkit-scrollbar{
     width: 0px;
 }
 .isActive{
     background-color: #F26921;
+    opacity: 0.5;
 }
 .containerTextClass{
     display: flex;
@@ -55,7 +121,6 @@
     font-size: 2.75rem;
     font-weight: 700;
     color:#EC641D;
-    margin-bottom: -0.5rem;
     border-left: 6px solid #EC641D;
     padding-left: 0.5rem;
 }
@@ -82,4 +147,54 @@
     height: 30%;
     width: 100%;
     justify-content:center;
+}
+
+/*
+info component
+
+*/
+
+.infoComponentStyle{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 2.3rem;
+}
+.containerAreaActions{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 2rem;
+    align-content: flex-end;
+}
+
+.stylesEditAction , .stylesDeleteAction{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    border-radius: 60%;
+    width: 2.3rem;
+    height: 2.3rem;
+    background-color: #F9F9F9;
+    border: none;
+}
+
+.containerActions{
+    display: flex;
+    height:2rem;
+    width: 35%;
+    justify-content: space-between;
+    align-self: flex-end;
+}
+
+.styleTurmaName{
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+
+
+}
+.stylesSetas{
+    width: 1rem;
+    height: 1rem;
 }

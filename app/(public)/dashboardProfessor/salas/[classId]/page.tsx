@@ -15,10 +15,17 @@ import maria from './image_temp_aluno/image 76.svg'
 import levi from './image_temp_aluno/image 82.svg'
 import mariah from './image_temp_aluno/image 78 (1).svg'
 import Image from 'next/image';
+import Mural from '../../../../../components/professor/mural/index'
+import TopBar from '@/components/professor/tabBar';
+import { useState } from 'react';
+import ListStudents from '@/components/professor/Students';
 //é aq que o prof consegue modificar tudo
 // pro aluno ver
 export default function ProfessorClass(){
   
+    const [selectedSubject , setSelectedSubject] = useState<string>('Mural');
+
+
     const {userLogin} = useUserContext();
     const {
         bgClassColor,
@@ -252,8 +259,6 @@ export default function ProfessorClass(){
         }
       ]
 
-
-    
        console.log("No professor" , isMuralActive);
 
     return(
@@ -276,38 +281,21 @@ export default function ProfessorClass(){
             namePlanet={namePlanet}
             imgPlanet={imgPlanet}
             />
-            <Bar
-            numberBar={3}
-            bgColor={bgClassColor}
-            />
+          <TopBar setSelectedSubject={(value) => setSelectedSubject(value)}/>
     
 
             <div
             className="containerContentConditional"
             >
            {
-            isMuralActive && (
+            selectedSubject === 'Mural' && (
                 <>
-                <div
-                className="containerComponentsClass"
-                >
-                  {arrPostsProfessor.map((posts)=>(
-                    <Post
-                 professorName={posts.professorName}
-                 professorImg={posts.professorImg}
-                 createdAt={posts.createdAt}
-                 message={posts.message}
-                 type={posts.type}
-                 postImg={posts.postImg}
-                 visible_for="professor"
-                />
-                  ))}
-                </div>
+             <Mural/>
                 </>
             )
            }
            {
-            isTaskActive && (
+            selectedSubject === 'Atividades' && (
                 <>
                <div
                className='containerComponentsClass'
@@ -323,46 +311,9 @@ export default function ProfessorClass(){
             )
            }
                      {
-            isStudentActive && (
+            selectedSubject === 'Alunos' && (
                 <>
-                <div
-                className='containerAlunosSala'
-                >
-                {
-                arrStudentsSalaProfessor.map((students)=>(
-                <div
-                key={students.alunoId}
-                className='containerStudentDetails'
-                >
-                <div
-                className='containerImageAlunoName'
-                >
-                <Image
-                alt='alunoImg'
-                src={students.avatarAluno}
-                />
-                <Text
-                $fontSize={28}
-                $fontWeight={400}
-                style={{
-                    borderBottom:'1px solid black',
-                    marginBottom:'2rem',
-                    marginTop:'1rem'
-                }}
-                >{students.alunoName}</Text>
-                </div>
-                <div
-                className='containerRa'
-                >
-                    <Text
-                    $fontSize={25}
-                    $fontWeight={700}
-                    >{students.alunoRa}</Text>
-                </div>
-                </div>
-                ))
-                }
-                </div>
+              <ListStudents/>
                 </>
             )
            }
@@ -386,7 +337,7 @@ const ContainerPrincipalProfessorClass = styled.div`
     margin-top: 2.125rem;
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 85%;
     height: 80%;
     gap: 3rem;
     align-items: center;
@@ -433,9 +384,9 @@ const ContainerPrincipalProfessorClass = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 90%;
+  width: 100%;
   height: 40%;
-  gap:4rem;
+  gap:2rem;
   overflow: auto;
     }
 

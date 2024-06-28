@@ -1,0 +1,48 @@
+.container {
+	background-color: #FDFDFD;
+	border-radius: 1vw;
+	width: 100%;
+	padding: 1vw 2vw;
+	box-shadow: 1px 1px 5px gray;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+.number_question {
+	color: #EC641D;
+	font-weight: bold;
+	font-size: 6vw;
+	border-right: #EC641D solid 0.4vw;
+	text-transform: uppercase;
+	font-family: 'Times New Roman', Times, serif;
+	padding-right: 2%;
+}
+
+.enunciado {
+  color: #000;
+  white-space: pre-line;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.8vw;
+	width: 75%;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis; 
+}
+
+.button_edit {
+	background-color: #F2F8C9;
+	width: 4vw;
+	border: none;
+	height: 4vw;
+	margin-left: 1vw;
+	border-radius: 3vw;
+}
+
+.icon_edit {
+	width: 2.3vw;
+	height: 2.3vw;
+}

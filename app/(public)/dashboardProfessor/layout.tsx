@@ -1,5 +1,5 @@
 "use client";
-import { Inter, Tinos } from 'next/font/google'
+import { Tinos } from 'next/font/google'
 import globalStyle from './css/global.module.css'
 import styles from './css/dashboard-professor.module.css'
 import Image from "next/image";
@@ -9,11 +9,10 @@ import mural from '../dashboardMain/image/web-chat (1) 1.svg'
 import desempenho from '../dashboardMain/image/diagrama 1.svg'
 import usuario from '../dashboardMain/image/do-utilizador (2) 1.svg'
 import salas from '../dashboardMain/image/casa 1.svg'
-import stylesChildren from '../dashboardMain/css/children.module.css'
 import simulado from '../dashboardMain/image/lista-de-embalagem 1.svg'
 import { UserProviderFromProviders } from '@/providers';
 import { Toaster } from 'sonner';
-
+import { ModalProvider } from '@/providers/providerModal';
 const tinos = Tinos({ 
   weight:['400','700'],  
   subsets: ['latin'] 
@@ -42,7 +41,11 @@ export default function DashboardProfessorLayout({
       padding:0
     }}
     >
-      <body className={globalStyle.body}>
+      <body 
+      style={{
+        position:'relative'
+      }}
+      className={globalStyle.body}>
       
       <aside className={styles.verticalSideBar}>
       
@@ -117,10 +120,10 @@ export default function DashboardProfessorLayout({
       
       {children}  
        <Toaster richColors position='top-center'/>
-    
- 
-
+  
       </body>
+      <ModalProvider/>
+  
     </html>
 
 

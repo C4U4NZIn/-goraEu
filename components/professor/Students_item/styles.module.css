@@ -1,0 +1,48 @@
+.container {
+	width: 75%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	background-color: #F6F6F6;
+	box-shadow: 1px 1px 5px gray;
+	border-radius: 1vw;
+	padding: 0.3vw 4vw;
+}
+
+.container_name_image {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	gap: 2vw;
+}
+
+.image {
+	height: 100%;
+	width: auto;
+}
+
+.container_image {
+	width: 4.7vw;
+	height: 4.7vw;
+	overflow: hidden;
+	align-items: center;
+	justify-content: center;
+	border-radius: 3vw;
+}
+
+.name {
+	font-size: 2.5vw;
+	color: #006792;
+	font-family: 'Times New Roman', Times, serif;
+
+	border-bottom: solid 1px #006792;
+	padding: 0vw 1vw;
+}
+
+.ra {
+	font-size: 2vw;
+	color: #373737;
+	font-weight: bold;
+	font-family: 'Times New Roman', Times, serif;
+}

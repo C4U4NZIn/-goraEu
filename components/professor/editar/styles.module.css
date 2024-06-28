@@ -1,0 +1,99 @@
+.container {
+	width: 70%;
+	display: flex;
+	border-radius: 1vw;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+	box-shadow: 1px 1px 5px gray;
+}
+
+.title {
+	color: black;
+	font-size: 2vw;
+	width: 80%;
+	border-bottom: solid 1px black;
+	padding: 1vw 1vw;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.comentario {
+	color:black;
+	white-space: pre-line;
+}
+
+.input {
+	width: 70%;
+	margin: 1vw 0px;
+	height: 20vw;
+	background-color: #EFEFEF;
+	border-radius: 1vw;
+	padding: 1vw 5vw 1vw 5vw;
+
+	color: #090909;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 1.5vw;
+
+	outline: none;
+	resize: none;
+	border: none;
+	overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.input::-webkit-scrollbar {
+  display: none; 
+}
+
+.container_bottom {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	padding: 1vw 5%;
+	width: 80%;
+	border-top: solid 1px black;
+}
+
+.container_icons {
+	display: flex;
+	flex-direction: row;
+	gap: 1vw;
+}
+
+.icons_button {
+	background-color: hsl(0, 0%, 96%);
+	box-shadow: 2px 1px 5px gray;
+	width: 3vw;
+	border: none;
+	height: 3vw;
+	border-radius: 5vw;
+}
+
+.icons_images {
+	width: 2vw;
+	height: 2vw;
+}
+
+.container_buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 3vw;
+}
+
+.label_button {
+	color: #000;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 2vw;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.buttons {
+	background-color: #FD721F;
+	border-radius: 0.2vw;
+	padding: 0vw 1vw 0vw 1vw;
+	border-radius: 0.5vw;
+	border: none;
+}

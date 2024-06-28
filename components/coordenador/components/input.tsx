@@ -12,7 +12,7 @@ type InputSearch = {
 }
 
 
-export const InputSearch = ({role , onChangeStudent}:InputSearch) =>{
+export const InputSearch = ({role , onChangeStudent , onChangeTeacher}:InputSearch) =>{
 
 
   
@@ -33,6 +33,7 @@ export const InputSearch = ({role , onChangeStudent}:InputSearch) =>{
         {
             role === 'professor' && (
                 <input 
+                onChange={(e)=> onChangeTeacher?.(e.target.value)}
                 className={styleContainerInput.styleSearchInput}
                 type="text"
                 placeholder="Pesquise o professor por turma , RA ou nome"

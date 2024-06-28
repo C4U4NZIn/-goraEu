@@ -1,0 +1,7 @@
+.container_screen{
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}

@@ -26,6 +26,13 @@ export default function middleware(request:NextRequest){
         '/dashboardProfessor/usuario':'professor',
         '/dashboardProfessor/salas':'professor',
         '/dashboardProfessor/simulado':'professor',
+        '/dashboardProfessor/simulado/AddQuestao':'professor',
+        '/dashboardProfessor/simulado/AlterarQuestao':'professor',
+        '/dashboardProfessor/simulado/AlterarQuestaoBanco':'professor',
+        '/dashboardProfessor/simulado/AlterarSimulado':'professor',
+        '/dashboardProfessor/simulado/BancoHome':'professor',
+        '/dashboardProfessor/simulado/CreateSimulado':'professor',
+        '/dashboardProfessor/simulado/CriarQuestao':'professor',
         '/dashboardProfessor/mural':'professor',
         '/dashboardProfessor/desempenho':'professor'
     }
